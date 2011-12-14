@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Ability><Name>Crusader Strike</Name><Default>false</Default><SpellID>35395</SpellID><Actions>/startattack</Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;, 9) &amp;lt; 3  then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Judgement</Name><Default>false</Default><SpellID>20271</SpellID><Actions>/startattack</Actions><Lua>sSoR = UnitBuffID(&amp;quot;player&amp;quot;, 20154) 
+sSoT = UnitBuffID(&amp;quot;player&amp;quot;, 31801) 
+sSoJ = UnitBuffID(&amp;quot;player&amp;quot;, 20164) 
+sSoI = UnitBuffID(&amp;quot;player&amp;quot;, 20165) 
+
+if sSoR ~= nil or sSoT ~= nil or sSoJ ~= nil or sSoI ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Storm</Name><Default>false</Default><SpellID>53385</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Hammer of Wrath</Name><Default>false</Default><SpellID>24275</SpellID><Actions>/startattack</Actions><Lua>local sAW = UnitBuffID(&amp;quot;player&amp;quot;, 31884)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if sAW ~= nil then
+	return true
+else
+	if unithealth &amp;lt;= 20 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Templar&amp;apos;s Verdict</Name><Default>false</Default><SpellID>85256</SpellID><Actions></Actions><Lua>local sDivinePurpose = UnitBuffID(&amp;quot;player&amp;quot;, 90174) 
+		
+if UnitPower(&amp;quot;player&amp;quot;, 9) == 3 or sDivinePurpose ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Crusader Aura</Name><Default>false</Default><SpellID>32223</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 5 and IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inquisition</Name><Default>false</Default><SpellID>84963</SpellID><Actions>/startattack</Actions><Lua>local sDivinePurpose = UnitBuffID(&amp;quot;player&amp;quot;, 90174) 
+local inqBuff, _, _, _, _, _, inqExpireTime = UnitBuffID(&amp;quot;player&amp;quot;, 84963)
+
+if inqBuff ~= nil then
+	local inqExpire = (inqExpireTime - GetTime())
+	if inqExpire &amp;lt; 4 then
+		if UnitPower(&amp;quot;player&amp;quot;, 9) == 3 or sDivinePurpose ~= nil then
+			return true
+		end
+	end
+else
+	if UnitPower(&amp;quot;player&amp;quot;, 9) == 3 or sDivinePurpose ~= nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Consecration</Name><Default>false</Default><SpellID>26573</SpellID><Actions>/startattack</Actions><Lua>local manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if manapercent &amp;gt; 70 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Exorcism if Art of War</Name><Default>false</Default><SpellID>879</SpellID><Actions></Actions><Lua>sAoW = UnitBuffID(&amp;quot;player&amp;quot;, 59578)
+ 
+if sAoW ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Exorcism</Name><Default>false</Default><SpellID>879</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Righteousness</Name><Default>false</Default><SpellID>20154</SpellID><Actions>/startattack</Actions><Lua>sSoR = UnitBuffID(&amp;quot;player&amp;quot;, 20154) 
+		
+if sSoR == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Truth</Name><Default>false</Default><SpellID>31801</SpellID><Actions>/startattack</Actions><Lua>sSoT = UnitBuffID(&amp;quot;player&amp;quot;, 31801) 
+		
+if sSoT == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Justice</Name><Default>false</Default><SpellID>20164</SpellID><Actions>/startattack</Actions><Lua>sSoJ = UnitBuffID(&amp;quot;player&amp;quot;, 20164) 
+		
+if sSoJ == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Insight</Name><Default>false</Default><SpellID>20165</SpellID><Actions>/startattack</Actions><Lua>sSoI = UnitBuffID(&amp;quot;player&amp;quot;, 20165) 
+
+if sSoI == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Anything</Name><Default>false</Default><SpellID>31801</SpellID><Actions>/startattack</Actions><Lua>sSoR = UnitBuffID(&amp;quot;player&amp;quot;, 20154) 
+sSoT = UnitBuffID(&amp;quot;player&amp;quot;, 31801) 
+sSoJ = UnitBuffID(&amp;quot;player&amp;quot;, 20164) 
+sSoI = UnitBuffID(&amp;quot;player&amp;quot;, 20165) 
+
+if sSoR ~= nil or sSoT ~= nil or sSoJ ~= nil or sSoI ~= nil then
+	--We have a seal up
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shield of the Righteous</Name><Default>false</Default><SpellID>53600</SpellID><Actions>/startattack</Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;, 9) == 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Avenger&amp;apos;s Shield</Name><Default>false</Default><SpellID>31935</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Hammer of the Righteous</Name><Default>false</Default><SpellID>53595</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Zealotry</Name><Default>false</Default><SpellID>85696</SpellID><Actions>/startattack</Actions><Lua>local sDivinePurpose = UnitBuffID(&amp;quot;player&amp;quot;, 90174) 
+local sAW = UnitBuffID(&amp;quot;player&amp;quot;, 31884)
+		
+if UnitPower(&amp;quot;player&amp;quot;, 9) &amp;lt; 2 or sDivinePurpose ~= nil or sAW ~=nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Exorcism no other GCD</Name><Default>false</Default><SpellID>879</SpellID><Actions>/startattack</Actions><Lua>--WORK IN PROGRESS.
+--Only cast if no other ability is coming off CD within 1.5 seconds and Holy Power ~= 3.
+
+local CSstart, CSduration, CSenabled = GetSpellCooldown(35395);
+local CScooldown = (CSstart + CSduration - GetTime())
+local JUstart, JUduration, JUenabled = GetSpellCooldown(20271);
+local JUcooldown = (JUstart + JUduration - GetTime())
+		
+if CScooldown &amp;lt;= 1.5 and JUcooldown &amp;lt;= 1.5 and UnitPower(&amp;quot;player&amp;quot;, 9) ~= 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Word of Glory</Name><Default>false</Default><SpellID>85673</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt; 50 and UnitPower(&amp;quot;player&amp;quot;, 9) == 3 then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>False</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flash of Light &amp;lt; 25% HP</Name><Default>false</Default><SpellID>19750</SpellID><Actions>/startattack</Actions><Lua>local sAW = UnitBuffID(&amp;quot;player&amp;quot;, 31884)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if sAW ~= nil then
+	return true
+else
+	if unithealth &amp;lt;= 20 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Word of Glory &amp;lt; 60%</Name><Default>false</Default><SpellID>85673</SpellID><Actions>/cancelaura Divine Plea</Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt; 60 and UnitPower(&amp;quot;player&amp;quot;, 9) == 3 then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Holy Shield</Name><Default>false</Default><SpellID>20925</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Plea</Name><Default>false</Default><SpellID>54428</SpellID><Actions>/cancelaura Divine Plea</Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt; 40 and UnitPower(&amp;quot;player&amp;quot;, 9) ~= 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Word of Glory &amp;lt; 100%</Name><Default>false</Default><SpellID>85673</SpellID><Actions>/cancelaura Divine Plea</Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt; 100 and UnitPower(&amp;quot;player&amp;quot;, 9) == 3 then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Avenging Wrath</Name><Default>false</Default><SpellID>31884</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rebuke</Name><Default>false</Default><SpellID>96231</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lay on Hands &amp;lt; %20</Name><Default>false</Default><SpellID>633</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lay on Hands &amp;lt; %15</Name><Default>false</Default><SpellID>633</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt;= 15 and GetSpellCooldown(&amp;quot;Lay on Hands&amp;quot;)==0 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>GoAK</Name><Default>false</Default><SpellID>86150</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Hammer of Justice MO</Name><Default>false</Default><SpellID>853</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown()  then
+	if UnitIsEnemy(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+StopAttack()
+return true
+end</Lua><RecastDelay>3000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>AOE/Single Target Switch</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if modkeytime == nil then modkeytime = 0 end
+if IsLeftControlKeyDown() and GetTime() - modkeytime &amp;gt; 1  then
+  modkeytime = GetTime()
+  if modkeystate then 
+    modkeystate = nil 
+    print(&amp;quot;Rotation mode: \124cFFDBFA2ASingle target&amp;quot;)
+  else 
+    modkeystate = 1 
+    print(&amp;quot;Rotation mode: \124cFFFA652AArea of Effect&amp;quot;)
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Divine Storm (w/AOE switch)</Name><Default>false</Default><SpellID>53385</SpellID><Actions>/startattack</Actions><Lua>if modkeystate then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Retribution Aura</Name><Default>false</Default><SpellID>7294</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 2 and IsMounted() == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Righteousness (If AOE)</Name><Default>false</Default><SpellID>20154</SpellID><Actions>/startattack</Actions><Lua>sSoR = UnitBuffID(&amp;quot;player&amp;quot;, 20154) 
+
+if modkeystate and sSoR == nil  then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Crusader Strike (w/AOE switch)</Name><Default>false</Default><SpellID>35395</SpellID><Actions>/startattack</Actions><Lua>if modkeystate then
+  return false
+end
+
+if UnitPower(&amp;quot;player&amp;quot;, 9) &amp;lt; 3  then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>WoW7th</Name><Default>false</Default><SpellID>0</SpellID><Actions>/use Celebration Package</Actions><Lua>W7A = UnitBuffID(&amp;quot;player&amp;quot;, 100951) 
+		
+if W7A == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Seal of Truth (If Not AOE)</Name><Default>false</Default><SpellID>31801</SpellID><Actions>/startattack</Actions><Lua>sSoT = UnitBuffID(&amp;quot;player&amp;quot;, 31801) 
+
+if modkeystate then
+  return false
+end
+		
+if sSoT == nil then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dont&amp;apos; Dismount</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--Offensive Spells--</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977 }
+local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Crystal Prison&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot; }
+local noaggromobs = nil
+local immunity = nil
+
+for i,v in ipairs(buff) do
+  if UnitBuffID(&amp;quot;target&amp;quot;,v) then immunity = 1 end
+end
+
+for i,v in ipairs(mob) do
+  if UnitName(&amp;quot;target&amp;quot;) == v then noaggromobs = 1 end
+end
+
+if UnitIsDead(&amp;quot;target&amp;quot;)
+or immunity
+or UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) == nil
+or (UnitAffectingCombat(&amp;quot;target&amp;quot;) == nil and noaggromobs == nil and UnitIsPlayer(&amp;quot;target&amp;quot;) == nil)
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PALADIN>

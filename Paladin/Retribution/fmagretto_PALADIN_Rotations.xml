@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Rotation><RotationName>Ret Raid (Aura Switching TEST)</RotationName><RotationDefault>false</RotationDefault><RotationList>Crusader Aura|Retribution Aura|Blessing of Might|Pause|AOE/Single Target Switch|Dont&amp;apos; Dismount|Hammer of Justice MO|Hand Of Freedom|--Offensive Spells--|Seal of Truth (If Not AOE)|Seal of Righteousness (If AOE)|Inquisition|Zealotry|Avenging Wrath|GoAK|Crusader Strike (w/AOE switch)|Divine Storm (w/AOE switch)|Templar&amp;apos;s Verdict|Hammer of Wrath|Exorcism if Art of War|Judgement|Holy Wrath|Consecration|Lay on Hands &amp;lt; %15</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Tap Left Ctrl: Switches between AOE (Divine Storm) and Single Target (Crusader Strike). 
+
+Hold Left Shift: Will Pause rotation and stop auto-attack. Useful when raid leader calls out stop dps and you don&amp;apos;t want to switch targets.
+
+Press Left Alt: Will cast Hammer of Justice (Stun) on Mouse Over. 
+</RotationNotes></Rotation><Rotation><RotationName>Ret Raid</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|AOE/Single Target Switch|Hammer of Justice MO|Hand Of Freedom|Dont&amp;apos; Dismount|Blessing of Might|Seal of Truth (If Not AOE)|Seal of Righteousness (If AOE)|Inquisition|Zealotry|Avenging Wrath|GoAK|Crusader Strike (w/AOE switch)|Divine Storm (w/AOE switch)|Hammer of Wrath|Exorcism if Art of War|Templar&amp;apos;s Verdict|Judgement|Holy Wrath|Consecration|Lay on Hands &amp;lt; %15</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Tap Left Ctrl: Switches between AOE (Divine Storm) and Single Target (Crusader Strike). 
+
+Hold Left Shift: Will Pause rotation and stop auto-attack. Useful when raid leader calls out stop dps and you don&amp;apos;t want to switch targets.
+
+Press Left Alt: Will cast Hammer of Justice (Stun) on Mouse Over. 
+</RotationNotes></Rotation><Rotation><RotationName>Ret Self-Heal/Questing</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|AOE/Single Target Switch|Hammer of Justice MO|Seal of Insight|Word of Glory &amp;lt; 60%|Inquisition|Zealotry|Avenging Wrath|GoAK|Crusader Strike (w/AOE switch)|Divine Storm (w/AOE switch)|Templar&amp;apos;s Verdict|Hammer of Wrath|Exorcism if Art of War|Judgement|Holy Wrath|Consecration|Lay on Hands &amp;lt; %15</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Tap Left Ctrl: Switches between AOE (Divine Storm) and Single Target (Crusader Strike). 
+
+Hold Left Shift: Will Pause rotation and stop auto-attack. Useful when raid leader calls out stop dps and you don&amp;apos;t want to switch targets.
+
+Press Left Alt: Will cast Hammer of Justice (Stun) on Mouse Over. 
+</RotationNotes></Rotation><Rotation><RotationName>Ret PVP with aura switching</RotationName><RotationDefault>false</RotationDefault><RotationList>Crusader Aura|Retribution Aura|Pause|AOE/Single Target Switch|Hammer of Justice MO|Hand Of Freedom|--Offensive Spells--|Seal of Truth (If Not AOE)|Seal of Righteousness (If AOE)|Inquisition|Zealotry|Avenging Wrath|GoAK|Crusader Strike (w/AOE switch)|Divine Storm (w/AOE switch)|Lay on Hands &amp;lt; %15|Templar&amp;apos;s Verdict|Hammer of Wrath|Exorcism if Art of War|Judgement|Holy Wrath|Word of Glory &amp;lt; 60%</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Tap Left Ctrl: Switches between AOE (Divine Storm) and Single Target (Crusader Strike). 
+
+Hold Left Shift: Will Pause rotation and stop auto-attack. Useful when raid leader calls out stop dps and you don&amp;apos;t want to switch targets.
+
+Press Left Alt: Will cast Hammer of Justice (Stun) on Mouse Over. 
+</RotationNotes></Rotation></PALADIN>

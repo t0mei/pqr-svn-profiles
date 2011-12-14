@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><ROGUE><Ability><Name>Sinister Strike</Name><Default>false</Default><SpellID>1752</SpellID><Actions></Actions><Lua>local sinisterstrikeCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+if sinisterstrikeCP &amp;lt;= 3 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability><Ability><Name>SnD</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddice, _, _, _, _, _, sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if sliceanddice ~= nil then
+    if sliceanddicetimer - GetTime() &amp;lt; 2 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability><Ability><Name>Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local eviscerateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+if eviscerateCP == 5 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability><Ability><Name>Revealing Strike</Name><Default>false</Default><SpellID>84617</SpellID><Actions></Actions><Lua>local revealingstrike, _, _, _, _, _, revealingstriketimer = UnitDebuffID(&amp;quot;target&amp;quot;, 84617)
+
+if revealingstrike ~= nil then
+    if revealingstrike - GetTime() &amp;gt; 1 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability><Ability><Name>Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local _,_,_,recuperate = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+local recuperateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local health = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+
+
+if recuperate ~= nil then
+    return false
+else
+if health &amp;lt; 95 then
+   if recuperateCP &amp;gt;= 5 then
+     return true
+   end
+end
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability><Ability><Name>WOTF</Name><Default>false</Default><SpellID>7744</SpellID><Actions></Actions><Lua>local fear, _, _, _, _, _, feartimer = UnitDebuffID(&amp;quot;player&amp;quot;, 5782)
+local willoftheforsakencooldown = (willoftheforsakenstart + willoftheforsakenduration - GetTime())
+
+
+if willoftheforsakencooldown &amp;gt; 0 then
+        return false
+else
+if fear ~= nil then
+    if fear - GetTime() &amp;gt; 1 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><SelfCast>False</SelfCast></Ability></ROGUE>

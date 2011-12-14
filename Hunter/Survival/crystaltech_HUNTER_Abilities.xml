@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Ability><Name>SV: Explosive Shot</Name><Default>false</Default><SpellID>53301</SpellID><Actions>/cast !auto shot</Actions><Lua>return true</Lua><RecastDelay>1500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM/SV: Rapid Fire</Name><Default>false</Default><SpellID>3045</SpellID><Actions>/cast Call of the wild|/cast Rabid|/use 13|/use 14</Actions><Lua>local rfBuff = UnitBuffID(&amp;quot;player&amp;quot;, 3045)
+
+if rfBuff == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Multi-Shot</Name><Default>false</Default><SpellID>2643</SpellID><Actions>/cast !auto shot|/cast Burrow Attack</Actions><Lua>if IsLeftControlKeyDown()  then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Kill Shot</Name><Default>false</Default><SpellID>53351</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+if unithealth &amp;lt;= 20 then 
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Kill Command</Name><Default>false</Default><SpellID>34026</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local health = UnitHealth(&amp;quot;pet&amp;quot;)
+if UnitExists(&amp;quot;pet&amp;quot;) and health &amp;gt;= 1 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Serpent Sting</Name><Default>false</Default><SpellID>1978</SpellID><Actions>/cast !auto shot</Actions><Lua>local ssDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 1978) 
+if ssDebuff == nil then
+	return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local _, _, _, KCcost = GetSpellInfo(34026)
+local _, _, _, ArScost = GetSpellInfo(3044)
+local totalCost = (KCcost + ArScost)
+			
+if UnitPower(&amp;quot;player&amp;quot;) &amp;gt;= totalCost then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local hasTbw = UnitBuffID(&amp;quot;player&amp;quot;, 34692)
+
+if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
+	CastSpellByID(82661) 
+end
+
+if hasTbw ~= nil then
+	return false
+end
+
+return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot</Actions><Lua>local duration = GetSpellCooldown(&amp;quot;Chimera Shot&amp;quot;)
+local myFocus = UnitPower(&amp;quot;player&amp;quot;)
+
+if duration &amp;gt;= 5 and myFocus &amp;gt;= 66 then
+	return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Chimera Shot</Name><Default>false</Default><SpellID>53209</SpellID><Actions>/cast !auto shot</Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Bestial Wrath</Name><Default>false</Default><SpellID>19574</SpellID><Actions>/cast Call of the Wild|/use 13|/use 14</Actions><Lua>if IsShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Focus Fire</Name><Default>false</Default><SpellID>82692</SpellID><Actions></Actions><Lua>local _, _, _, FrenzyCount = UnitBuffID(&amp;quot;pet&amp;quot;, 19615)
+local hasTbw = UnitBuffID(&amp;quot;player&amp;quot;, 34692)
+
+if FrenzyCount ~= nil then
+	if FrenzyCount == 5 and hasTbw == nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Rapid Fire</Name><Default>false</Default><SpellID>3045</SpellID><Actions>/cast Call of the Wild</Actions><Lua>local hasTbw = UnitBuffID(&amp;quot;player&amp;quot;, 34692)
+local bwstart, bwduration, bwenabled = GetSpellCooldown(19574)
+
+if hasTbw ~= nil then
+	return false
+end
+
+if bwenabled == 0 then
+	return false
+elseif bwstart  &amp;gt; 0 and bwduration &amp;gt; 0 and IsShiftKeyDown() then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Fervor</Name><Default>false</Default><SpellID>82726</SpellID><Actions>/cast arcane torrent</Actions><Lua>local myFocus = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+if myFocus &amp;lt;= 15 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot</Actions><Lua>local myfocus = UnitPower(&amp;quot;player&amp;quot;)
+local unitshealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local lnlBuff = UnitBuffID(&amp;quot;player&amp;quot;, 56343)
+
+if lnlBuff ~= nil then
+	return false
+end
+
+if myfocus &amp;gt;= 70 and unitshealth &amp;lt;= 100 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Steady Shot</Name><Default>false</Default><SpellID>56641</SpellID><Actions>/cast !auto shot</Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Aimed Shot</Name><Default>false</Default><SpellID>19434</SpellID><Actions>/cast !auto shot</Actions><Lua>local hasFire = UnitBuffID(&amp;quot;player&amp;quot;, &amp;quot;82926&amp;quot;)
+local myFocus = UnitPower(&amp;quot;player&amp;quot;)
+local unitHp = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if hasFire ~= nil then
+	return true
+end
+
+if unitHp &amp;gt;= 90 and myFocus &amp;gt;= 70  then
+	return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Black Arrow</Name><Default>false</Default><SpellID>3674</SpellID><Actions>/cast !auto shot</Actions><Lua>local baDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 3674)
+local myfocus = UnitPower(&amp;quot;player&amp;quot;)
+
+if baDebuff == nil and myfocus &amp;gt;= 35 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions>/cast !auto shot</Actions><Lua>if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
+	CastSpellByID(82661) 
+end
+
+return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Steady Shot</Name><Default>false</Default><SpellID>56641</SpellID><Actions>/cast !auto shot</Actions><Lua>if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
+	CastSpellByID(82661) 
+end
+
+return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Hunter&amp;apos;s Mark</Name><Default>false</Default><SpellID>1130</SpellID><Actions></Actions><Lua>local mark = UnitDebuffID(&amp;quot;target&amp;quot;, 1130)
+
+if mark == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Aspect of the Hawk</Name><Default>false</Default><SpellID>13165</SpellID><Actions></Actions><Lua>if PQR_IsMoving(1) == false and UnitBuffID(&amp;quot;player&amp;quot;, 13165) == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown()
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;player&amp;quot;,77769)
+or UnitBuffID(&amp;quot;player&amp;quot;,5384)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>AoE: Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions>/cast !auto shot</Actions><Lua>if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
+	CastSpellByID(82661) 
+end
+
+if IsLeftControlKeyDown()  and UnitPower(&amp;quot;player&amp;quot;) &amp;lt;= 20 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Mend Pet</Name><Default>false</Default><SpellID>136</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;pet&amp;quot;) and UnitIsDead(&amp;quot;pet&amp;quot;) == nil and 100 * UnitHealth(&amp;quot;pet&amp;quot;) / UnitHealthMax(&amp;quot;pet&amp;quot;) &amp;lt; 90 and UnitBuffID(&amp;quot;pet&amp;quot;,136) == nil and UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Misdirection</Name><Default>false</Default><SpellID>34477</SpellID><Actions></Actions><Lua>if UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) and UnitIsDead(&amp;quot;target&amp;quot;) == nil and UnitHealth(&amp;quot;target&amp;quot;) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;) and UnitName(&amp;quot;target&amp;quot;) ~= &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot; and UnitInRaid(&amp;quot;player&amp;quot;) == nil then
+
+local havetank = nil
+local InParty = GetNumPartyMembers()
+if InParty &amp;gt; 0 then
+  for i = 1, InParty, 1 do
+  local member = &amp;quot;party&amp;quot;..tostring(i)
+    if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; and UnitIsDead(member) == nil then
+      if UnitThreatSituation(member,&amp;quot;target&amp;quot;) ~= 3 and UnitInRange(member) then CastSpellByID(34477,member) end
+      havetank = 1
+    end
+  end
+end
+if havetank == nil and UnitExists(&amp;quot;pet&amp;quot;) and UnitThreatSituation(&amp;quot;pet&amp;quot;,&amp;quot;target&amp;quot;) ~= 3 then return true end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Pet</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Raptor Strike</Name><Default>false</Default><SpellID>2973</SpellID><Actions></Actions><Lua>if IsSpellInRange(tostring(GetSpellInfo(56641))) == 0 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Tranquilizing Shot</Name><Default>false</Default><SpellID>19801</SpellID><Actions></Actions><Lua>buff = { 99646 }
+local candispel = 1
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;target&amp;quot;,v) then candispel = nil end
+end
+
+local i = 1
+local buff,_,_,_,bufftype = UnitBuff(&amp;quot;target&amp;quot;, i)
+while buff do
+  if (bufftype == &amp;quot;Magic&amp;quot; or buff == &amp;quot;Enrage&amp;quot;) and candispel then
+    return true
+  end
+  i = i + 1;
+  buff,_,_,_,bufftype = UnitBuff(&amp;quot;target&amp;quot;, i)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Rapid Fire</Name><Default>false</Default><SpellID>3045</SpellID><Actions>/cast Call of the wild|/cast Rabid|/use 13|/use 14</Actions><Lua>if IsShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Blood Elf: Racial</Name><Default>false</Default><SpellID>80483</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 20 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></HUNTER>

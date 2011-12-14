@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?><ROGUE><Ability><Name>SnD</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddice, _, _, _, _, _, sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if sliceanddice ~= nil then
+    if sliceanddicetimer - GetTime() &amp;lt; 2 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local eviscerateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+if eviscerateCP &amp;gt;= 4 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Mutilate</Name><Default>false</Default><SpellID>1329</SpellID><Actions>/startattack</Actions><Lua>local mutilateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+if mutilateCP &amp;lt;= 4 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local _,_,_,recuperate = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+local recuperateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local health = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+
+
+if recuperate ~= nil then
+    return false
+else
+if recuperateCP &amp;gt;= 3 then
+	return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Rupture</Name><Default>false</Default><SpellID>1943</SpellID><Actions></Actions><Lua>local rupture, _, _, _, _, _, rupturetimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1943, &amp;quot;PLAYER&amp;quot;)
+local ruptureCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+
+if rupture ~= nil then
+	if ruptureCP &amp;gt;= 1 then
+		if rupturetimer - GetTime() &amp;lt; 2 then
+		return true
+	end
+end
+else
+	if ruptureCP &amp;gt;= 1 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Envenom</Name><Default>false</Default><SpellID>32645</SpellID><Actions>/startattack</Actions><Lua>local EnvenomCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local _,_,_,EnvenomDP = UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Deadly Poison&amp;quot;)
+local EnvenomBuff = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Envenom&amp;quot;)
+
+if EnvenomCP &amp;gt;= 4 then
+	if EnvenomDP &amp;gt;= 4 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability></ROGUE>

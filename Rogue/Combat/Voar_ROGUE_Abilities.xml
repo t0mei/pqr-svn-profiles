@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><ROGUE><Ability><Name>Sinister Strike</Name><Default>false</Default><SpellID>1752</SpellID><Actions></Actions><Lua>local sinisterstrikeCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+
+
+
+if sinisterstrikeCP &amp;lt;= 3 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>SnD</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddice, _, _, _, _, _, sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+
+if sliceanddice ~= nil then
+    if sliceanddicetimer - GetTime() &amp;lt; 2 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local eviscerateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+
+
+
+if eviscerateCP == 5 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Revealing Strike</Name><Default>false</Default><SpellID>84617</SpellID><Actions></Actions><Lua>local revsCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+
+
+
+
+if revsCP == 4 then
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local _,_,_,recuperate = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+local recuperateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local health = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+
+
+
+
+
+if recuperate ~= nil then
+    return false
+else
+if health &amp;lt; 95 then
+   if recuperateCP &amp;gt;= 4 then
+     return true
+   end
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Rupture</Name><Default>false</Default><SpellID>1943</SpellID><Actions></Actions><Lua>local rupture, _, _, _, _, _, rupturetimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1943, &amp;quot;PLAYER&amp;quot;)
+local ruptureCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local hasCatMangle, _, _, _, _, _, CatMangleTimer = UnitDebuffID(&amp;quot;target&amp;quot;, 33876)
+local hasBearMangle, _, _, _, _, _, BearMangleTimer = UnitDebuffID(&amp;quot;target&amp;quot;, 33878)
+local hasTrauma = UnitDebuffID(&amp;quot;target&amp;quot;, 46857)
+local hasHemorrhage = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
+
+
+if hasCatMangle ~= nil or hasBearMangle ~= nil or hasTrauma ~= nil or hasHemorrhage ~= nil then
+        return false
+    else
+if rupture ~= nil then 
+   if ruptureCP == 4 then
+      if rupturetimer - GetTime() &amp;lt; 1 then
+          return true
+      end
+   end
+else
+  return false
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Shiv</Name><Default>false</Default><SpellID>5938</SpellID><Actions></Actions><Lua>bDS = UnitBuffID(&amp;quot;target&amp;quot;, 8599) --Enrage
+
+
+        
+if bDS ~= nil then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Feint</Name><Default>false</Default><SpellID>1966</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Tricks of the trade</Name><Default>false</Default><SpellID>57934</SpellID><Actions></Actions><Lua>local InParty = GetNumPartyMembers()
+if IsCtrlKeyDown()
+if InParty &amp;gt; 0 and UnitInRaid(&amp;quot;player&amp;quot;) == nil then
+  for i = 1, InParty, 1 do
+  local member = &amp;quot;party&amp;quot;..tostring(i)
+  if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then
+    CastSpellByName(&amp;quot;Tricks of the Trade&amp;quot;)
+    SpellTargetUnit(member)
+    end
+  end
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Adrenaline Rush</Name><Default>false</Default><SpellID>13750</SpellID><Actions>/use 13|/use14</Actions><Lua>local ARstart, ARduration = GetSpellCooldown(13750)
+local ARcooldown = (ARstart + ARduration - GetTime())
+local levelcheck = UnitLevel(&amp;quot;target&amp;quot;)
+local Energy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+
+if levelcheck == -1 or levelcheck &amp;gt;= 87 then
+    if ARcooldown &amp;gt; 0 or Energy &amp;gt;=40 then
+        return false
+    else
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Killing Spree</Name><Default>false</Default><SpellID>51690</SpellID><Actions></Actions><Lua>if IsControlKeyDown() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability></ROGUE>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?><DEATHKNIGHT><Rotation><RotationName>Unholy PvP - PHDk</RotationName><RotationDefault>false</RotationDefault><RotationList>U - Constants|U - Anti-Magic Zone (R-Alt)|U - Chains of Ice (L-Shift)|U - Chains of Ice Mouseover (R-Shift)|U - Death and Decay (L-Alt)|U - Death Grip (L-Control)|U - Strangulate (R-Control)|U - Stop Attack (PvP CC)|U - Don&amp;apos;t Dismount (PvP)|U - Dark Simulacrum (PvP Casts)|U - Dark Simulacrum (PvP Focus Casts)|U - Immunities (Free RP)|U - Raise Dead (Pet)|U - Totems (Pet)|U - Healthstone (Low HP)|U - Death Strike (Low HP)|U - Death Coil (Shadow Infusion)|U - Death Coil (Low HP)|U - Death Coil (Pet Low HP)|U - Death Coil (Ranged)|U - Summon Gargoyle|U - Dark Transformation|U - Death Coil (Sudden Doom)|U - Death Coil (RP Cap)|U - Chains of Ice (Ranged)|U - Blood Tap (Strangulate CD)|U - Chains of Ice (Disease)|U - Plague Strike (Disease)|U - Festering Strike (Blood Runes)|U - Outbreak (Disease)|U - Necrotic Strike (Trinket)|U - Necrotic Strike|U - Death Coil|U - Horn of Winter</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Hi there ^^
+
+I have a few things to add about this rotation. Firstly, it was tested in a successful PHDk (Holy Paladin, Hunter, DK) setup, and as such follows the typical Unholy utility playstyle. You&amp;apos;ll see much better results if you run with a high-burst class to put damage into your Necrotic Strike stacks (which build up quickly).
+
+Left Shift - Chains of Ice (target)
+Right Shift - Chains of Ice (mouseover)
+Left Control - Death Grip
+Right Control - Strangulate (focus)
+Left Alt - Death and Decay (at cursor location)
+Right Alt - Anti-Magic Zone
+
+I&amp;apos;ve included abilities to use Scourge Strike, but they&amp;apos;re not incorporated into the rotation. If you&amp;apos;re doing 2&amp;apos;s or (maybe) RBG&amp;apos;s and have the Rage of Rivendare talent, you may want to swap Scourge Strike (PvE) for Necrotic Strike.
+
+If your pet is damaged at all, Death Coils will be cast into it to heal it, and build up more Shadow Infusions. If you only want this when the pet is below 50% HP, remove the U - Death Coil (Shadow Infusion) ability.
+
+I suggest setting your pet to passive and using macros to control him. At the bare minimum, you will need PetAttack and PetAttack (focus) macros, along with PetFollow, Focus Leap and Focus Gnaw. I also suggest an Unholy Frenzy (mouseover) macro.
+
+Please let me know if you find bugs or have any suggestions. Happy DKing :)</RotationNotes></Rotation><Rotation><RotationName>Unholy PvE - 5/1/35</RotationName><RotationDefault>false</RotationDefault><RotationList>U - Anti-Magic Zone (R-Alt)|U - Chains of Ice (L-Shift)|U - Death and Decay (L-Alt)|U - Death Grip (L-Control)|U - Pestilence (R-Shift PvE)|U - Strangulate (R-Control)|U - Don&amp;apos;t Dismount (PvP)|U - Stop Attack (PvP CC)|U - Immunities (Free RP)|U - Raise Dead (Pet)|U - Totems (Pet)|U - Arcane Torrent (BE Racial)|U - Healthstone (Low HP)|U - Death Strike (Low HP)|U - Death Coil (Shadow Infusion)|U - Death Coil (Low HP)|U - Death Coil (Pet Low HP)|U - Death Coil (Ranged)|U - Summon Gargoyle (PvE)|U - Dark Transformation|U - Death Coil (Sudden Doom)|U - Death Coil (PvE RP Cap)|U - Blood Tap (Strangulate CD)|U - Outbreak (Disease)|U - Icy Touch (PvE Disease)|U - Plague Strike (Disease)|U - Festering Strike (PvE)|U - Scourge Strike (PvE)|U - Death Coil (PvE)|U - Horn of Winter</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Hello again!
+
+This rotation was mainly an afterthought, but it pulled 26k DPS against Heroic Shannox in absolutely terrible PvE gear. Instead of casting Chains of Ice against your mouseover target, holding down Right Shift will cast Pestilence to spread your diseases to nearby targets.
+
+Unlike the other rotation, it will use Icy Touch to apply Frost Fever and will also cast Unholy Frenzy whenever summoning your Gargoyle.</RotationNotes></Rotation></DEATHKNIGHT>

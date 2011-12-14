@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Lava Lash</Name><Default>false</Default><SpellID>60103</SpellID><Actions>/startattack</Actions><Lua>if IsSpellInRange(&amp;quot;Lava Lash&amp;quot;, &amp;quot;target&amp;quot;) == 1 then	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Stormstrike</Name><Default>false</Default><SpellID>17364</SpellID><Actions>/startattack</Actions><Lua>if IsSpellInRange(&amp;quot;Stormstrike&amp;quot;, &amp;quot;target&amp;quot;) == 1 then	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Earth Shock</Name><Default>false</Default><SpellID>8042</SpellID><Actions>/startattack</Actions><Lua>if IsSpellInRange(&amp;quot;Earth Shock&amp;quot;, &amp;quot;target&amp;quot;) == 1 then	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Searing Totem</Name><Default>false</Default><SpellID>3599</SpellID><Actions>/startattack</Actions><Lua>local hasSearing = GetTotemTimeLeft(1)
+if hasSearing == 0 then
+return true
+else
+if hasSearing &amp;lt; 3 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions>/startattack</Actions><Lua>pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;target&amp;quot;, 8056) --Frost shock
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;target&amp;quot;, 38617) --Frostbrand
+end
+
+if pvpdebuffCheck ~= nil then
+	if (expire - GetTime()) &amp;lt;= 5.5 then
+		if IsSpellInRange(&amp;quot;Unleash Elements&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+			return true
+		end
+	end
+else
+	if IsSpellInRange(&amp;quot;Unleash Elements&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions>/startattack</Actions><Lua>sFS = UnitBuffID(&amp;quot;player&amp;quot;, 73683)
+
+if IsSpellInRange(&amp;quot;Flame Shock&amp;quot;, &amp;quot;target&amp;quot;) == 1 and sFS ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Lightning Bolt (Maelstrom)</Name><Default>false</Default><SpellID>403</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasMaelstrom = UnitBuffID(&amp;quot;player&amp;quot;, 53817)
+if hasMaelstrom == 5 then
+if IsSpellInRange(&amp;quot;Lightning Bolt&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+return true
+else
+return false
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>chain lightning (Maelstrom)</Name><Default>false</Default><SpellID>421</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasMaelstrom = UnitBuffID(&amp;quot;player&amp;quot;, 53817)
+if hasMaelstrom == 5 then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Fire Nova</Name><Default>false</Default><SpellID>1535</SpellID><Actions>/startattack</Actions><Lua>sFn = UnitDebuffID(&amp;quot;target&amp;quot;, 8050)
+
+if IsSpellInRange(&amp;quot;Fire Nova&amp;quot;, &amp;quot;target&amp;quot;) == 1 and sFn ~= nil then	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>MagmaTorem</Name><Default>false</Default><SpellID>8190</SpellID><Actions>/startattack</Actions><Lua>local hasMagma = GetTotemTimeLeft(1)
+if hasMagma == 0 then
+return true
+else
+if hasMagma &amp;lt; 3 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>aoeFlame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions>/startattack</Actions><Lua>local FlameShockDebuff, _, _, _, _, _, FlameShockExpireTime = UnitDebuffID(&amp;quot;target&amp;quot;, 8050)
+
+if FlameShockDebuff ~= nil then
+FlameShockTime = FlameShockExpireTime - GetTime()
+if FlameShockTime &amp;lt; .2 then
+return true
+end
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>flametoungue</Name><Default>false</Default><SpellID>8024</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasFlametongue = GetWeaponEnchantInfo()
+
+if hasFlametongue ~= nil then
+return false
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>windfury</Name><Default>false</Default><SpellID>8232</SpellID><Actions>/startattack</Actions><Lua>local hasWindfury = GetWeaponEnchantInfo()
+
+if hasWindfury ~= nil then
+return false
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>lightning shield</Name><Default>false</Default><SpellID>324</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,ls = UnitBuffID(&amp;quot;player&amp;quot;, 324)
+
+if ls == nil then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Greater Healing wave (Maelstrom)</Name><Default>false</Default><SpellID>77472</SpellID><Actions>/startattack</Actions><Lua>local mytarget = 100 * UnitHealth(targettoheal) / UnitHealthMax(targettoheal)
+local _,_,_,hasMaelstrom = UnitBuffID(&amp;quot;player&amp;quot;, 53817)
+
+if mytarget &amp;lt; 80 
+and hasMaelstrom == 5
+then CastSpellByID(77472,targettoheal) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Shamanistic rage</Name><Default>false</Default><SpellID>30823</SpellID><Actions>/startattack</Actions><Lua>local self = 100 * UnitHealth&amp;quot;player&amp;quot; / UnitHealthMax&amp;quot;player&amp;quot;
+
+if self &amp;lt;= 95 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Wolves</Name><Default>false</Default><SpellID>51533</SpellID><Actions>/startattack|/use blood fury|/use 13</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Tremor</Name><Default>false</Default><SpellID>8143</SpellID><Actions>/startattack</Actions><Lua>a = UnitDebuffID(&amp;quot;player&amp;quot;, 5782) --Fear
+b = UnitDebuffID(&amp;quot;player&amp;quot;, 8122) --Psychic Scream
+c = UnitDebuffID(&amp;quot;player&amp;quot;, 6358) --Seduction
+d = UnitDebuffID(&amp;quot;player&amp;quot;, 5484) --Howl of terror
+e = UnitDebuffID(&amp;quot;player&amp;quot;, 5246) --Intimidating shout
+
+if a ~= nil or b ~= nil or c ~= nil or d ~= nil or e ~= nil then
+	return true
+else 
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Purge</Name><Default>false</Default><SpellID>370</SpellID><Actions>/startattack</Actions><Lua>a = UnitBuffID(&amp;quot;target&amp;quot;, 54428) --Plea
+b = UnitBuffID(&amp;quot;target&amp;quot;, 6346) --Fear Ward
+c = UnitBuffID(&amp;quot;target&amp;quot;, 17) --PWD:S
+d = UnitBuffID(&amp;quot;target&amp;quot;, 89485) --Inner Focus
+e = UnitBuffID(&amp;quot;target&amp;quot;, 10060) --Power Infusion
+f = UnitBuffID(&amp;quot;target&amp;quot;, 16188) --NS
+g = UnitBuffID(&amp;quot;target&amp;quot;, 29166) --Innervate
+h = UnitBuffID(&amp;quot;target&amp;quot;, 16689) --Nature&amp;apos;s Grasp
+i = UnitBuffID(&amp;quot;target&amp;quot;, 16974) --PredSwift
+j = UnitBuffID(&amp;quot;target&amp;quot;, 17116) --NSDruid
+k = UnitBuffID(&amp;quot;target&amp;quot;, 1022) --BoP
+l = UnitBuffID(&amp;quot;target&amp;quot;, 1044) --Freedom
+m = UnitBuffID(&amp;quot;target&amp;quot;, 31884) --Avenging Wrath
+n = UnitBuffID(&amp;quot;target&amp;quot;, 12472) --Icy Veins
+o = UnitBuffID(&amp;quot;target&amp;quot;, 11426) --IceBarrier
+p = UnitBuffID(&amp;quot;target&amp;quot;, 543) --MageWard		
+q = UnitBuffID(&amp;quot;target&amp;quot;, 1463) --ManaShield
+r = UnitBuffID(&amp;quot;target&amp;quot;, 12357) --Impact
+
+
+if a ~= nil or b ~= nil or c ~= nil or d ~= nil or e ~= nil or f ~= nil or g ~= nil or h ~= nil or i ~= nil or j ~= nil or k ~= nil or l ~= nil or m ~= nil or n ~= nil or o ~= nil or p ~= nil or q ~= nil or r ~= nil then
+	if IsSpellInRange(&amp;quot;Purge&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+		return true
+	else
+		return false
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Grounding</Name><Default>false</Default><SpellID>8177</SpellID><Actions>/startattack</Actions><Lua>local hasGrounding = GetTotemTimeLeft(4)
+Ground = UnitBuffID(&amp;quot;player&amp;quot;, 8178) --Grounding totem effect
+
+if Ground == nil then
+	return true
+end
+if hasGrounding == 0 then
+	return true
+else
+	if hasGrounding &amp;lt; 3 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Totems</Name><Default>false</Default><SpellID>66842</SpellID><Actions>/startattack</Actions><Lua>local a = GetTotemTimeLeft(1)
+local b = GetTotemTimeLeft(2)
+local c = GetTotemTimeLeft(3)
+local d = GetTotemTimeLeft(4)
+
+if a == 0 then
+	if b == 0 then
+		return true
+	end
+end
+
+if a == 0 then
+	if c == 0 then
+		return true
+	end
+end
+
+if a == 0 then
+	if d == 0 then
+		return true
+	end
+end
+
+if b == 0 then
+	if c == 0 then
+		return true
+	end
+end
+
+if b == 0 then
+	if d == 0 then
+		return true
+	end
+end
+
+if c == 0 then
+	if d == 0 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>stoneclaw totem</Name><Default>false</Default><SpellID>5730</SpellID><Actions>/startattack</Actions><Lua>local self = 100 * UnitHealth&amp;quot;player&amp;quot; / UnitHealthMax&amp;quot;player&amp;quot;
+
+if self &amp;lt;= 60 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Frost Shock</Name><Default>false</Default><SpellID>8056</SpellID><Actions>/startattack</Actions><Lua>if IsSpellInRange(&amp;quot;Frost Shock&amp;quot;, &amp;quot;target&amp;quot;) == 1 then	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Enemy divine</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>bDS = UnitBuffID(&amp;quot;target&amp;quot;, 642) --Divine Shield
+bIB = UnitBuffID(&amp;quot;target&amp;quot;, 45438) --Ice Block
+bCL = UnitDebuffID(&amp;quot;target&amp;quot;, 33786) --Cyclone
+		
+if bDS ~= nil or bIB ~= nil or bCL ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Earthbind</Name><Default>false</Default><SpellID>2484</SpellID><Actions>/startattack</Actions><Lua>a = UnitDebuffID(&amp;quot;player&amp;quot;, 45524) --Chains of ice
+b = UnitDebuffID(&amp;quot;player&amp;quot;, 2974) --Wing clip
+c = UnitDebuffID(&amp;quot;player&amp;quot;, 13809) --Ice trap
+d = UnitDebuffID(&amp;quot;player&amp;quot;, 5116) --Concussive shot
+e = UnitDebuffID(&amp;quot;player&amp;quot;, 16979) --feral charge
+f = UnitDebuffID(&amp;quot;player&amp;quot;, 116) --Frostbolt
+g = UnitDebuffID(&amp;quot;player&amp;quot;, 120) --Cone of cold
+h = UnitDebuffID(&amp;quot;player&amp;quot;, 11113) --Blast wave
+i = UnitDebuffID(&amp;quot;player&amp;quot;, 31589) --Slow
+j = UnitDebuffID(&amp;quot;player&amp;quot;, 15407) --mindflay
+k = UnitDebuffID(&amp;quot;player&amp;quot;, 3776) --Crippeling poison
+l = UnitDebuffID(&amp;quot;player&amp;quot;, 26679) --Deadly throw
+m = UnitDebuffID(&amp;quot;player&amp;quot;, 8056) --Frost shock
+n = UnitDebuffID(&amp;quot;player&amp;quot;, 2484) --Earthbind totem
+p = UnitDebuffID(&amp;quot;player&amp;quot;, 1715) --Hamstring		
+q = UnitDebuffID(&amp;quot;player&amp;quot;, 12323) --Piercing howl
+r = UnitDebuffID(&amp;quot;player&amp;quot;, 48483) --Infected wounds
+u = UnitDebuffID(&amp;quot;player&amp;quot;, 7321) --Chilled
+
+if a ~= nil or b ~= nil or c ~= nil or d ~= nil or e ~= nil or f ~= nil or g ~= nil or h ~= nil or i ~= nil or j ~= nil or k ~= nil or l ~= nil or m ~= nil or n ~= nil or p ~= nil or q ~= nil or r ~= nil or u ~= nil then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Hex</Name><Default>false</Default><SpellID>51514</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasMaelstrom = UnitBuffID(&amp;quot;player&amp;quot;, 53817)
+local focus = UnitExists(&amp;quot;focus&amp;quot;)
+bDS = UnitBuffID(&amp;quot;focus&amp;quot;, 642) --Divine Shield
+bIB = UnitBuffID(&amp;quot;focus&amp;quot;, 45438) --Ice Block
+bCL = UnitDebuffID(&amp;quot;focus&amp;quot;, 33786) --Cyclone
+		
+if focus ~= nil then
+	if bDS == nil and bIB == nil and bCL == nil then
+		if hasMaelstrom == 5 then
+			if IsSpellInRange(&amp;quot;Hex&amp;quot;, &amp;quot;focus&amp;quot;) == 1 then
+				return true
+			else
+				return false
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Tremor totem</Name><Default>false</Default><SpellID>8143</SpellID><Actions>/startattack</Actions><Lua>pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 5782) --Fear
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 8122) --Psychic Scream
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 6358) --Seduction
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 5484) --Howl of terror
+end
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;player&amp;quot;, 5246) --Intimidating shout
+end
+
+if pvpdebuffCheck ~= nil then
+	if (expire - GetTime()) &amp;gt;= 4 then
+		return true
+	else
+		return false
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Frostbrand</Name><Default>false</Default><SpellID>8033</SpellID><Actions>/startattack</Actions><Lua>local hasFrostbrand = GetWeaponEnchantInfo()
+
+if hasFrostbrand ~= nil then
+return false
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Autoarget LowHP</Name><Default>false</Default><SpellID>0</SpellID><Actions>/startattack</Actions><Lua>if UnitExists(&amp;quot;target&amp;quot;) and UnitIsDead(&amp;quot;target&amp;quot;) == nil and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+then targettoheal = &amp;quot;target&amp;quot;
+elseif UnitExists(&amp;quot;mouseover&amp;quot;) and UnitIsDead(&amp;quot;mouseover&amp;quot;) == nil and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;mouseover&amp;quot;)
+then targettoheal = &amp;quot;mouseover&amp;quot;
+else 
+
+targettoheal = &amp;quot;player&amp;quot;
+local lowest = 100 * UnitHealth(targettoheal) / UnitHealthMax(targettoheal)
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+lowhpmembers = 0
+allinrange = 1
+missingfortitude = nil
+missingshadow = nil
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = 100 * UnitHealth(member) / UnitHealthMax(member)
+  if UnitInRange(member) == false then allinrange = nil end
+  if UnitBuffID(member, 79105) == nil and UnitIsDead(member) == nil then missingfortitude = 1 end
+  if UnitBuffID(member, 79107) == nil and UnitIsDead(member) == nil then missingshadow = 1 end
+  if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 5 end
+  if UnitThreatSituation(member) == 3 then memberhp = memberhp - 5 end
+  if memberhp &amp;lt; 95 and UnitInRange(member) then lowhpmembers = lowhpmembers +1 end
+  if memberhp &amp;gt; 1  and memberhp &amp;lt; lowest and UnitInRange(member) then
+    targettoheal = member
+    lowest = memberhp
+  end
+end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>I Totems II</Name><Default>false</Default><SpellID>8177</SpellID><Actions>/startattack</Actions><Lua>local a = GetTotemTimeLeft(1)
+local b = GetTotemTimeLeft(2)
+local c = GetTotemTimeLeft(3)
+local d = GetTotemTimeLeft(4)
+
+if d == 0
+and a == 0 
+then CastSpellByID(66842) end
+
+if d == 0 
+and b == 0 
+then CastSpellByID(66842) end
+
+if d == 0 
+and c == 0 
+then CastSpellByID(66842) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Purge U</Name><Default>false</Default><SpellID>370</SpellID><Actions>/startattack</Actions><Lua>r = UnitBuffID(&amp;quot;target&amp;quot;, 21562) --Power Word: Fortitude
+u = UnitBuffID(&amp;quot;target&amp;quot;, 20217) --Blessing of Kings
+v = UnitBuffID(&amp;quot;target&amp;quot;, 1126) --Mift of the Wild
+x = UnitBuffID(&amp;quot;target&amp;quot;, 19740) --Blessing of Might
+y = UnitBuffID(&amp;quot;target&amp;quot;, 33076) --Prayer of Mending
+z = UnitBuffID(&amp;quot;target&amp;quot;, 1459) --Arcane briliance
+
+if r ~= nil or u ~= nil or v ~= nil or x ~= nil or y ~= nil or z ~= nil then
+	if IsSpellInRange(&amp;quot;Purge&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+		return true
+	else 
+		return false
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>I Frost Shock</Name><Default>false</Default><SpellID>8056</SpellID><Actions>/startattack</Actions><Lua>pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;target&amp;quot;, 8056) --Frost shock
+if pvpdebuffCheck == nil then
+	pvpdebuffCheck, _, _, _, _, _, expire = UnitDebuffID(&amp;quot;target&amp;quot;, 38617) --Frostbrand
+end
+
+if pvpdebuffCheck ~= nil then
+	if (expire - GetTime()) &amp;lt;= 4 then
+		if IsSpellInRange(&amp;quot;Frost Shock&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+			if IsSpellInRange(&amp;quot;Lava Lash&amp;quot;, &amp;quot;target&amp;quot;) == 0 then
+				return true
+			end
+		end
+	end
+else
+	if IsSpellInRange(&amp;quot;Frost Shock&amp;quot;, &amp;quot;target&amp;quot;) == 1 then
+		return true
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Ghost</Name><Default>false</Default><SpellID>2645</SpellID><Actions>/startattack</Actions><Lua>Ghost = UnitBuffID(&amp;quot;player&amp;quot;, 2645)
+
+if Ghost == nil then
+	if IsSpellInRange(&amp;quot;Lava Lash&amp;quot;, &amp;quot;target&amp;quot;) == 0 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Curses</Name><Default>false</Default><SpellID>51886</SpellID><Actions>/startattack</Actions><Lua>a = UnitDebuffID(&amp;quot;player&amp;quot;, 603) --Curse of exhastion
+b = UnitDebuffID(&amp;quot;player&amp;quot;, 980) --Curse of exhastion
+c = UnitDebuffID(&amp;quot;player&amp;quot;, 1490) --Curse of exhastion
+d = UnitDebuffID(&amp;quot;player&amp;quot;, 1714) --Curse of exhastion
+e = UnitDebuffID(&amp;quot;player&amp;quot;, 702) --Curse of exhastion
+f = UnitDebuffID(&amp;quot;player&amp;quot;, 51514) --Curse of exhastion
+
+if a ~= nil or b ~= nil or c ~= nil or d ~= nil or e ~= nil or f ~= nil then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>I Curses</Name><Default>false</Default><SpellID>51886</SpellID><Actions>/startattack</Actions><Lua>a = UnitDebuffID(&amp;quot;player&amp;quot;, 18223) --Curse of exhastion
+
+if a ~= nil then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Healing Surge</Name><Default>false</Default><SpellID>8004</SpellID><Actions>/use Spiritwalker&amp;apos;s Grace</Actions><Lua>local mytarget = 100 * UnitHealth(targettoheal) / UnitHealthMax(targettoheal)
+
+if mytarget &amp;lt; 95 then
+	if IsLeftAltKeyDown() then 
+		CastSpellByID(8004,targettoheal)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>Strength of Earth</Name><Default>false</Default><SpellID>8075</SpellID><Actions>/startattack</Actions><Lua>local hasStr = GetTotemTimeLeft(2)
+if hasSearing == 0 then
+return true
+else
+if hasStr &amp;lt; 3 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability><Ability><Name>WF</Name><Default>false</Default><SpellID>8512</SpellID><Actions>/startattack</Actions><Lua>local hasWF = GetTotemTimeLeft(4)
+Ground = UnitBuffID(&amp;quot;player&amp;quot;, 8178) --Grounding totem effect
+
+if Ground == nil then
+	if hasWF == 0 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel></Ability></SHAMAN>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>barkskin</Name><Default>false</Default><SpellID>22812</SpellID><Actions></Actions><Lua>local myHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+		
+if myHP &amp;lt;= 40 then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Autotarget LowHP</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitExists(&amp;quot;target&amp;quot;) 
+  and UnitIsDead(&amp;quot;target&amp;quot;) == nil
+  and UnitIsFriend(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;) 
+  and UnitCanCooperate(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+  then PQR_CustomTarget = &amp;quot;target&amp;quot;
+          PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+else 
+
+PQR_CustomTarget = &amp;quot;player&amp;quot;
+PQR_CustomTargetHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+lowhpmembers = 0
+local lowest = 100
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = 100 * UnitHealth(member) / UnitHealthMax(member)
+  if UnitInRange(member) 
+  and UnitIsFriend(&amp;quot;player&amp;quot;, member)
+  and UnitIsDeadOrGhost(member) == nil  then
+    if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 1 end
+    if UnitThreatSituation(member) == 3 then memberhp = memberhp - 3 end
+    if UnitBuffID(member, 53563) ~= nil then memberhp = memberhp + 7 end
+    if memberhp &amp;lt; 85 then lowhpmembers = lowhpmembers +1 end
+    if memberhp &amp;lt; lowest then
+      PQR_CustomTarget = member
+      lowest = memberhp
+      PQR_CustomTargetHP = 100 * UnitHealth(PQR_CustomTarget) / UnitHealthMax(PQR_CustomTarget)
+    end
+  end
+end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Nourish</Name><Default>false</Default><SpellID>50464</SpellID><Actions></Actions><Lua>if PQR_IsMoving(1) == false and PQR_CustomTargetHP &amp;lt; 80 and PQR_IsCastingSpell(50464) == false then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Rejuvenation</Name><Default>false</Default><SpellID>774</SpellID><Actions></Actions><Lua>local RJ = UnitBuffID(PQR_CustomTarget, 774) 
+
+if PQR_CustomTargetHP &amp;lt; 70 and RJ == nil then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Wild Growth</Name><Default>false</Default><SpellID>48438</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 94 then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Swiftmend</Name><Default>false</Default><SpellID>18562</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 90 then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Regrowth</Name><Default>false</Default><SpellID>8936</SpellID><Actions></Actions><Lua>local CC = UnitBuffID(&amp;quot;player&amp;quot;,16870, &amp;quot;player&amp;quot;)
+
+if PQR_IsMoving(1) == false and PQR_CustomTargetHP &amp;lt; 85 and
+ PQR_IsCastingSpell(8936) == false and CC ~= nil then
+ return true
+end
+
+if PQR_IsMoving(1) == false and PQR_CustomTargetHP &amp;lt; 35 and
+ PQR_IsCastingSpell(8936) == false and CC == nil then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Innervate</Name><Default>false</Default><SpellID>29166</SpellID><Actions></Actions><Lua>local myMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+
+if myMana &amp;lt; 75 and PQR_CustomTargetHP &amp;lt; 98 then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Lifebloom</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, _, _, LB, _, _, LBt = UnitBuffID(&amp;quot;focus&amp;quot;, 33763)
+local treeoflife = UnitBuffID(&amp;quot;player&amp;quot;,33891)
+
+if (UnitBuffID(&amp;quot;focus&amp;quot;, 33763) == nil or LBt - GetTime() &amp;lt; 3) and PQR_CustomTargetHP &amp;lt; 99 then
+    CastSpellByID(33763, &amp;quot;focus&amp;quot;) return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Healing Touch</Name><Default>false</Default><SpellID>5185</SpellID><Actions></Actions><Lua>if PQR_IsMoving(1) == false and PQR_CustomTargetHP &amp;lt; 55 and PQR_IsCastingSpell(5185) == false then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Tranquility</Name><Default>false</Default><SpellID>740</SpellID><Actions></Actions><Lua>if IsRightAltKeyDown() 
+and GetCurrentKeyBoardFocus() == nil 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Insect Swarm</Name><Default>false</Default><SpellID>5570</SpellID><Actions></Actions><Lua>if UnitDebuffID(&amp;quot;target&amp;quot;, 5570, &amp;quot;player&amp;quot;) == nil then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Sunfire</Name><Default>false</Default><SpellID>8921</SpellID><Actions></Actions><Lua>local dir = GetEclipseDirection()
+
+if dir == &amp;quot;moon&amp;quot; and UnitDebuffID(&amp;quot;target&amp;quot;, 8921, &amp;quot;player&amp;quot;) == nil and UnitDebuffID(&amp;quot;target&amp;quot;, 93402, &amp;quot;player&amp;quot;) == nil then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Moonfire</Name><Default>false</Default><SpellID>8921</SpellID><Actions></Actions><Lua>local dir = GetEclipseDirection()
+
+if dir ~= &amp;quot;moon&amp;quot; and UnitDebuffID(&amp;quot;target&amp;quot;, 8921, &amp;quot;player&amp;quot;) == nil and UnitDebuffID(&amp;quot;target&amp;quot;, 93402, &amp;quot;player&amp;quot;) == nil then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Wrath</Name><Default>false</Default><SpellID>5176</SpellID><Actions></Actions><Lua>local dir = GetEclipseDirection()
+
+if dir == &amp;quot;moon&amp;quot; then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Starfire</Name><Default>false</Default><SpellID>2912</SpellID><Actions></Actions><Lua>local dir = GetEclipseDirection()
+
+if dir ~= &amp;quot;moon&amp;quot; then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Starsurge</Name><Default>false</Default><SpellID>78674</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Force of Nature</Name><Default>false</Default><SpellID>33831</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Click</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Starfall</Name><Default>false</Default><SpellID>48505</SpellID><Actions></Actions><Lua>if IsRightAltKeyDown() then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Thorns</Name><Default>false</Default><SpellID>467</SpellID><Actions></Actions><Lua>if IsMounted() == nil then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Balance: Hurricane</Name><Default>false</Default><SpellID>16914</SpellID><Actions></Actions><Lua>if IsLeftControlKeyDown() then 
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Click</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: StopCasting</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local Spell = UnitCastingInfo(&amp;quot;player&amp;quot;)
+
+if PQR_CustomTargetHP &amp;gt; 80 then
+	if Spell == &amp;quot;Healing Touch&amp;quot; then
+		SpellStopCasting()
+	end
+end
+
+if PQR_CustomTargetHP &amp;gt; 98 then
+	if Spell == &amp;quot;Healing Touch&amp;quot; or Spell == &amp;quot;Regrowth&amp;quot; or Spell == &amp;quot;Nourish&amp;quot; then
+		SpellStopCasting()
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Dispell</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff = { 96328, 96325, 96326, 92876, 92877, 92878, 86788, 30108, 34914 }
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 0, members, 1 do
+  if i==0 then mem = &amp;quot;player&amp;quot; else mem = group..tostring(i) end
+  if UnitInRange(mem) and UnitIsDeadOrGhost(mem) == nil then
+   local candispel = 1
+   for k,v in ipairs(buff) do
+    if UnitDebuffID(mem,v) then candispel = nil end
+   end
+   local j = 1
+   local debuff,_,_,count,bufftype,dur = UnitDebuff(mem, j)
+   while debuff do
+    if ((bufftype == &amp;quot;Magic&amp;quot;) or (bufftype == &amp;quot;Curse&amp;quot;) or (bufftype == &amp;quot;Poison&amp;quot;)) and dur &amp;gt; 1 and candispel then
+     CastSpellByID(2782 ,mem)
+     return true
+    end
+    j = j + 1;
+    debuff,_,_,count,bufftype,duration = UnitDebuff(mem, j)
+    end
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Resto: Lifebloom (tol)</Name><Default>false</Default><SpellID>33763</SpellID><Actions></Actions><Lua>local _,_,_,LB,_,_,LBt = UnitBuffID(PQR_CustomTarget, 33763)
+local treeoflife = UnitBuffID(&amp;quot;player&amp;quot;,33891)
+
+if PQR_CustomTargetHP &amp;lt; 98 and ((LB &amp;lt; 3) or (LBt - GetTime() &amp;lt; 2)) and treeoflife ~= nil then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mount</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></DRUID>

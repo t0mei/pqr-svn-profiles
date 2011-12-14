@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Lava Lash</Name><Default>false</Default><SpellID>60103</SpellID><Actions>/startattack|/use 10</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Stormstrike</Name><Default>false</Default><SpellID>17364</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Earth Shock</Name><Default>false</Default><SpellID>8042</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Searing Totem</Name><Default>false</Default><SpellID>66842</SpellID><Actions>/startattack</Actions><Lua>local hasSearing = GetTotemTimeLeft(1)
+if hasSearing == 0 then
+return true
+else
+if hasSearing &lt; 3 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions>/startattack</Actions><Lua>sFS = UnitBuffID(&quot;player&quot;, 73683)
+
+if sFS ~= nil then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Lightning Bolt (Maelstrom)</Name><Default>false</Default><SpellID>403</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasMaelstrom = UnitBuffID(&quot;player&quot;, 53817)
+if hasMaelstrom == 5 then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability>
+
+
+  <Ability>
+    <Name>GHW (Maelstrom)</Name>
+    <Default>false</Default>
+    <SpellID>77472</SpellID>
+    <Actions>/startattack</Actions>
+    <Lua>local _,_,_,hasMaelstrom =
+    UnitBuffID(&amp;quot;player&amp;quot;, 53817) local unithealth
+    = 100 * UnitHealth(&amp;quot;player&amp;quot;) /
+    UnitHealthMax(&amp;quot;player&amp;quot;) if hasMaelstrom == 5
+    and unithealth &amp;lt; 80 then return true else return false
+    end</Lua>
+    <RecastDelay>0</RecastDelay>
+    <Target>Target</Target>
+  </Ability>
+
+<Ability><Name>chain lightning (Maelstrom)</Name><Default>false</Default><SpellID>421</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,hasMaelstrom = UnitBuffID(&quot;player&quot;, 53817)
+if hasMaelstrom == 5 then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Fire Nova</Name><Default>false</Default><SpellID>1535</SpellID><Actions>/startattack</Actions><Lua>sFn = UnitDebuffID(&quot;target&quot;, 8050)
+
+if sFn ~= nil then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>MagmaTorem</Name><Default>false</Default><SpellID>8190</SpellID><Actions>/startattack</Actions><Lua>local hasMagma = GetTotemTimeLeft(1)
+if hasMagma == 0 then
+return true
+else
+if hasMagma &lt; 3 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>aoeFlame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions>/startattack</Actions><Lua>local FlameShockDebuff, _, _, _, _, _, FlameShockExpireTime = UnitDebuffID(&quot;target&quot;, 8050)
+
+if FlameShockDebuff ~= nil then
+FlameShockTime = FlameShockExpireTime - GetTime()
+if FlameShockTime &lt; .2 then
+return true
+end
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Blood Fury</Name><Default>false</Default><SpellID>33697</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>flametoungue</Name><Default>false</Default><SpellID>8024</SpellID><Actions></Actions><Lua>local _,_,_,hasFlametongue = GetWeaponEnchantInfo()
+
+if hasFlametongue ~= nil then
+return false
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>windfury</Name><Default>false</Default><SpellID>8232</SpellID><Actions></Actions><Lua>local hasWindfury = GetWeaponEnchantInfo()
+
+if hasWindfury ~= nil then
+return false
+else
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>lightning shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>local _,_,_,ls = UnitBuffID(&quot;player&quot;, 324)
+
+if ls == nil then
+return true
+else
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability></SHAMAN>

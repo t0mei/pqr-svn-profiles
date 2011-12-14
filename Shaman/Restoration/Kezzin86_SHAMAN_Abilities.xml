@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Resto: Riptide</Name><Default>false</Default><SpellID>61295</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local riptide = UnitBuffID(&amp;quot;target&amp;quot;, 61295)
+
+if friend ~= nil and mytarget &amp;lt; 95 and riptide == nil and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>6000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Water Shield</Name><Default>false</Default><SpellID>52127</SpellID><Actions></Actions><Lua>local WS = UnitBuffID(&amp;quot;player&amp;quot;, 52127) 
+local ES = UnitBuffID(&amp;quot;player&amp;quot;, 974)
+
+if WS == nil and ES == nil and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Earth Shield</Name><Default>false</Default><SpellID>974</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ES = UnitBuffID(&amp;quot;target&amp;quot;, 974)
+
+if friend ~= nil and mytarget &amp;lt; 75 and ES == nil and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Autotarget LowHP</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local mytarget = &amp;quot;player&amp;quot;
+local lowest = 100 * UnitHealth(mytarget) / UnitHealthMax(mytarget)
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+lowhpmembers = 0
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = 100 * UnitHealth(member) / UnitHealthMax(member)
+  if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 5 end
+  if UnitThreatSituation(member) == 3 then memberhp = memberhp - 5 end
+  if memberhp &amp;lt; 95 and UnitInRange(member) then lowhpmembers = lowhpmembers +1 end
+  if memberhp &amp;gt; 1  and memberhp &amp;lt; lowest and UnitInRange(member) then
+    mytarget = member
+    lowest = memberhp
+  end
+end
+
+TargetUnit(mytarget)</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Cleanse Spirit</Name><Default>false</Default><SpellID>51886</SpellID><Actions></Actions><Lua>buff = { 96328, 96325, 96326, 92876, 92877, 92878, 86788, 30108 }
+local candispel = 1
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;target&amp;quot;,v) then candispel = nil end
+end
+
+local i = 1
+local buff,_,_,count,bufftype,duration = UnitDebuff(&amp;quot;target&amp;quot;, i)
+while buff do
+  if bufftype == &amp;quot;Magic&amp;quot; and duration &amp;gt; 6 and count ~= 1 and candispel and UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) and IsMounted() == nil then return true end
+  i = i + 1;
+  buff,_,_,count,bufftype,duration = UnitDebuff(&amp;quot;target&amp;quot;, i)
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Chain Heal</Name><Default>false</Default><SpellID>1064</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if friend ~= nil and SwG ~= nil and mytarget &amp;lt; 85 and lowhpmembers &amp;gt;= 3 and IsMounted() == nil then
+  return true
+end
+
+if friend ~= nil and PQR_IsMoving(1) == false and mytarget &amp;lt; 85 and lowhpmembers &amp;gt;= 3 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Mana Tide</Name><Default>false</Default><SpellID>16190</SpellID><Actions></Actions><Lua>local manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if manapercent &amp;lt; 65  and IsMounted() == nil then
+ return true
+end</Lua><RecastDelay>180000</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Healing Rain</Name><Default>false</Default><SpellID>73920</SpellID><Actions>/cast Healing Rain</Actions><Lua>local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if SwG ~= nil and GetSpellCooldown(73920) == 0 and IsShiftKeyDown() then
+  return true
+end
+
+if PQR_IsMoving(1) == false and GetSpellCooldown(73920) == 0 and IsShiftKeyDown() and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>10000</RecastDelay><Target>Click</Target></Ability><Ability><Name>Resto: Call of Elements</Name><Default>false</Default><SpellID>66842</SpellID><Actions></Actions><Lua>if IsLeftControlKeyDown() then
+    return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Healing Stream</Name><Default>false</Default><SpellID>5394</SpellID><Actions></Actions><Lua>local _, WaterTotem = GetTotemInfo(3)
+local BoM = UnitBuffID(&amp;quot;player&amp;quot;, 19740)
+local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if WaterTotem == &amp;quot;&amp;quot; and BoM ~= nil and mytarget &amp;lt; 85 and IsMounted() == nil then
+    return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Mana Spring</Name><Default>false</Default><SpellID>5675</SpellID><Actions></Actions><Lua>local _, WaterTotem = GetTotemInfo(3)
+local BoM = UnitBuffID(&amp;quot;player&amp;quot;, 19740)
+local manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if WaterTotem == &amp;quot;&amp;quot; and BoM == nil and manapercent &amp;lt; 75  and IsMounted() == nil then
+    return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Healing Surge</Name><Default>false</Default><SpellID>8004</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if friend ~= nil and SwG ~= nil and mytarget &amp;lt; 35 and manapercent &amp;gt; 15 and IsMounted() == nil then
+  return true
+end
+
+if friend ~= nil and PQR_IsMoving(1) == false and mytarget &amp;lt; 35 and manapercent &amp;gt; 15 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Greater Healing Wave</Name><Default>false</Default><SpellID>77472</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if friend ~= nil and SwG ~= nil and mytarget &amp;lt; 70 and manapercent &amp;gt; 10  and IsMounted() == nil then
+  return true
+end
+
+if friend ~= nil and PQR_IsMoving(1) == false and mytarget &amp;lt; 70 and manapercent &amp;gt; 10  and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Healing Wave</Name><Default>false</Default><SpellID>331</SpellID><Actions>/use 13|/use 10</Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if friend ~= nil and SwG ~= nil and mytarget &amp;lt; 95 and IsMounted() == nil then
+ return true
+end
+
+if friend ~= nil and PQR_IsMoving(1) == false and mytarget &amp;lt; 95 and IsMounted() == nil then
+ return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Nature&amp;apos;s Swiftness</Name><Default>false</Default><SpellID>16188</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if friend ~= nil and GetSpellCooldown(16188) == 0 and mytarget &amp;lt; 40 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Spiritwalker&amp;apos;s Grace</Name><Default>false</Default><SpellID>79206</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if PQR_IsMoving(1) == true and GetSpellCooldown(79206) == 0 and mytarget &amp;lt; 95 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions></Actions><Lua>local friend = UnitIsFriend(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+local mytarget = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if friend ~= nil and mytarget &amp;lt; 90 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>15000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Lightning Bolt</Name><Default>false</Default><SpellID>403</SpellID><Actions>/cast [target=targettarget] Lightning Bolt</Actions><Lua>local tt = UnitIsEnemy(&amp;quot;player&amp;quot;,&amp;quot;targettarget&amp;quot;)
+local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if SwG ~= nil and tt ~= nil and IsMounted() == nil then
+  return true
+end
+
+if PQR_IsMoving(1) == false and tt ~= nil and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target></Ability><Ability><Name>Resto: Earthliving Weapon</Name><Default>false</Default><SpellID>51730</SpellID><Actions></Actions><Lua>local hasEarthliving = GetWeaponEnchantInfo()
+
+if IsMounted() ~= nil then
+  return false
+end
+
+if hasEarthliving ~= nil then
+ return false
+else
+ return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Wind Shear</Name><Default>false</Default><SpellID>57994</SpellID><Actions>/stopcasting</Actions><Lua>_,_,_,_,_,_,_,_,interrupt = UnitCastingInfo(&amp;quot;focus&amp;quot;)
+local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Wind Shear&amp;quot;,unit)
+end
+if interrupt == false and GetSpellCooldown(57994) == 0 and inRange==1 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target></Ability><Ability><Name>Resto: Purge</Name><Default>false</Default><SpellID>370</SpellID><Actions></Actions><Lua>local heroism = UnitBuffID(&amp;quot;focus&amp;quot;, 32182)
+local lust = UnitBuffID(&amp;quot;focus&amp;quot;, 2825)
+local warp = UnitBuffID(&amp;quot;focus&amp;quot;, 80353)
+local hysteria = UnitBuffID(&amp;quot;focus&amp;quot;, 90355)
+local HoP = UnitBuffID(&amp;quot;focus&amp;quot;, 1022)
+local HoF = UnitBuffID(&amp;quot;focus&amp;quot;, 1044)
+local AW = UnitBuffID(&amp;quot;focus&amp;quot;, 31884)
+local PWS = UnitBuffID(&amp;quot;focus&amp;quot;, 17)
+local PI = UnitBuffID(&amp;quot;focus&amp;quot;, 10060)
+local TW = UnitBuffID(&amp;quot;focus&amp;quot;, 51564)
+local EM = UnitBuffID(&amp;quot;focus&amp;quot;, 16166)
+local Inn = UnitBuffID(&amp;quot;focus&amp;quot;, 29166)
+local IB = UnitBuffID(&amp;quot;focus&amp;quot;, 11426)
+local DI = UnitBuffID(&amp;quot;focus&amp;quot;, 80398)
+local Sac = UnitBuffID(&amp;quot;focus&amp;quot;, 7812)
+local Rip = UnitBuffID(&amp;quot;focus&amp;quot;, 61295)
+local Rejuv = UnitBuffID(&amp;quot;focus&amp;quot;, 774)
+local Rem = UnitBuffID(&amp;quot;focus&amp;quot;, 77912)
+local focus = UnitExists(&amp;quot;focus&amp;quot;)
+
+if focus ~= nil and IsMounted() == nil then
+  if heroism ~= nil or lust ~= nil or warp ~= nil or HoP ~= nil or HoF ~= nil or Rem ~= nil or Rejuv ~= nil or Rip ~= nil or Sac ~= nil or DI ~= nil or IB ~= nil or Inn ~= nil or EM ~= nil or AW ~= nil or PWS ~= nil or PI ~= nil or TW ~= nil or hysteria ~= nil then
+  return true
+  end
+end</Lua><RecastDelay>500</RecastDelay><Target>Focus</Target></Ability><Ability><Name>Resto: Hex</Name><Default>false</Default><SpellID>51514</SpellID><Actions></Actions><Lua>local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Hex&amp;quot;,unit)
+end
+if inRange==1 and GetSpellCooldown(51514) == 0 and IsMounted() == nil then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target></Ability><Ability><Name>Resto: Ghost Wolf</Name><Default>false</Default><SpellID>2645</SpellID><Actions></Actions><Lua>local SwG = UnitBuffID(&amp;quot;player&amp;quot;, 79206)
+
+if PQR_IsMoving(1) == true and SwG ~= nil then
+  return false
+end
+
+if PQR_IsMoving(1) == true and UnitBuffID(&amp;quot;player&amp;quot;, 2645) == nil and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>1700</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Ghost Wolf (Disable)</Name><Default>false</Default><SpellID>0</SpellID><Actions>/cancelaura Ghost Wolf</Actions><Lua>local mytarget = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if PQR_IsMoving(1) == false and UnitBuffID(&amp;quot;player&amp;quot;, 2645) ~= nil then
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Earthbind Totem</Name><Default>false</Default><SpellID>2484</SpellID><Actions></Actions><Lua>local mytarget = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if PQR_IsMoving(1) == true and UnitBuffID(&amp;quot;player&amp;quot;, 2645) == nil and mytarget &amp;lt; 95 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>15000</RecastDelay><Target>Player</Target></Ability><Ability><Name>Resto: Stoneclaw Totem</Name><Default>false</Default><SpellID>5730</SpellID><Actions></Actions><Lua>local mytarget = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if PQR_IsMoving(1) == true and UnitBuffID(&amp;quot;player&amp;quot;, 2645) == nil  and mytarget &amp;lt; 96 and IsMounted() == nil then
+  return true
+end</Lua><RecastDelay>20000</RecastDelay><Target>Player</Target></Ability><Ability><Name>Enhance: Call of Elements</Name><Default>false</Default><SpellID>66842</SpellID><Actions>/startattack</Actions><Lua>if IsLeftControlKeyDown() then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Earth Shock</Name><Default>false</Default><SpellID>8042</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>6000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Earthbind Totem</Name><Default>false</Default><SpellID>2484</SpellID><Actions>/startattack</Actions><Lua>local _, EarthbindTotem = GetTotemInfo(2)
+
+
+if EarthbindTotem == &amp;quot;&amp;quot; then
+    return true
+end</Lua><RecastDelay>15000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Feral Spirit</Name><Default>false</Default><SpellID>51533</SpellID><Actions>/startattack</Actions><Lua>if UnitLevel(&amp;quot;target&amp;quot;) &amp;gt;= 87 or UnitLevel(&amp;quot;target&amp;quot;) == -1 then 
+	if UnitHealth(&amp;quot;target&amp;quot;) &amp;gt; 300000  then
+			return true
+	end
+end</Lua><RecastDelay>120000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Feral Spirit - PvP</Name><Default>false</Default><SpellID>51533</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>120000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,UnleashFlame = UnitBuffID(&amp;quot;player&amp;quot;, 73683)
+
+
+if UnleashFlame ~= nil then
+        return true
+end</Lua><RecastDelay>6000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Frost Shock</Name><Default>false</Default><SpellID>8056</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>6000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Greater Healing Wave</Name><Default>false</Default><SpellID>77472</SpellID><Actions>/startattack</Actions><Lua>local _,_,_,MealstromWeaponCount = UnitBuffID(&amp;quot;player&amp;quot;, 51528)
+local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+
+if MealstromWeaponCount ~= nil then
+	if MealstromWeaponCount &amp;gt;= 5 then
+		if unithealth &amp;lt;= 50 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Grounding Totem</Name><Default>false</Default><SpellID>8177</SpellID><Actions>/startattack</Actions><Lua>local _, GroundingTotem = GetTotemInfo(4)
+
+
+if GroundingTotem == &amp;quot;&amp;quot; then
+    return true
+end</Lua><RecastDelay>45000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Hex</Name><Default>false</Default><SpellID>51514</SpellID><Actions></Actions><Lua>local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Hex&amp;quot;,unit)
+end
+if inRange==1 and GetSpellCooldown(51514) == 0 and IsControlKeyDown() == nil then
+ return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target></Ability><Ability><Name>Enhance: Lava Lash</Name><Default>false</Default><SpellID>60103</SpellID><Actions>/startattack|/cancelaura Hand of Protection|/use 10|/use 13</Actions><Lua>return true</Lua><RecastDelay>10000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Lightning Bolt</Name><Default>false</Default><SpellID>403</SpellID><Actions>/startattack|/use 10</Actions><Lua>local _,_,_,MealstromWeaponCount = UnitBuffID(&amp;quot;player&amp;quot;, 51528)
+
+
+if MealstromWeaponCount ~= nil then
+    if MealstromWeaponCount&amp;gt;= 5 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Lightning Shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>LS = UnitBuffID(&amp;quot;player&amp;quot;, 324) 
+		
+if LS == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target></Ability><Ability><Name>Enhance: Purge</Name><Default>false</Default><SpellID>370</SpellID><Actions>/startattack</Actions><Lua>local heroism = UnitBuffID(&amp;quot;target&amp;quot;, 32182)
+local lust = UnitBuffID(&amp;quot;target&amp;quot;, 2825)
+local warp = UnitBuffID(&amp;quot;target&amp;quot;, 80353)
+local hysteria = UnitBuffID(&amp;quot;target&amp;quot;, 90355)
+local HoP = UnitBuffID(&amp;quot;target&amp;quot;, 1022)
+local HoF = UnitBuffID(&amp;quot;target&amp;quot;, 1044)
+local AW = UnitBuffID(&amp;quot;target&amp;quot;, 31884)
+local PWS = UnitBuffID(&amp;quot;target&amp;quot;, 17)
+local PI = UnitBuffID(&amp;quot;target&amp;quot;, 10060)
+local TW = UnitBuffID(&amp;quot;target&amp;quot;, 51564)
+local EM = UnitBuffID(&amp;quot;target&amp;quot;, 16166)
+local Inn = UnitBuffID(&amp;quot;target&amp;quot;, 29166)
+local IB = UnitBuffID(&amp;quot;target&amp;quot;, 11426)
+local DI = UnitBuffID(&amp;quot;target&amp;quot;, 80398)
+local Sac = UnitBuffID(&amp;quot;target&amp;quot;, 7812)
+local Rip = UnitBuffID(&amp;quot;target&amp;quot;, 61295)
+local Rejuv = UnitBuffID(&amp;quot;target&amp;quot;, 774)
+local Rem = UnitBuffID(&amp;quot;target&amp;quot;, 77912)
+
+if heroism ~= nil or lust ~= nil or warp ~= nil or HoP ~= nil or HoF ~= nil or Rem ~= nil or Rejuv ~= nil or Rip ~= nil or Sac ~= nil or DI ~= nil or IB ~= nil or Inn ~= nil or EM ~= nil or AW ~= nil or PWS ~= nil or PI ~= nil or TW ~= nil or hysteria ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Searing Totem</Name><Default>false</Default><SpellID>3599</SpellID><Actions>/startattack</Actions><Lua>local _, SearingTotem = GetTotemInfo(1)
+
+
+if SearingTotem == &amp;quot;&amp;quot; then
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Shamanistic Rage</Name><Default>false</Default><SpellID>30823</SpellID><Actions>/startattack</Actions><Lua>local mytarget = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if mytarget &amp;lt; 75 then
+  return true
+end</Lua><RecastDelay>60000</RecastDelay><Target>Player</Target></Ability><Ability><Name>Enhance: Stormstrike</Name><Default>false</Default><SpellID>17364</SpellID><Actions>/startattack|/cancelaura Hand of Protection|/petattack|/use 10|/use 13</Actions><Lua>return true</Lua><RecastDelay>8000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions>/startattack|/cancelaura Hand of Protection|/use 13</Actions><Lua>return true</Lua><RecastDelay>15000</RecastDelay><Target>Target</Target></Ability><Ability><Name>Enhance: Wind Shear</Name><Default>false</Default><SpellID>57994</SpellID><Actions>/stopcasting</Actions><Lua>_,_,_,_,_,_,_,_,interrupt = UnitCastingInfo(&amp;quot;focus&amp;quot;)
+local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Wind Shear&amp;quot;,unit)
+end
+if interrupt == false and GetSpellCooldown(57994) == 0 and inRange==1 then
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target></Ability></SHAMAN>

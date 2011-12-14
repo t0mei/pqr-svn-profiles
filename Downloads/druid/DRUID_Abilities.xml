@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>Skull Bash(Bear Form)</Name><Default>false</Default><SpellID>80964</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>False</Target></Ability><Ability><Name>Skull Bash(Cat Form)</Name><Default>false</Default><SpellID>80965</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target></Ability><Ability><Name>Starsurge</Name><Default>false</Default><SpellID>78674</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Insect swarm</Name><Default>false</Default><SpellID>5570</SpellID><Actions>/startattack</Actions><Lua>local ssDebuff = UnitAura(&amp;quot;target&amp;quot;, &amp;quot;Insect Swarm&amp;quot;, nil, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+
+if ssDebuff == nil then
+	return true
+end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Wrath (lunar)</Name><Default>false</Default><SpellID>5176</SpellID><Actions>/startattack</Actions><Lua>local sAW = UnitPower(&amp;quot;player&amp;quot;, 8)
+local dir = GetEclipseDirection()
+
+        if sAW &amp;gt;=-100 and dir == &amp;quot;moon&amp;quot; then
+            return true
+        end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Sunfire</Name><Default>false</Default><SpellID>8921</SpellID><Actions>/startattack</Actions><Lua>local pp = UnitAura(&amp;quot;target&amp;quot;, &amp;quot;Sunfire&amp;quot;, nil, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+local solar = UnitBuffID(&amp;quot;player&amp;quot;, 48517)
+
+if pp == nil and solar ~= nil then
+return true
+end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Starfire (solar)</Name><Default>false</Default><SpellID>2912</SpellID><Actions>/startattack</Actions><Lua>local sAW = UnitPower(&amp;quot;player&amp;quot;, 8)
+local dir = GetEclipseDirection()
+
+        if sAW &amp;lt;=100 and dir == &amp;quot;sun&amp;quot; then
+            return true
+        end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Starfire (none)</Name><Default>false</Default><SpellID>2912</SpellID><Actions>/startattack</Actions><Lua>local dir = GetEclipseDirection()
+
+        if dir == &amp;quot;none&amp;quot; then
+            return true
+        end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability><Ability><Name>Moonfire</Name><Default>false</Default><SpellID>8921</SpellID><Actions>/startattack</Actions><Lua>local ss = UnitAura(&amp;quot;target&amp;quot;, &amp;quot;Moonfire&amp;quot;, nil, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+local solar = UnitBuffID(&amp;quot;player&amp;quot;, 48517)
+
+if ss == nil and solar == nil then
+return true
+end</Lua><RecastDelay>768</RecastDelay><Target>Target</Target></Ability></DRUID>

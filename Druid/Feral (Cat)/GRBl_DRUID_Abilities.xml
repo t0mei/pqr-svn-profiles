@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>Mark of the Wild</Name><Default>false</Default><SpellID>1126</SpellID><Actions></Actions><Lua>local MoW = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Mark of the Wild&amp;quot;)
+local prowl = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Prowl&amp;quot;)
+
+if UnitAffectingCombat(&amp;quot;player&amp;quot;) or prowl ~= nil then return false
+else
+if MoW == nil then return true end end</Lua><RecastDelay>200</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ShapeShift</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local myHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local stance = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if stance == 5 or IsMounted() then return true end
+
+if myHP &amp;gt;= 30 and stance ~= 3 then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	CastShapeshiftForm(3)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+else
+if myHP &amp;lt;=29 and stance ~= 1 then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	CastShapeshiftForm(1)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prowl</Name><Default>false</Default><SpellID>5215</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Free Ravage</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local stamp = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Stampede&amp;quot;)
+
+if stamp ~= nil then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	RunMacroText(&amp;quot;/cast Ravage!&amp;quot;)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SS Slows</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>buff = { 45524, 5116, 61394, 2974, 54644, 26679, 8056, 18223, 63311, 1715, 12323 }
+local havebuff = nil
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;player&amp;quot;,v) then havebuff = 1 end
+end
+
+if havebuff then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	CastShapeshiftForm(3)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Freedom</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>buff = { 122, 339, 54706, 4167, 33395, 83302, 55080, 64695, 63685, 39965, 55536, 13099 }
+local havebuff = nil
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(&amp;quot;player&amp;quot;,v) then havebuff = 1 end
+end
+
+if havebuff then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	CastSpellByID(1850)
+	CastSpellByID(77764)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>-- DEFENSIVE SPELLS --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMouseButtonDown() and GetMouseFocus() ~= nil and IsLeftShiftKeyDown() then
+       if GetMouseFocus():GetName() ~= nil then 
+          RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+          RunMacroText(&amp;quot;/click &amp;quot;..GetMouseFocus():GetName()) 
+          RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+          return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>-- OFENSIVE SPELLS --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977 }
+local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot; }
+local noaggromobs = nil
+local immunity = nil
+
+for i,v in ipairs(buff) do
+  if UnitBuffID(&amp;quot;target&amp;quot;,v) then immunity = 1 end
+end
+
+for i,v in ipairs(mob) do
+  if UnitName(&amp;quot;target&amp;quot;) == v then noaggromobs = 1 end
+end
+
+if UnitIsDead(&amp;quot;target&amp;quot;)
+or immunity
+or UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) == nil
+or (UnitAffectingCombat(&amp;quot;target&amp;quot;) == nil and noaggromobs == nil and UnitIsPlayer(&amp;quot;target&amp;quot;) == nil)
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+or IsSpellInRange(&amp;quot;Pounce&amp;quot;, &amp;quot;target&amp;quot;) == 0
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Barkskin</Name><Default>false</Default><SpellID>22812</SpellID><Actions></Actions><Lua>local myHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myHP &amp;lt;= 85 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Survival Instincts</Name><Default>false</Default><SpellID>61336</SpellID><Actions></Actions><Lua>local myHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if myHP &amp;lt;= 75 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>50334</SpellID><Actions></Actions><Lua>local myEgy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+if myEgy &amp;lt; 60 then
+	return false
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>TRINKET 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13) == 0 then UseInventoryItem(13) end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cyclone</Name><Default>false</Default><SpellID>33786</SpellID><Actions></Actions><Lua>local _, _, _, PS = UnitBuffID(&amp;quot;player&amp;quot;, 69369)
+local inRange = IsSpellInRange(&amp;quot;Cyclone&amp;quot;, &amp;quot;focus&amp;quot;)
+
+if PS ~= nil and inRange == 1 then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>local FF, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 91565)
+local FFstart, FFduration, FFenabled = GetSpellCooldown(16857)
+local FFcooldown = (FFstart + FFduration - GetTime())
+
+
+if FF == nil then
+    if FFcooldown &amp;gt; 0 then
+        return false
+    else
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ferocious Bite</Name><Default>false</Default><SpellID>22568</SpellID><Actions></Actions><Lua>local fbrip, _, _, _, _, _, fbtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local fbCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local fbhealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local fbenergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+
+if fbCP == 5 and fbenergy &amp;gt;= 60 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Maim</Name><Default>false</Default><SpellID>22570</SpellID><Actions></Actions><Lua>local mCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local MMstart, MMduration = GetSpellCooldown(22570)
+local MMcooldown = (MMstart + MMduration - GetTime())
+
+if MMcooldown &amp;gt; 0 then
+	return false
+else
+	if mCP == 5 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>-- Rogues and Warriors can handle it themselves.
+local hasCatMangle, _, _, _, _, _, CatMangleTimer = UnitDebuffID(&amp;quot;target&amp;quot;, 33876)
+local hasBearMangle, _, _, _, _, _, BearMangleTimer = UnitDebuffID(&amp;quot;target&amp;quot;, 33878, &amp;quot;PLAYER&amp;quot;)
+local hasTrauma = UnitDebuffID(&amp;quot;target&amp;quot;, 46857)
+local hasHemorrhage = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
+local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+if PQR_NotBehindTarget() then
+    if CP == 5 then
+        return false
+    else
+        return true
+    end
+end
+
+
+-- First, let&amp;apos;s let other people handle their own debuffs
+if hasTrauma ~= nil then
+    return false
+elseif hasHemorrhage ~= nil then
+    return false
+elseif hasBearMangle ~= nil then
+    return false
+
+
+-- Let us handle it!
+elseif hasCatMangle ~= nil or hasBearMangle ~= nil then
+    -- Check the timer
+    if CatMangleTimer - GetTime() &amp;lt; 1 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rake</Name><Default>false</Default><SpellID>1822</SpellID><Actions></Actions><Lua>local rake, _, _, _, _, _, raketimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;player&amp;quot;)
+
+if rake ~= nil then
+    if raketimer - GetTime() &amp;lt; 3 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>1079</SpellID><Actions></Actions><Lua>local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local ripCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local riphealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+
+
+
+if rip ~= nil then
+    if riphealth &amp;gt; 25 then
+        if ripCP == 5 then
+            if riptimer - GetTime() &amp;lt; 2 then
+                return true
+            end
+        end
+    end
+else
+    if ripCP == 5 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>52610</SpellID><Actions></Actions><Lua>local _,_,_,SavageRoar = UnitBuffID(&amp;quot;player&amp;quot;, 62071)
+local srCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+
+
+if SavageRoar ~= nil then
+	return false
+else
+if rip ~= nil then
+	if srCP &amp;gt;= 1 then
+		if riptimer - GetTime() &amp;gt;= 1 then
+			return true
+		end
+	end
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>5221</SpellID><Actions></Actions><Lua>-- Check for the debuffs.
+local hasCatMangle = UnitDebuffID(&amp;quot;target&amp;quot;, 33876)
+local hasBearMangle = UnitDebuffID(&amp;quot;target&amp;quot;, 33878)
+local hasTrauma = UnitDebuffID(&amp;quot;target&amp;quot;, 46857)
+local hasHemorrhage = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
+local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+
+-- Just check for all buffs, we have no casting time on Shred so no need for a timer check
+if hasCatMangle ~= nil or hasBearMangle ~= nil or hasTrauma ~= nil or hasHemorrhage ~= nil then
+    if PQR_NotBehindTarget() then
+        return false
+    else
+        if CP == 5 then
+            return false
+        else
+            return true
+        end
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>5217</SpellID><Actions></Actions><Lua>local tfEgy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+if tfEgy &amp;lt;= 40 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pounce</Name><Default>false</Default><SpellID>9005</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></DRUID>

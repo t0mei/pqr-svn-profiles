@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>Arcane Torrent</Name><Default>false</Default><SpellID>28730</SpellID><Actions>/use 13|/use 14</Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Arcane Torrent&amp;quot;)
+local mana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if learned == nil then return false else
+	if mana &amp;lt; 80 then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Arcane Torrent&amp;quot;)
+local mana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if learned == nil then return false else
+	if mana &amp;lt; 80 then return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Mouseover)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>500</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Focus)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>500</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Vampiric Touch&amp;quot;)
+local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Vampiric Touch&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if VT ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Focus)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Devouring Plague</Name><Default>false</Default><SpellID>2944</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Devouring Plague&amp;quot;)
+local DP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 2944, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Devouring Plague&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if PQR_IsMoving(1) then return true end
+	if DP ~= nil then
+		if timer - GetTime() &amp;lt;= 3 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Devouring Plague&amp;quot;)
+local DP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 2944, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Devouring Plague&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if PQR_IsMoving(1) then return true end
+	if DP ~= nil then
+		if timer - GetTime() &amp;lt;= 3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MP = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadowfiend&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil then return false else
+	if level &amp;lt; 85 then
+		if MP &amp;lt;= 50 and targetHP &amp;gt;= 30 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore>local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MP = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadowfiend&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil then return false else
+	if level &amp;lt; 85 then
+		if MP &amp;lt;= 50 and targetHP &amp;gt;= 30 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend (Mouseover)</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MP = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadowfiend&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil then return false else
+	if level &amp;lt; 85 then
+		if MP &amp;lt;= 50 and targetHP &amp;gt;= 30 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore>local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MP = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadowfiend&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil then return false else
+	if level &amp;lt; 85 then
+		if MP &amp;lt;= 50 and targetHP &amp;gt;= 30 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (Focus)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;focus&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;focus&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (Mouseover)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore>local BossHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local MyMana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local MyHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Death&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
+for i,v in ipairs(tormented_debuffs) do
+	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
+end
+
+if learned == nil or tormented == 1 or IsSpellInRange(&amp;quot;Shadow Word: Death&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 and MyMana &amp;lt;= 50 and MyHP &amp;gt;= 40 then return true end
+	if BossHP &amp;lt;= 25 and MyHP &amp;gt;= 30 then return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Archangel</Name><Default>false</Default><SpellID>87151</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Archangel&amp;quot;)
+local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;, 87117)
+
+if learned == nil or DA == nil or DA &amp;lt; 5 then return false else
+	return true
+end</Lua><RecastDelay>200</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Archangel&amp;quot;)
+local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;, 87117)
+
+if learned == nil or DA == nil or DA &amp;lt; 5 then return false else
+	return true
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast (Orb)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local buff,_,_,ORBCount = UnitAura(&amp;quot;player&amp;quot;,&amp;quot;Shadow Orb&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Mind Blast&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Blast&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 then return true end
+	if buff ~= true and ORBCount == 3 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Flay</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Mind Flay&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Flay&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Mind Flay&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Flay&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Fire</Name><Default>false</Default><SpellID>588</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Inner Fire&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,588) ~= nil then return false else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Inner Fire&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,588) ~= nil then return false else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowform</Name><Default>false</Default><SpellID>15473</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Shadowform&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,15473) ~= nil then return false else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Shadowform&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,15473) ~= nil then return false else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Embrace</Name><Default>false</Default><SpellID>15286</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Inner Fire&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,15286) ~= nil then return false else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Inner Fire&amp;quot;)
+
+if learned == nil then return false else
+	if UnitBuffID(&amp;quot;player&amp;quot;,15286) ~= nil then return false else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast (Orb - mouseover)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local buff,_,_,ORBCount = UnitAura(&amp;quot;player&amp;quot;,&amp;quot;Shadow Orb&amp;quot;)
+local learned = GetSpellBookItemInfo(&amp;quot;Mind Blast&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Blast&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if level &amp;lt; 85 then return true end
+	if buff ~= true and ORBCount == 3 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Sear</Name><Default>false</Default><SpellID>48045</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Mind Sear&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Sear&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Mind Sear&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Sear&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dispersion</Name><Default>false</Default><SpellID>47585</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Dispersion&amp;quot;)
+local mana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local health = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil then return false else
+	if level &amp;lt; 85 then
+		if mana &amp;lt;= 50 or health &amp;lt;= 50 then return true end
+	else
+		if mana &amp;lt;= 5 then return true end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Dispersion&amp;quot;)
+local mana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+local health = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if learned == nil then return false else
+	if level &amp;lt; 85 then
+		if mana &amp;lt;= 50 or health &amp;lt;= 50 then return true end
+	else
+		if mana &amp;lt;= 5 then return true end
+	end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mass Dispel</Name><Default>false</Default><SpellID>32375</SpellID><Actions></Actions><Lua>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</Lua><RecastDelay>150</RecastDelay><Target>Click</Target><CancelChannel>True</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14) == 0 then UseInventoryItem(14) end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,15) == 0 then UseInventoryItem(15) end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dispell MAgic</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>buff = { 96328, 96325, 96326, 92876, 92877, 92878, 86788, 30108 }
+local candispel = 1
+
+for i,v in ipairs(buff) do
+ if UnitDebuffID(PQR_CustomTarget,v) then candispel = nil end
+end
+
+local i = 1
+local buff,_,_,count,bufftype,duration = UnitDebuff(PQR_CustomTarget, i)
+while buff do
+  if bufftype == &amp;quot;Magic&amp;quot; 
+  and duration &amp;gt; 6 
+  and count ~= 1 
+  and candispel 
+  and UnitIsFriend(&amp;quot;player&amp;quot;,PQR_CustomTarget) 
+  then return true end
+  i = i + 1;
+  buff,_,_,count,bufftype,duration = UnitDebuff(PQR_CustomTarget, i)
+end</Lua><RecastDelay>500</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Flay (Mouseover)</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Mind Flay&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Flay&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Mind Flay&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Flay&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Mouseover)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;mouseover&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;mouseover&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore>local learned = GetSpellBookItemInfo(&amp;quot;Shadow Word: Pain&amp;quot;)
+local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;PLAYER&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or IsSpellInRange(&amp;quot;Shadow Word: Pain&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	if SWP ~= nil then
+		if timer - GetTime() &amp;lt;= 4.3 then return true end
+	else return true end
+end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local learned = GetSpellBookItemInfo(&amp;quot;Mind Blast&amp;quot;)
+local target = UnitExists(&amp;quot;target&amp;quot;)
+
+if learned == nil or target == nil or PQR_IsMoving(1) or IsSpellInRange(&amp;quot;Mind Blast&amp;quot;, &amp;quot;target&amp;quot;) ~= 1 then return false else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore>if IsRightAltKeyDown() and GetCurrentKeyBoardFocus() == nil then return true end</LuaBefore><LuaAfter></LuaAfter></Ability></PRIEST>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?><ROGUE><Ability><Name>All: Undead Racial</Name><Default>false</Default><SpellID>7744</SpellID><Actions></Actions><Lua>local fear, _, _, _, _, _, feartimer = UnitDebuffID(&amp;quot;player&amp;quot;, 5782)
+local willoftheforsakencooldown = (willoftheforsakenstart + willoftheforsakenduration - GetTime())
+
+
+if willoftheforsakencooldown &amp;gt; 0 then
+        return false
+else
+if fear ~= nil then
+    if fear - GetTime() &amp;gt; 1 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Deadly Throw</Name><Default>false</Default><SpellID>26679</SpellID><Actions></Actions><Lua>local deadlythrowCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local inRange = 0
+
+
+if deadlythrowCP &amp;lt;= 5 then
+   inRange = IsSpellInRange(&amp;quot;Deadly Throw&amp;quot;, &amp;quot;target&amp;quot;)
+      return true
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Slice and Dice</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddice, _, _, _, _, _, sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if sliceanddice ~= nil then
+    if sliceanddicetimer - GetTime() &amp;lt; 2 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Slice and Dice</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local sliceanddice, _, _, _, _, _, sliceanddicetimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if sliceanddice ~= nil then
+    if sliceanddicetimer - GetTime() &amp;lt; 2 then
+        return true
+    end
+else
+    return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Rupture</Name><Default>false</Default><SpellID>1943</SpellID><Actions></Actions><Lua>local rupture, _, _, _, _, _, rupturetimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1943, &amp;quot;PLAYER&amp;quot;)
+local ruptureCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if rupture ~= nil then 
+	if ruptureCP &amp;gt;= 4 then
+		if rupturetimer - GetTime() &amp;lt; 2 then
+			return true
+		end
+	end
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Envenom</Name><Default>false</Default><SpellID>32645</SpellID><Actions>/cast Cold Blood</Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if myCP &amp;gt;= 4 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Backstab</Name><Default>false</Default><SpellID>53</SpellID><Actions></Actions><Lua>local backstabCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local backstabhealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local mypower = UnitPower(&amp;quot;player&amp;quot;)
+
+if PQR_NotBehindTarget() then
+	return false
+end
+
+if backstabCP &amp;lt;= 4 then
+	if backstabhealth &amp;lt;= 35 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Vendetta</Name><Default>false</Default><SpellID>79140</SpellID><Actions></Actions><Lua>local levelCheck = UnitLevel(&amp;quot;target&amp;quot;)
+
+if levelCheck ~= -1 then
+	return true
+end
+
+if levelCheck == 87 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Cold Blood</Name><Default>false</Default><SpellID>14177</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Mutilate</Name><Default>false</Default><SpellID>1329</SpellID><Actions>/startattack|/use 10</Actions><Lua>local mutilateCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local mutilatehealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local mypower = UnitPower(&amp;quot;player&amp;quot;)
+
+if mutilateCP &amp;lt;= 3 and mypower &amp;gt;= 60 then
+	if mutilatehealth &amp;gt;= 35 then
+		return true
+	elseif mutilatehealth &amp;lt;=34 and PQR_NotBehindTarget() then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Garrote</Name><Default>false</Default><SpellID>703</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut: Vanish</Name><Default>false</Default><SpellID>1856</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut/CB: Slice and Dice</Name><Default>false</Default><SpellID>5171</SpellID><Actions></Actions><Lua>local snd, _, _, _, _, _, sndtimer = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if snd ~= nil then
+	sndtimer = (sndtimer- GetTime())
+	if sndtimer &amp;lt;= 2 then
+		return true
+	end
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Rupture</Name><Default>false</Default><SpellID>1943</SpellID><Actions></Actions><Lua>local rup, _, _, _, _, _, ruptimerr = UnitDebuffID(&amp;quot;target&amp;quot;, 1943, &amp;quot;PLAYER&amp;quot;)
+local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local mc = UnitDebuffID(&amp;quot;target&amp;quot;, 33876)
+local mb = UnitDebuffID(&amp;quot;target&amp;quot;, 33878)
+local hemo = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
+local bf = UnitDebuffID(&amp;quot;target&amp;quot;, 29859)
+local tr = UnitDebuffID(&amp;quot;target&amp;quot;, 50271)
+local gore = UnitDebuffID(&amp;quot;target&amp;quot;, 35290)
+local stam = UnitDebuffID(&amp;quot;target&amp;quot;, 57386)
+
+if mc ~= nil or mb~= nil or hemo ~= nil or bf ~= nil or tr ~= nil or gore ~= nil or stam ~= nil then
+	if rup ~= nil and myCP == 5 then 
+		ruptimer = (ruptimer - GetTime())
+		if rupturetimer &amp;lt;= 0 then
+			return true
+		end
+	else
+		if myCP == 5 then
+			return true
+		end
+	end
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Sinister Strike</Name><Default>false</Default><SpellID>1752</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local mypower = UnitPower(&amp;quot;player&amp;quot;)
+
+if myCP == 4 then
+	return false
+end
+
+if myCP &amp;lt;= 3 and mypower &amp;gt;= 40 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Revealing Strike</Name><Default>false</Default><SpellID>84617</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if myCP == 4 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local hasrup = UnitDebuffID(&amp;quot;target&amp;quot;, 1943)
+local hassnd = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if myCP == 5 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Shiv</Name><Default>false</Default><SpellID>5938</SpellID><Actions></Actions><Lua>local bDS = UnitBuffID(&amp;quot;target&amp;quot;, 8599)
+		
+if bDS ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mut/CB: Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local myhp = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if myhp &amp;lt;= 35 and myCP &amp;gt;= 2 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Adrenaline Rush</Name><Default>false</Default><SpellID>13750</SpellID><Actions></Actions><Lua>local heroism = UnitBuffID(&amp;quot;player&amp;quot;, 32182)
+local lust = UnitBuffID(&amp;quot;player&amp;quot;, 2825)
+local warp = UnitBuffID(&amp;quot;player&amp;quot;, 80353)
+local hysteria = UnitBuffID(&amp;quot;player&amp;quot;, 90355)
+
+if heroism ~= nil or lust ~= nil or warp ~= nil or hysteria ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB: Killing Spree</Name><Default>false</Default><SpellID>51690</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Rupture</Name><Default>false</Default><SpellID>1943</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local needrup, _, _, _, _, _, ruptimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1943, &amp;quot;PLAYER&amp;quot;)
+
+if needrup == nil and myCP == 5 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Recuperate</Name><Default>false</Default><SpellID>73651</SpellID><Actions></Actions><Lua>local needrecup, _, _, _, _, _, recuptimer = UnitBuffID(&amp;quot;target&amp;quot;, 73651, &amp;quot;PLAYER&amp;quot;)
+local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if needrecup == nil and myCP == 5 then
+	return true
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>CB/Sub: Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if myCP == 5 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Backstab</Name><Default>false</Default><SpellID>53</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local mypower = UnitPower(&amp;quot;player&amp;quot;)
+
+if PQR_NotBehindTarget() then
+	return false
+end
+
+if myCP &amp;lt;= 2 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Hemo</Name><Default>false</Default><SpellID>16511</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if myCP &amp;lt;= 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: ShadowStep</Name><Default>false</Default><SpellID>36554</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Shadow Dance</Name><Default>false</Default><SpellID>51713</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Vanish</Name><Default>false</Default><SpellID>1856</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Premed</Name><Default>false</Default><SpellID>14183</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Prep</Name><Default>false</Default><SpellID>14185</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Ambush</Name><Default>false</Default><SpellID>8676</SpellID><Actions>/cast Premeditation</Actions><Lua>local hasshd = UnitBuffID(&amp;quot;player&amp;quot;, 51713)
+local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if hasshd ~= nil then
+	if myCP &amp;lt;= 2 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sub: Eviscerate</Name><Default>false</Default><SpellID>2098</SpellID><Actions></Actions><Lua>local myCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local hasrecup = UnitBuffID(&amp;quot;player&amp;quot;, 73651)
+local hasrup = UnitDebuffID(&amp;quot;target&amp;quot;, 1943)
+local hassnd = UnitBuffID(&amp;quot;player&amp;quot;, 5171)
+
+if hasrecup ~= nil and hasrup ~= nil and hassnd ~= nil then
+	if myCP == 5 then
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></ROGUE>

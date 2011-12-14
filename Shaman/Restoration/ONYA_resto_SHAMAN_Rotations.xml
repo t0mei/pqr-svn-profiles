@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Rotation><RotationName>Resto</RotationName><RotationDefault>false</RotationDefault><RotationList>-- onya library|--- pve library|Resto: -- defensive spells|Resto: set scalefactor|Resto: combat checker|Resto: canceltotems|Resto: Hex|Resto: Cancel LB|Resto: Cancel GHW|Resto: Wind Shear|Resto: Earthliving Weapon|Resto: Water Shield|Resto: Autotarget LowHP|Resto: Healing Rain|Resto: -- healing spells|Resto: totems|Resto: Stoneclaw|Resto: Riptide|Resto: Cleanse Spirit|Resto: Nature&amp;apos;s Swiftness|Resto: Purge|Resto: Mana Tide|Resto: Spiritwalker&amp;apos;s Grace|Resto: Unleash Elements|Resto: Chain Heal|Resto: GHW|Resto: Earth Shield|Resto: Healing Wave|Resto: Lightning Bolt</RotationList><RequireCombat>false</RequireCombat><RotationNotes>ctrl for healing rain
+
+edit -- defensive spells to set variables for when to use which heal.
+
+will hex your focus
+
+will earthshield on the tank in a 5 man/focus in a raid
+
+add trinket1 or trinke 2 to the rotation if you have on use trinkets</RotationNotes></Rotation><Rotation><RotationName>test</RotationName><RotationDefault>false</RotationDefault><RotationList>--- pve library</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation></SHAMAN>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><HUNTER><Ability><Name>SV: Explosive Shot</Name><Default>false</Default><SpellID>53301</SpellID><Actions>/cast !auto shot</Actions><Lua>return true</Lua><RecastDelay>1500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM/SV: Rapid Fire</Name><Default>false</Default><SpellID>3045</SpellID><Actions>/cast Call of the wild|/cast Rabid|/use 13|/use 14</Actions><Lua>local rfBuff = UnitBuffID(&amp;quot;player&amp;quot;, 3045)
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Ability><Name>SV: Explosive Shot</Name><Default>false</Default><SpellID>53301</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>return true</Lua><RecastDelay>1200</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM/SV: Rapid Fire</Name><Default>false</Default><SpellID>3045</SpellID><Actions>/cast Call of the wild|/cast Rabid|/use 13|/use 14</Actions><Lua>local rfBuff = UnitBuffID(&amp;quot;player&amp;quot;, 3045)
 
 if rfBuff == nil then
 	return true
@@ -11,6 +11,11 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
 if UnitExists(&amp;quot;pet&amp;quot;) and health &amp;gt;= 1 then
 	return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Serpent Sting</Name><Default>false</Default><SpellID>1978</SpellID><Actions>/cast !auto shot</Actions><Lua>local ssDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 1978) 
+
+if IsLeftControlKeyDown() then
+	return false
+end
+
 if ssDebuff == nil then
 	return true
 end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BM: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local _, _, _, KCcost = GetSpellInfo(34026)
@@ -60,15 +65,15 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False
 
 if myFocus &amp;lt;= 15 then
 	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot</Actions><Lua>local myfocus = UnitPower(&amp;quot;player&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local myfocus = UnitPower(&amp;quot;player&amp;quot;)
 local unitshealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
-local lnlBuff = UnitBuffID(&amp;quot;player&amp;quot;, 56343)
+local lnlBuff = UnitBuffID(&amp;quot;player&amp;quot;, 56453)
 
 if lnlBuff ~= nil then
 	return false
 end
 
-if myfocus &amp;gt;= 70 and unitshealth &amp;lt;= 100 then
+if myfocus &amp;gt;= 70 and unitshealth &amp;lt;= 90 then
 	return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Steady Shot</Name><Default>false</Default><SpellID>56641</SpellID><Actions>/cast !auto shot</Actions><Lua>return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>MM: Aimed Shot</Name><Default>false</Default><SpellID>19434</SpellID><Actions>/cast !auto shot</Actions><Lua>local hasFire = UnitBuffID(&amp;quot;player&amp;quot;, &amp;quot;82926&amp;quot;)
 local myFocus = UnitPower(&amp;quot;player&amp;quot;)
@@ -80,12 +85,12 @@ end
 
 if unitHp &amp;gt;= 90 and myFocus &amp;gt;= 70  then
 	return true
-end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Black Arrow</Name><Default>false</Default><SpellID>3674</SpellID><Actions>/cast !auto shot</Actions><Lua>local baDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 3674)
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Black Arrow</Name><Default>false</Default><SpellID>3674</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>local baDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 3674)
 local myfocus = UnitPower(&amp;quot;player&amp;quot;)
 
 if baDebuff == nil and myfocus &amp;gt;= 35 then
 	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions>/cast !auto shot</Actions><Lua>if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>SV: Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions>/cast !auto shot|/cast Rabid</Actions><Lua>if PQR_IsMoving(2) == true and UnitBuffID(&amp;quot;player&amp;quot;, 82661) == nil then
 	CastSpellByID(82661) 
 end
 
@@ -94,6 +99,9 @@ return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChann
 end
 
 return true</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Hunter&amp;apos;s Mark</Name><Default>false</Default><SpellID>1130</SpellID><Actions></Actions><Lua>local mark = UnitDebuffID(&amp;quot;target&amp;quot;, 1130)
+if IsLeftControlKeyDown() then
+	return false
+end
 
 if mark == nil then
 	return true

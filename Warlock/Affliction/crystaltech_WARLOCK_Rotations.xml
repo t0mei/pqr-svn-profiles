@@ -3,17 +3,30 @@
 Hold Left Shift to Soulburn
 Removed Bane of Agony from rotation just using bane of doom.
 Hold Left Alt to cast Bane of Havoc on mouse over
-Hold Left Control to Pause </RotationNotes></Rotation><Rotation><RotationName>Affliction: Single Target</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|All: Set Focus|All: Curse of the Elements|All: Life Tap|All: Fel Flame|Aff: Opener Shadow Bolt|All: Demon Soul|Aff: Soul Fire|Aff: Soulburn t13|Aff: Soul Swap:Exhale|Aff: Soul Swap|Aff: Haunt|Aff/Destro: Bane of Doom|Aff/Destro: Bane of Agony|All: Corruption|Aff: Unstable Affliction|Aff: Drain Soul|Aff: Shadow Bolt</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated to 4.3
+Hold Left Control to Pause </RotationNotes></Rotation><Rotation><RotationName>Affliction: Single Target</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|All: Set Focus|All: Curse of the Elements|All: Life Tap|All: Fel Flame|Aff: Shadowflame|Aff: Seed of Corruption|Aff: Opener Shadow Bolt|All: Demon Soul|Aff: Soul Fire|Aff: Soulburn t13|Aff: Soul Swap:Exhale|Aff: Soul Swap|Aff: Haunt|Aff/Destro: Bane of Doom|Aff/Destro: Bane of Agony|All: Corruption|Aff: Unstable Affliction|Aff: Drain Soul|Aff: Shadow Bolt</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated to 4.3
 
 Hold Left Control to Pause
-Hold Left Alt to Set Focus on Current target</RotationNotes></Rotation><Rotation><RotationName>Affliction: AOE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: Demon Soul|All: Life Tap|All: Fel Flame|Aff: Soulburn:SoC|Aff: Seed of Corruption|All: Shadowflame</RotationList><RequireCombat>true</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Demo: AOE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: Life Tap|Demo: DRB_Felguard|Demo: Metamorphosis|Demo: Immolation Aura|All: Shadowflame|Demo: Pet_Felstorm|Demo: Hellfire</RotationList><RequireCombat>true</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Demo: Single Target (SB Filler)</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|Demo: DRB_Felhound|All: Curse of the Elements|All: Life Tap|Demo: Metamorphosis|All: Demon Soul|Demo: Incinerate (SB Filler)|Demo: Soulburn|Demo: Soul Fire|Demo/Destro: Immolate|Demo: Hand of Gul&amp;apos;dan|Demo: Bane of Doom|All: Corruption|All: Fel Flame|Demo: Shadow Bolt (Filler)</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated for 4.3
+Hold Left Alt to Set Focus on Current target
+Hold Left Shift to cast Shadowflame and Cast Seed of Corruption.</RotationNotes></Rotation><Rotation><RotationName>Demo: PVE Multi Dot Spec</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|Demo: DRB_Felhound|All: Life Tap|All: Fel Flame|All: Curse of the Elements|Demo: Soulburn|Demo: Metamorphosis|All: Demon Soul|Demo: Immolation Aura|Demo: Hellfire|Demo/Destro: Immolate|Demo: Bane of Doom|All: Corruption|All: Shadowflame|Demo: Hand of Gul&amp;apos;dan|Demo: Incinerate (SB Filler)|Demo: Soul Fire|Demo: Shadow Bolt (Filler)</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated for 4.3
+
+spec- http://wowtal.com/#k=-AAhQGS4.b0w.warlock.
 
 Hold Left Shift to use Meta
 Hold Left Control for Pause
+Hold Left Alt to Cast Shadowflame
+Hold Left Alt to cast Hellfire if Shadowflame is on CD. Escape to cancel cast.
 
-User choice: Select Demo: DRB_Felhound or Demo: DRB_Felguard  for the rebirth effect.</RotationNotes></Rotation><Rotation><RotationName>Demo: Single Target (Inc Filler)</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|Demo: DRB_Felhound|All: Curse of the Elements|All: Life Tap|Demo: Metamorphosis|All: Demon Soul|Demo: Shadow Bolt (Inc Filler)|Demo: Soulburn|Demo: Soul Fire|Demo/Destro: Immolate|Demo: Hand of Gul&amp;apos;dan|Demo: Bane of Doom|All: Corruption|All: Fel Flame|Demo: Incinerate (Filler)</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated for 4.3
+User choice: Select Demo: DRB_Felhound or Demo: DRB_Felguard  for the rebirth effect.
+
+Use macro for pet twisting.</RotationNotes></Rotation><Rotation><RotationName>Demo: PVE Single Target Spec</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|Demo: DRB_Felhound|All: Life Tap|All: Fel Flame|All: Curse of the Elements|Demo: Soulburn|Demo: Metamorphosis|All: Demon Soul|Demo: Immolation Aura|Demo: Hellfire|Demo: Pet_Felstorm|Demo/Destro: Immolate|Demo: Bane of Doom|All: Corruption|All: Shadowflame|Demo: Hand of Gul&amp;apos;dan|Demo: Soul Fire|Demo: Shadow Bolt (Inc Filler)|Demo: Incinerate (Filler)</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Updated for 4.3
+
+spec- http://wowtal.com/#k=HetR0qYL.b0w.warlock.
 
 Hold Left Shift to use Meta
 Hold Left Control for Pause
+Hold Left Alt to Cast Shadowflame
+Hold Left Alt to cast Hellfire if Shadowflame is on CD. Escape to cancel cast.
 
-User choice: Select Demo: DRB_Felhound or Demo: DRB_Felguard  for the rebirth effect.</RotationNotes></Rotation></WARLOCK>
+User choice: Select Demo: DRB_Felhound or Demo: DRB_Felguard  for the rebirth effect.
+
+Use macro for pet twisting.</RotationNotes></Rotation></WARLOCK>

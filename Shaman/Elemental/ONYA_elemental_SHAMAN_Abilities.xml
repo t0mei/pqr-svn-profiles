@@ -28,30 +28,36 @@ or IsMounted()
 or UnitBuffID(&amp;quot;player&amp;quot;,87959)
 or UnitIsDeadOrGhost(&amp;quot;player&amp;quot;) 
 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earth Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,_,_,LSCount = UnitBuffID(&amp;quot;player&amp;quot;, 324)
-local _,lcd =  GetSpellCooldown(8042)
-
-if LSCount&amp;gt;= 7  and lcd == 0  then
+local a,b = GetSpellCooldown(8042)
+if LSCount &amp;gt;= 7 and b &amp;lt; 5 then
   RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
   CastSpellByID(8042)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
   return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Elemental Mastery</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(16166)
-if lcd == 0 then
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Elemental Mastery</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsUsableSpell(16166) then
   RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
   CastSpellByID(16166)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Flame Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER|HARMFUL&amp;quot;)
-local _,lcd =  GetSpellCooldown(8050)
-if lcd == 0 and fsDebuff == nil then
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Flame Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>FSdebuff, _, _, _,_,_, expirationTime = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER|HARMFUL&amp;quot;)
+if FSdebuff == nil then
+   exptime = 0
+else
+    exptime = (expirationTime - GetTime()) 
+end
+
+local a,b = GetSpellCooldown(8050)
+if b &amp;lt; 5 and exptime &amp;lt; 0.5 then
   RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
   CastSpellByID(8050)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: FT weapon</Name><Default>false</Default><SpellID>8024</SpellID><Actions></Actions><Lua>local hasFT = GetWeaponEnchantInfo()
 
 if hasFT ~= 1  then
    return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Lava Burst</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(51505)
-if moving == 0 and lcd == 0   then
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Lava Burst</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _, _, _, _, _, _, castTime = GetSpellInfo(51505)
+local a,b = GetSpellCooldown(51505)
+if b &amp;lt; 8 and exptime &amp;gt; (castTime/1000)  then
   RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
   CastSpellByID(51505)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
@@ -178,21 +184,15 @@ if lcd == 0 and fsDebuff ~= nil then
   CastSpellByID(1535)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
   return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earthquake</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(61882)
-
-if lcd == 0 and IsControlKeyDown()  and GetCurrentKeyBoardFocus() == nil then
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earthquake</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsUsableSpell (61882) and IsControlKeyDown()  and GetCurrentKeyBoardFocus() == nil then
   CastSpellByID(61882)
   if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
   return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Chain Lightning</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(421)
-if lcd == 0 then
-RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Chain Lightning</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
   CastSpellByID(421)
   RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
-  return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Thunderstorm</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
-local _,lcd =  GetSpellCooldown(51490)
-if lcd == 0 and manapercent &amp;lt; 30 then 
+  return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Thunderstorm</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>manapercent = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+if IsUsableSpell(51490) and manapercent &amp;lt; 30 then 
 RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
 CastSpellByID(51490)
 RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
@@ -259,4 +259,26 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False
           return true
         end
     end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>hot</Name><Default>false</Default><SpellID>0</SpellID><Actions>/click ExtraActionButton1</Actions><Lua>local spellHourOfTwilight = GetSpellInfo(109417)
+local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+if channelSpell ~= nil and channelSpell == spellHourOfTwilight then
+     local finishTime = endTime/1000 - GetTime()
+     if finishTime &amp;lt; 1 then
+          return true
+      end
+end
+
+local sFadingLight, _, _, _, _, _, fadingEndTime = UnitDebuffID(&amp;quot;player&amp;quot;, 110068)
+if sFadingLight then
+    local finishTime = fadingEndTime - GetTime()
+    if finishTime &amp;lt; 1 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Elemental: Earth Shock - aoe</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,_,_,LSCount = UnitBuffID(&amp;quot;player&amp;quot;, 324)
+
+if LSCount&amp;gt;= 9  and IsUsableSpell (8042) then
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+  CastSpellByID(8042)
+  RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+  return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></SHAMAN>

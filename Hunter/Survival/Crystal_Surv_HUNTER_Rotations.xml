@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Rotation><RotationName>Surv: PVE</RotationName><RotationDefault>false</RotationDefault><RotationList>Explosive Trap|Trap Launcher|Pause|Extras|Mend Pet|Raptor Strike|Racial: Blood Elf|Tranquilizing Shot|Multi Shot|Hunter&amp;apos;s Mark|Rapid Fire|Misdirection|Serpent Sting|Kill Shot|Explosive Shot|Black Arrow|Arcane Shot|Cobra Shot</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Explosive shot test</RotationName><RotationDefault>false</RotationDefault><RotationList>Explosive Shot</RotationList><RequireCombat>true</RequireCombat><RotationNotes>how to use:
+
+start autoshotting dummy
+throw trap to proc lnl
+enable rotation
+wait until explosive shot is on cd and disable rotation
+get out of combat
+check meters for 9 ticks
+if nine ticks your good
+if not ajust delay in explosive shot by 100 up or down and retest.</RotationNotes></Rotation></HUNTER>

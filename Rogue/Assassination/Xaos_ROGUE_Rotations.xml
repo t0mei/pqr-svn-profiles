@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?><ROGUE><Rotation><RotationName>Mute</RotationName><RotationDefault>false</RotationDefault><RotationList>-- defensive spells --|Pick Lock|Apply Poisons|Stealth|Assist Tank|Tricks of the Trade|Fan of Knives|-- offensive spells --|Garrote|Backstab|Slice and Dice|Rupture|Vanish|Cold Blood|Gloves|Trinket1|Trinket 2|Vendetta|Envenom|Mutilate</RotationList><RequireCombat>false</RequireCombat><RotationNotes>
-Tap RIGHT CONTROL to disable/enable Backstab/Garrotte
-Hold down LEFT ALT pause rotation
+<?xml version="1.0" encoding="utf-8" ?><ROGUE><Rotation><RotationName>Mute</RotationName><RotationDefault>false</RotationDefault><RotationList>-- defensive spells --|Pick Lock|Apply Poisons|Stealth|Assist Tank|Tricks of the Trade|Fan of Knives|-- offensive spells --|ToT Focus|Garrote|Backstab|Slice and Dice|Rupture|Vanish|Cold Blood|Gloves|Trinket1|Trinket 2|Vendetta|Envenom|Mutilate</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Hold down LEFT ALT pause rotation
 Hold down LEFT SHIFT to use Fan of Knives
 
 
 -- Features
 Auto Pick Lock when any player trade you a Lockbox
-Auto apply poisons</RotationNotes></Rotation></ROGUE>
+Auto apply poisons
+Keep Tricks of the Trade up on focus</RotationNotes></Rotation></ROGUE>

@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8" ?><DEATHKNIGHT><Ability><Name>Blood Tap</Name><Default>false</Default><SpellID>45529</SpellID><Actions></Actions><Lua>local time1,dur1,d1=GetRuneCooldown(1
+)
+local time2,dur2,d2=GetRuneCooldown(2)
+
+
+
+if  d1 == false or d2 == false then
+
+   time1 = time1 + dur1 - GetTime()
+
+   time2 = time2 + dur2 - GetTime()
+
+   if time1 &amp;gt; 5 or time2  &amp;gt; 5 then
+
+      return true
+
+   end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rime</Name><Default>false</Default><SpellID>49184</SpellID><Actions></Actions><Lua>local FreezingFog = UnitBuffID(&amp;quot;player&amp;quot;, 59052)
+
+if FreezingFog ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Frost Strike(rp-capped)</Name><Default>false</Default><SpellID>49143</SpellID><Actions>/use 10|/startattack</Actions><Lua>if  UnitPower(&amp;quot;player&amp;quot;) &amp;gt; 109 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Blood Plague</Name><Default>false</Default><SpellID>45462</SpellID><Actions>/startattack</Actions><Lua>local dbBloodPlague, _, _, _, _, _, BloodPlagueExpire = UnitDebuffID(&amp;quot;target&amp;quot;,59879, &amp;quot;player&amp;quot;)
+
+if dbBloodPlague == nil then	
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Frost Fever</Name><Default>false</Default><SpellID>49184</SpellID><Actions>/startattack</Actions><Lua>local dbFrostFever, _, _, _, _, _, dbexpire = UnitDebuffID(&amp;quot;target&amp;quot;,55095, &amp;quot;player&amp;quot;)
+
+if dbFrostFever ~= nil then		
+	dbexpire =(dbexpire - GetTime())
+	if dbexpire &amp;lt; 4 then
+		return true
+	end
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(2D or F/U pairs)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+if (u3 == true and u4 == true and f5 == true and f6 == true) or (d1 == true and d2 == true) then	
+	return true
+
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Test2_Obliterate(2U up ir in &amp;lt;1s)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+if  u1 ==true and u2 == true then
+	return true
+
+elseif  u1 == false or u2 == false then
+	time1 = time1 + dur1 - GetTime()
+	time2 = time2 + dur2 - GetTime()
+
+	if time1 &amp;lt; 2 and time2 &amp;lt; 2 then
+		time3 = time3 + dur3 - GetTime()
+		time4 = time4 + dur4 - GetTime()
+		time5 = time5 + dur5 - GetTime()
+		time6 = time6 + dur6 - GetTime()
+		if time3 &amp;lt; 1 or time4 &amp;lt; 1 or time5 &amp;lt; 1 or time6 &amp;lt; 1 then
+    			  return true
+ 		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Howling Blast &amp;lt; 90RP</Name><Default>false</Default><SpellID>49184</SpellID><Actions>/startattack|/use 10</Actions><Lua>if  UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 90 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Howling Blast &amp;lt; 60RP</Name><Default>false</Default><SpellID>49184</SpellID><Actions>/startattack|/use 10</Actions><Lua>if  UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 60 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Frost Strike(rp&amp;gt;90)</Name><Default>false</Default><SpellID>49143</SpellID><Actions>/use 10|/startattack</Actions><Lua>if  UnitPower(&amp;quot;player&amp;quot;) &amp;gt; 90 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Frost Strike</Name><Default>false</Default><SpellID>49143</SpellID><Actions>/use 10|/startattack</Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Horn of Winter</Name><Default>false</Default><SpellID>57330</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raise Dead(US + PoF)</Name><Default>false</Default><SpellID>46584</SpellID><Actions></Actions><Lua>local bUS =  UnitBuffID(&amp;quot;player&amp;quot;, 53365)
+local bPoF =  UnitBuffID(&amp;quot;player&amp;quot;,51271)
+
+if UnitLevel(&amp;quot;target&amp;quot;) &amp;gt;= 88 or UnitLevel(&amp;quot;target&amp;quot;) == -1 then 
+	if UnitHealth(&amp;quot;target&amp;quot;) &amp;gt; 1000000  then
+		if bUS ~= nil and bPoF ~= nil then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Empowered Runic Weapon</Name><Default>false</Default><SpellID>47568</SpellID><Actions></Actions><Lua>local _,_,R1 = GetRuneCooldown(1)
+local _,_,R2 = GetRuneCooldown(2)
+local _,_,R3 = GetRuneCooldown(3)
+local _,_,R4 = GetRuneCooldown(4)
+local _,_,R5 = GetRuneCooldown(5)
+local _,_,R6 = GetRuneCooldown(6)
+local levelCheck = UnitLevel(&amp;quot;target&amp;quot;)
+
+if levelCheck ~= -1 then
+	--boss level returns as -1
+	return false
+else
+	if  R1 == false and R2 == false and (R3 == false or R4 == false) and R5 == false and R6 == false and UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 32 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pillar or Frost</Name><Default>false</Default><SpellID>51271</SpellID><Actions></Actions><Lua>if UnitHealth(&amp;quot;target&amp;quot;) &amp;gt;= 300000  then 
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Outbreak</Name><Default>false</Default><SpellID>77575</SpellID><Actions></Actions><Lua>local dbBloodPlague, _, _, _, _, _, BloodPlagueExpire = UnitDebuffID(&amp;quot;target&amp;quot;,59879, &amp;quot;player&amp;quot;)
+
+if dbBloodPlague == nil then	
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(2U up ir in &amp;lt;1s)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+if  u1 ==true and u2 == true then
+	return true
+
+elseif  u1 == false or u2 == false then
+	time1 = time1 + dur1 - GetTime()
+	time2 = time2 + dur2 - GetTime()
+
+	if time1 &amp;lt; 4 and time2 &amp;lt; 4 then
+		time3 = time3 + dur3 - GetTime()
+		time4 = time4 + dur4 - GetTime()
+		time5 = time5 + dur5 - GetTime()
+		time6 = time6 + dur6 - GetTime()
+		if time3 &amp;lt; 2 or time4 &amp;lt; 2 or time5 &amp;lt; 2 or time6 &amp;lt; 2 then
+    			  return true
+ 		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic will</Name><Default>false</Default><SpellID>0</SpellID><Actions>/click ExtraActionButton1</Actions><Lua>local spellHourOfTwilight = GetSpellInfo(109417)
+local channelSpell, _, _, _, _, endTime = UnitChannelInfo(&amp;quot;boss1&amp;quot;)
+if channelSpell ~= nil and channelSpell == spellHourOfTwilight then
+    local finishTime = endTime/1000 - GetTime()
+    if finishTime &amp;lt; 1 then
+        return true
+    end
+end
+
+
+local sFadingLight, _, _, _, _, _, fadingEndTime = UnitDebuffID(&amp;quot;player&amp;quot;, 110068)
+if sFadingLight then
+    local finishTime = fadingEndTime - GetTime()
+    if finishTime &amp;lt; 1 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Test2_Obliterate(2U up ir in &amp;lt;1s)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+if  u1 ==true and u2 == true then
+	return true
+
+elseif  u1 == false or u2 == false then
+	time1 = time1 + dur1 - GetTime()
+	time2 = time2 + dur2 - GetTime()
+
+	if time1 &amp;lt; 3 and time2 &amp;lt; 3 then
+		time3 = time3 + dur3 - GetTime()
+		time4 = time4 + dur4 - GetTime()
+		time5 = time5 + dur5 - GetTime()
+		time6 = time6 + dur6 - GetTime()
+		if time3 &amp;lt; 2 or time4 &amp;lt; 2 or time5 &amp;lt; 2 or time6 &amp;lt; 2 then
+    			  return true
+ 		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Unholy pres</Name><Default>false</Default><SpellID>48265</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 3 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local bloodtap = GetSpellCooldown(45529)
+local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+
+if  bloodtap &amp;lt; 3 then
+
+   time1 = time1 + dur1 - GetTime()
+   time2 = time2 + dur2 - GetTime()
+   time3 = time3 + dur3 - GetTime()
+   time4 = time4 + dur4 - GetTime()
+
+   if if (time1 &amp;lt; 1 and time3 &amp;lt; 1) or (time1 &amp;lt; 1 and time4 &amp;lt; 1) or (time2 &amp;lt; 1 and time3 &amp;lt; 1) or (time2 &amp;lt; 1 and time4 &amp;lt; 1) or (time3 &amp;lt; 1 and time4 &amp;lt; 1) then
+	return true
+
+	end
+
+   end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>BT_Obliterate</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local btcd, cd = GetSpellCooldown(45529)
+
+
+btcd = GetTime() - btcd
+if  btcd &amp;lt; 3 or btcd &amp;gt; 27 then
+
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>ObliterateT</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>if GetSpellCooldown(45529) &amp;lt; 10 or GetSpellCooldown(45529) &amp;gt; 50  then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(2D or F/U pairs KM)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local time1,dur1,d1=GetRuneCooldown(1)
+local time2,dur2,d2=GetRuneCooldown(2)
+local time3,dur3,u1=GetRuneCooldown(3)
+local time4,dur4,u2=GetRuneCooldown(4)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+local KM = UnitBuffID(&amp;quot;player&amp;quot;,51128)
+
+if u3 == true and u4 == true and f5 == true and f6 == true then	
+	return true
+elseif d1 == true and d2 == true then	
+	return true	
+
+elseif KM ~= nil then
+	return true
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Howling Blast (2d 2f)</Name><Default>false</Default><SpellID>49184</SpellID><Actions></Actions><Lua>local time1,dur1,d1=GetRuneCooldown(1)
+local time2,dur2,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+
+if  f5 == true and f6 == true then	
+	return true
+elseif d1 == true and d2 == true then	
+	return true	
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Howling Blast</Name><Default>false</Default><SpellID>49184</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raise ally</Name><Default>false</Default><SpellID>61999</SpellID><Actions></Actions><Lua>-- Check CD is up
+if UnitExists(&amp;quot;mouseover&amp;quot;) and
+   UnitIsDeadOrGhost(&amp;quot;mouseover&amp;quot;) and
+   UnitCanCooperate(&amp;quot;player&amp;quot;, &amp;quot;mouseover&amp;quot;) and
+   IsSpellInRange(&amp;quot;Raise Ally&amp;quot;, &amp;quot;mouseover&amp;quot;) and 
+   GetSpellCooldown(61999) == 0 and
+   UnitChannelInfo(&amp;quot;player&amp;quot;) == nil
+then
+
+  -- Cast it!
+  return true
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Outbreakpvp</Name><Default>false</Default><SpellID>77575</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pillar or Frostpvp</Name><Default>false</Default><SpellID>51271</SpellID><Actions>/use 14</Actions><Lua>if (100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;lt; 80) and (100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; 20)
+then
+return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dark scrim</Name><Default>false</Default><SpellID>77606</SpellID><Actions></Actions><Lua>local Spell,_,_,_,_,_,_,_,_ = UnitCastingInfo(&amp;quot;focus&amp;quot;)
+
+if Spell == (&amp;quot;Fear&amp;quot;) or Spell == (&amp;quot;Polymorph&amp;quot;) or Spell == (&amp;quot;Mind Control &amp;quot;) or Spell == (&amp;quot;Hex&amp;quot;) or Spell == (&amp;quot;Cyclone&amp;quot;) then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Strang FOcus</Name><Default>false</Default><SpellID>47476</SpellID><Actions></Actions><Lua>if  IsControlKeyDown() then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>OutbreakPVP</Name><Default>false</Default><SpellID>77575</SpellID><Actions></Actions><Lua>shiftDown = IsShiftKeyDown()
+ctrlDown  = IsControlKeyDown()
+altDown   = IsAltKeyDown()
+local dbFrostFever, _, _, _, _, _, dbexpire = UnitDebuffID(&amp;quot;target&amp;quot;,55095, &amp;quot;player&amp;quot;)
+local dbBloodPlague, _, _, _, _, _, BloodPlagueExpire = UnitDebuffID(&amp;quot;target&amp;quot;,59879, &amp;quot;player&amp;quot;)
+
+if dbBloodPlague ~= nil and dbFrostFever ~= nil and SpellIsTargeting() == nil and IsShiftKeyDown() == nil and IsControlKeyDown() == nil and IsAltKeyDown() == nil then
+	--cast if debuff has &amp;lt; 5 sec left
+	BloodPlagueExpire =(BloodPlagueExpire - GetTime())
+	dbexpire =(dbexpire - GetTime())
+	if BloodPlagueExpire &amp;lt; 7 and dbexpire &amp;lt; 7 then
+		return true
+	end
+else
+	if dbBloodPlague == nil and dbFrostFever == nil and SpellIsTargeting() == nil and IsShiftKeyDown() == nil and IsControlKeyDown() == nil and IsAltKeyDown() == nil then
+		return true
+	else
+		return false
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Nectrotic Strike</Name><Default>false</Default><SpellID>73975</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raise Dead(pvp)</Name><Default>false</Default><SpellID>46584</SpellID><Actions></Actions><Lua>if 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 40 
+and GetSpellCooldown(49039) ~= 0 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Death pact</Name><Default>false</Default><SpellID>48743</SpellID><Actions></Actions><Lua>if GetTotemInfo(1) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Blood pres</Name><Default>false</Default><SpellID>48263</SpellID><Actions></Actions><Lua>local Aura = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+
+if Aura ~= 1 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsShiftKeyDown() then
+return true
+end</Lua><RecastDelay>3000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PEmpowered Runic Weapon</Name><Default>false</Default><SpellID>47568</SpellID><Actions></Actions><Lua>if select(3,GetRuneCooldown(1)) == false 
+and select(3,GetRuneCooldown(2)) == false 
+and select(3,GetRuneCooldown(3)) == false 
+and select(3,GetRuneCooldown(4)) == false 
+and select(3,GetRuneCooldown(5)) == false 
+and select(3,GetRuneCooldown(6)) == false
+and 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;lt; 50 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>PDeathstrike</Name><Default>false</Default><SpellID>49998</SpellID><Actions></Actions><Lua>local HP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if HP &amp;lt; 50 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Aparatus</Name><Default>false</Default><SpellID>0</SpellID><Actions>/use 14</Actions><Lua>local _,_,_, TPCount = UnitBuffID(&amp;quot;player&amp;quot;,96923)
+local CD = GetItemCooldown(&amp;quot;69113&amp;quot;)
+
+if CD &amp;lt; 1 then
+	if TPCount == 5 and UnitHealth(&amp;quot;target&amp;quot;) &amp;gt;= 300000 then
+       		 return true
+    	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>NObliterate</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(&amp;lt;3)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local bloodtap = GetSpellCooldown(45529)
+local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+
+if  bloodtap &amp;lt; 3 then
+
+   time1 = time1 + dur1 - GetTime()
+   time2 = time2 + dur2 - GetTime()
+   time3 = time3 + dur3 - GetTime()
+   time4 = time4 + dur4 - GetTime()
+
+	if (time1 &amp;lt; .5 and time3 &amp;lt; .5) or (time1 &amp;lt; .5 and time4 &amp;lt; .5) or (time2 &amp;lt; .5 and time3 &amp;lt; .5) or (time2 &amp;lt; .5 and time4 &amp;lt; .5) or (time3 &amp;lt; .5 and time4 &amp;lt; .5) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(&amp;gt;3)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local bloodtap = GetSpellCooldown(45529)
+local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+
+if  bloodtap &amp;gt; 3 then
+
+   time1 = time1 + dur1 - GetTime()
+   time2 = time2 + dur2 - GetTime()
+   time3 = time3 + dur3 - GetTime()
+   time4 = time4 + dur4 - GetTime()
+
+	if (time1 &amp;lt; 1 and time3 &amp;lt; 1) or (time1 &amp;lt; 1 and time4 &amp;lt; 1) or (time2 &amp;lt; 1 and time3 &amp;lt; 1) or (time2 &amp;lt; 1 and time4 &amp;lt; 1) or (time3 &amp;lt; 1 and time4 &amp;lt; 1) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Obliterate(&amp;gt;27)</Name><Default>false</Default><SpellID>49020</SpellID><Actions></Actions><Lua>local bloodtap = GetSpellCooldown(45529)
+local time1,dur1,u1=GetRuneCooldown(3)
+local time2,dur2,u2=GetRuneCooldown(4)
+local time3,dur3,d1=GetRuneCooldown(1)
+local time4,dur4,d2=GetRuneCooldown(2)
+local time5,dur5,f1=GetRuneCooldown(5)
+local time6,dur6,f2=GetRuneCooldown(6)
+
+
+if  bloodtap &amp;gt; 27 then
+
+   time1 = time1 + dur1 - GetTime()
+   time2 = time2 + dur2 - GetTime()
+   time3 = time3 + dur3 - GetTime()
+   time4 = time4 + dur4 - GetTime()
+   time5 = time5 + dur5 - GetTime()
+   time6 = time6 + dur6 - GetTime()
+
+	if (time1 &amp;lt; .5 and time3 &amp;lt; .5) or (time1 &amp;lt; .5 and time4 &amp;lt; .5) or (time2 &amp;lt; .5 and time3 &amp;lt; .5) or (time2 &amp;lt; .5 and time4 &amp;lt; .5) or (time3 &amp;lt; .5 and time4 &amp;lt; .5) or (time3 &amp;lt; .5 and time5 &amp;lt; .5) or (time3 &amp;lt; .5 and time6 &amp;lt; .5) or (time4 &amp;lt; .5 and time5 &amp;lt; .5) or (time4 &amp;lt; .5 and time6 &amp;lt; .5) then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></DEATHKNIGHT>

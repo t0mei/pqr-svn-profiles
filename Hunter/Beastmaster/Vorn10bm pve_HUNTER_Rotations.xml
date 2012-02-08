@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Rotation><RotationName>bmpve single/aoe</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|--- special events ---|Mend Pet|Misdirection|Scatter Shot|Hunter&amp;apos;s Mark|Aspects|Assist Tank|Explosive Trap|--- offensive spells ---|Wing Clip|Concussive Shot|Tranquilizing Shot|Bestial Wrath|Kill Shot|Multi Shot|Kill Command|Serpent Sting|Raptor Strike|Rapid Fire|Fervor|Focus Fire|Arcane Shot|Cobra Shot</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Credits to:
+Sheuron
+Kickmydog
+I just implement AoE switch and some another changes.
+
+Right CTRL - switch SINGLE/AoE
+Left ALT - Scatter Shot mouseover
+Ultraxion - Heroic Will button build-in
+AoE - Explosive Trap on mouseover position and spam MS/CS
+Concussive Shot - when we have aggro from targeted mob
+Wing Clip - when aggro and in melee range
+
+Self use:
+Deterrence, Disengage, Feign Death
+
+Vorn10</RotationNotes></Rotation></HUNTER>

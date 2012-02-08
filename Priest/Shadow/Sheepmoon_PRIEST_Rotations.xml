@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>PVE</RotationName><RotationDefault>false</RotationDefault><RotationList>Dispersion|Inner Fire|Shadowform|Vampiric Embrace|Shadow Word: Death|Shadow Word: Death (Focus)|Synapse Springs|Mind Blast (Orb)|VT Buffed|DP Buffed|Shadow Word: Pain|Shadow Word: Pain (Focus)|Devouring Plague|Vampiric Touch|Vampiric Touch (Focus)|Archangel|Shadowfiend|Mind Flay</RotationList><RequireCombat>true</RequireCombat><RotationNotes>&amp;gt;&amp;gt;&amp;gt; Works for minimum level characters! &amp;lt;&amp;lt;&amp;lt;
+
+This is the profile you&amp;apos;ll be using most of the time.
+It features &amp;quot;smart&amp;quot; applying and re-applying of dots on your target and focus targets to maximize cast and channel times while replicating how you would normally cast your priority list.
+
+It will automatically apply Inner Fire, Shadowform, Vampiric Embrace if not present (while activated), use Dispersion at 5% mana and Arcane Torrent at 80% mana or bellow for most efficiency.
+
+Hold your Right Alt key to cast Mass Dispel.</RotationNotes></Rotation><Rotation><RotationName>AoE</RotationName><RotationDefault>false</RotationDefault><RotationList>Mind Sear</RotationList><RequireCombat>false</RequireCombat><RotationNotes>&amp;gt;&amp;gt;&amp;gt; Works for any level characters! &amp;lt;&amp;lt;&amp;lt;</RotationNotes></Rotation><Rotation><RotationName>Opening</RotationName><RotationDefault>false</RotationDefault><RotationList>Dispersion|Inner Fire|Shadowform|Vampiric Embrace|Cancel Aura|Shadowfiend Opening|Shadow Word: Death|Mind Blast Opening|Mind Spike Opening|Archangel Opening|Shadow Word: Pain|Mind Blast No AA|Vampiric Touch No AA|Shadow Word: Pain No AA|Devouring Plague No AA|Mind Flay</RotationList><RequireCombat>true</RequireCombat><RotationNotes>&amp;gt;&amp;gt;&amp;gt; Works for minimum level characters! &amp;lt;&amp;lt;&amp;lt;
+
+This is the profile you&amp;apos;ll be using most of the time.
+It features &amp;quot;smart&amp;quot; applying and re-applying of dots on your target and focus targets to maximize cast and channel times while replicating how you would normally cast your priority list.
+
+It will automatically apply Inner Fire, Shadowform, Vampiric Embrace if not present (while activated), use Dispersion at 5% mana and Arcane Torrent at 80% mana or bellow for most efficiency.
+
+Hold your Right Alt key to cast Mass Dispel.</RotationNotes></Rotation></PRIEST>

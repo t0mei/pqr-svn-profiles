@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>DISC Atonement</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|--- special events ---|--- automatic target ---|Inner Fire|Inner Will|Inner Focus|Shadow Protection|Power Word: Fortitude|Fade|Power Word: Barrier|Mass Dispel|--- healing spells ---|Arcane Torrent|Shadowfiend|Power Infusion|Archangel|Dispel Magic|Power Word: Shield|Prayer of Mending|Prayer of Healing TEST|Binding Heal|Flash Heal|Penance|Greater Heal|Holy Fire|Smite|Renew</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#bfGorRsbcRMochM:cqmdaqzM0
+
+-- Hotkeys
+
+Hold down RIGHT SHIFT to cast PW: Barrier at mouse position
+Hold down RIGHT ALT to cast Mass Dispell at mouse position
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to enable healing while out of combat
+
+-- Other Notes
+
+Please make sure an enemy is ALWAYS targeted for DPS purposes. (Unless you want to focus heals). Profile based on Sheuron&amp;apos;s Holy Priest profile, made for Discipline Priest by ticklets.</RotationNotes></Rotation><Rotation><RotationName>DISC No Atonement</RotationName><RotationDefault>false</RotationDefault><RotationList>--- initialize ---|--- special events ---|--- automatic target ---|Inner Fire|Inner Will|Inner Focus|Shadow Protection|Power Word: Barrier|Power Word: Fortitude|Fade|Mass Dispel|--- healing spells ---|Arcane Torrent|Shadowfiend|Power Infusion|Dispel Magic|Power Word: Shield|Prayer of Mending|Prayer of Healing TEST|Binding Heal|Flash Heal|Penance|Greater Heal|Heal|Renew</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#bfhzrosbfRMochMZ0b:cqmqZzM0
+
+-- Hotkeys
+
+Hold down RIGHT SHIFT to cast PW: Barrier at mouse position
+Hold down RIGHT ALT to cast Mass Dispell at mouse position
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to enable healing while out of combat
+
+-- Other Notes
+
+Holy Priest profile, made for Discipline Priest by ticklets.</RotationNotes></Rotation></PRIEST>

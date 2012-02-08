@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?><WARLOCK><Ability><Name>Soulburn</Name><Default>false</Default><SpellID>74434</SpellID><Actions></Actions><Lua>local tier = { 78776, 78681, 76343, 78797, 76342, 78702, 78816, 76341, 78721, 78844, 76339, 78749, 78825, 76340, 78730 }
+local total = 0
+for _,v in ipairs(tier) do
+   if IsEquippedItem(&amp;quot;v&amp;quot;) == true then
+      total = total + 1
+   end
+end
+
+if total &amp;gt;= 4 then
+   return true
+else
+  return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Soul Fire</Name><Default>false</Default><SpellID>6353</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 74434) ~= nil then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Demon Soul</Name><Default>false</Default><SpellID>77801</SpellID><Actions></Actions><Lua>local lust = { 32182, 2825, 80353, 90355 }
+local isBoss = false
+for _,v in ipairs(lust) do
+	if UnitBuffID(&amp;quot;player&amp;quot;, v) ~= nil then return true end
+end
+for i=1,4 do
+	if UnitExists(&amp;quot;boss&amp;quot;..i) then
+		isBoss = true
+		break
+	end
+end
+
+if isBoss == false then
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Corruption</Name><Default>false</Default><SpellID>172</SpellID><Actions></Actions><Lua>local corr, _, _, _, _, _, correxp = UnitDebuffID(&amp;quot;target&amp;quot;, 172, &amp;quot;PLAYER&amp;quot;)
+if corr == nil then
+		return true
+else
+	correxp = correxp - GetTime()
+	if correxp &amp;lt; .5 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Unstable Affliction</Name><Default>false</Default><SpellID>30108</SpellID><Actions></Actions><Lua>local ua, _, _, _, _, _, uaexp = UnitDebuffID(&amp;quot;target&amp;quot;, 30108, &amp;quot;PLAYER&amp;quot;)
+if ua == nil then
+	return true
+else
+	uaexp = uaexp - GetTime()
+	if uaexp &amp;lt; 1.5  and 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; 25 then
+		return true
+	end
+end</Lua><RecastDelay>150</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bane of Doom</Name><Default>false</Default><SpellID>603</SpellID><Actions></Actions><Lua>local bod, _, _, _, _, _, bodexp = UnitDebuffID(&amp;quot;target&amp;quot;, 603, &amp;quot;PLAYER&amp;quot;)
+if bod == nil and UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; 200000 then
+	return true
+else
+	bodexp = bodexp - GetTime()
+	if bodexp &amp;lt; 14 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bane of Agony</Name><Default>false</Default><SpellID>980</SpellID><Actions></Actions><Lua>local boa, _, _, _, _, _, boaexp = UnitDebuffID(&amp;quot;target&amp;quot;, 980, &amp;quot;PLAYER&amp;quot;)
+
+if boa == nil and UnitHealthMax(&amp;quot;target&amp;quot;) &amp;lt; 200000 then
+	return true
+else
+	boaexp = boaexp - GetTime()
+	if boaexp &amp;lt; 14 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Haunt</Name><Default>false</Default><SpellID>48181</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Drain Soul</Name><Default>false</Default><SpellID>1120</SpellID><Actions></Actions><Lua>if 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;lt; 25 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowflame</Name><Default>false</Default><SpellID>47897</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Bolt</Name><Default>false</Default><SpellID>686</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 17941 ) ~= nil then return true end
+if 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; 25 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Soul Swap</Name><Default>false</Default><SpellID>86121</SpellID><Actions></Actions><Lua>local bOd = UnitDebuffID(&amp;quot;target&amp;quot;, 603, &amp;quot;PLAYER&amp;quot;)
+local bOa = UnitDebuffID(&amp;quot;target&amp;quot;, 980, &amp;quot;PLAYER&amp;quot;)
+local corrupT = UnitDebuffID(&amp;quot;target&amp;quot;, 172, &amp;quot;PLAYER&amp;quot;)
+local uA = UnitDebuffID(&amp;quot;target&amp;quot;, 30108, &amp;quot;PLAYER&amp;quot;)
+local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Soul Swap&amp;quot;,unit)
+end
+
+if inRange==1 and IsLeftShiftKeyDown() then
+	if bOd ~= nil then CastSpellByID(890) end
+	if bOa ~= nil and corrupT ~= nil and uA ~= nil then return true end
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Soul Swap: Exhale</Name><Default>false</Default><SpellID>86121</SpellID><Actions></Actions><Lua>local inRange = 0
+local unit = &amp;quot;focus&amp;quot;
+local hassoulswap = UnitBuffID(&amp;quot;player&amp;quot;, 86211)
+
+if UnitExists(unit) and UnitIsVisible(unit) then
+   inRange = IsSpellInRange(&amp;quot;Soul Swap&amp;quot;,unit)
+end
+
+if inRange==1 then
+	if hassoulswap then
+		return true
+	end
+else
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Curse of the Elements</Name><Default>false</Default><SpellID>1490</SpellID><Actions></Actions><Lua>local curse = { 1490, 85547, 60433, 65142, 34889, 24844, 93068 }
+for _,v in ipairs(curse) do
+	if UnitDebuffID(&amp;quot;target&amp;quot;, v) ~= nil then
+		return false
+	elseif UnitDebuffID(&amp;quot;target&amp;quot;, v) == nil then 
+		return true
+	end
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Focus</Name><Default>false</Default><SpellID>0</SpellID><Actions>/focus [@mouseover]</Actions><Lua>if IsRightShiftKeyDown() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() or UnitInVehicle(&amp;quot;player&amp;quot;) or IsMounted() or SpellIsTargeting() or UnitBuffID(&amp;quot;player&amp;quot;,1856) or UnitBuffID(&amp;quot;player&amp;quot;,80169) or UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil  then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 28176) == nil then
+	CastSpellByID(28176)
+elseif UnitBuffID(&amp;quot;player&amp;quot;, 19028) == nil then
+	CastSpellByID(19028)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Doom Guard</Name><Default>false</Default><SpellID>18540</SpellID><Actions></Actions><Lua>if IsLeftControlKeyDown() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Extras</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
+local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
+if fadingtime and fadingtime - GetTime() &amp;lt; 1.3 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid Hour of Twilight on Ultraxion, Delete next 3 lines if you are working as tank
+local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+if channelSpell == GetSpellInfo(109417) and endTime/1000 - GetTime() &amp;lt; 1.3 
+then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fel Flame</Name><Default>false</Default><SpellID>77799</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 89937) ~= nil or PQR_IsMoving(1) then return true end</Lua><RecastDelay>1500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Infernal</Name><Default>false</Default><SpellID>1122</SpellID><Actions></Actions><Lua>if IsRightControlKeyDown() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Life Tap</Name><Default>false</Default><SpellID>1454</SpellID><Actions></Actions><Lua>local playermana = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+local playerhealth = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if playermana &amp;lt; 20 and playerhealth &amp;gt; 50 then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></WARLOCK>

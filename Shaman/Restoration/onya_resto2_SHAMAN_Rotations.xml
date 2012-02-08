@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Rotation><RotationName>raid healing</RotationName><RotationDefault>false</RotationDefault><RotationList>Hour of Twilight|-- init|--- set scalefactor new|combat checker|canceltotems|Water Shield|Earthliving Weapon|Earth Shield|ooc pause|Cancel LB|cancel ghw|mouseclick|totems|UE|SWG|Nature&amp;apos;s Swiftness|Healing Surge|trinkets -- int|Healing Rain|Mana Tide|Riptide|Cleanse Spirit|Purge|Chain Heal|Greater Healing Wave|Healing Wave|Lightning Bolt</RotationList><RequireCombat>false</RequireCombat><RotationNotes>hold down ctrl for healing rain on cursor
+
+in combat hold down shift to spam lightning bolt instead of healing to get back mana via telluric currents
+
+out of combat hold down shift to continue healing
+</RotationNotes></Rotation></SHAMAN>

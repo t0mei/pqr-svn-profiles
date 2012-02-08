@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>Heroic Leap</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,HLeap = GetSpellCooldown(&amp;quot;Heroic Leap&amp;quot;)
+
+if HLeap == 0 and IsLeftControlKeyDown() and GetCurrentKeyBoardFocus()==nil then
+CastSpellByName(&amp;quot;Heroic Leap&amp;quot;)
+if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>---- AoE ----</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not leftkeydown then leftkeydown = 0 end
+
+if IsLeftShiftKeyDown() and GetTime() - leftkeydown &amp;gt; 0.3  then
+  leftkeydown = GetTime()
+  if AoEMode  then 
+    AoEMode  = false print(&amp;quot;Rotation mode: \124c98FB982ASingle Target&amp;quot;)
+  else 
+    AoEMode  = true print(&amp;quot;Rotation mode: \124cFFF0002AArea of Effect&amp;quot;)
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>AoErot</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>cast=CastSpellByName
+function check(sp,unit)
+   unit = unit or &amp;quot;target&amp;quot;;
+   spell = string.format(&amp;quot;%s&amp;quot;,sp)
+   if GetSpellCooldown(spell)==0 and IsUsableSpell(spell) then 
+      if SpellHasRange(spell)==1 then
+         if IsSpellInRange(spell,unit)~=1 then
+            return false
+         end
+      end
+   else 
+      return false
+   end
+   return true
+end
+
+if AoEMode then
+   if check(&amp;quot;Whirlwind&amp;quot;) then cast(&amp;quot;Whirlwind&amp;quot;) return end
+   if check(&amp;quot;Inner Rage&amp;quot;) then cast(&amp;quot;Inner Rage&amp;quot;) return end
+   if check(&amp;quot;Cleave&amp;quot;) then cast(&amp;quot;Cleave&amp;quot;) return end 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local BT = UnitBuffID(&amp;quot;player&amp;quot;, 85742)
+
+if BT ~= nil or (IR ~= nil and rage &amp;gt;= 40 and unithealth &amp;gt;= 20) then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute One</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local ExecuteTime, _, _, _, _, _, ExecuteExpireTime = UnitBuffID(&amp;quot;player&amp;quot;, 90806)
+
+if ExecuteTime ~= nil then
+ExecuteTime = ExecuteExpireTime - GetTime()
+if ExecuteTime &amp;lt;= 2 then
+	return true
+end
+else 
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute Two</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local _, _, _, count = UnitBuffID(&amp;quot;player&amp;quot;, 90806)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+		
+if unithealth &amp;lt; 20 then
+if count ~= 5 and rage &amp;gt;= 30 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bloodthirst</Name><Default>false</Default><SpellID>23881</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Colossus Smash One</Name><Default>false</Default><SpellID>86346</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+
+if csDebuff == nil and csDebuffR == nil then
+ return true
+ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Rage</Name><Default>false</Default><SpellID>1134</SpellID><Actions></Actions><Lua>local cs, csx = GetSpellCooldown(86346)
+local cscd = (cs + csx - GetTime())
+local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+
+if csDebuff ~= nil or csDebuffR ~= nil or cscd &amp;lt; 9 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Slam</Name><Default>false</Default><SpellID>1464</SpellID><Actions></Actions><Lua>local BS = UnitBuffID(&amp;quot;player&amp;quot;, 46915)
+
+if BS ~= nil then 
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute Three</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+		
+if unithealth &amp;lt; 20 and rage &amp;gt;= 50 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Two</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+
+if (incite ~= nil or (csdebuff ~= nil or csdebuffr ~= nil)) and ((rage &amp;gt;=50 or (rage &amp;gt;= 40 and IR ~= nil)) and unithealth &amp;gt;= 20) then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Three</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+
+if (incite ~= nil or (csdebuff ~= nil or csdebuffr ~= nil)) and ((rage &amp;gt;=75 or (rage &amp;gt;= 65 and IR ~= nil)) and unithealth &amp;lt; 20) then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raging Blow</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local ir, irx = GetSpellCooldown(1134)
+local ircd = (ir + irx - GetTime())
+
+if rage &amp;gt; 60 and ircd &amp;gt; 2 and IR == nil then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Four</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local BT = UnitBuffID(&amp;quot;player&amp;quot;, 85742)
+
+if rage &amp;gt;= 85 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raging Blow Two</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local ir, irx = GetSpellCooldown(1134)
+local ircd = (ir + irx - GetTime())
+
+if rage &amp;gt; 90 and IR ~= nil then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Battle Shout two</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 70 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Battle Shout</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>local BS = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;6673&amp;quot;)
+
+if BS == nil then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Berserker Rage</Name><Default>false</Default><SpellID>18499</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+local retal, retalX = GetSpellCooldown(20230)
+local retalcd = (retal + retalX - GetTime())
+
+if rage &amp;lt;= 95 and retalcd &amp;lt;= .1 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- cooldowns ---</Name><Default>false</Default><SpellID>0</SpellID><Actions>/cast Recklessness|/cast Death Wish</Actions><Lua>if IsLeftAltKeyDown() then
+return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></WARRIOR>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Rotation><RotationName>Marksmanship [7/31/3]</RotationName><RotationDefault>false</RotationDefault><RotationList>Aimed Shot Camouflage|Scatter Shot|Traplauncher|Traplauncher2|FreezingTrap|Explosive Trap|Ice Trap|Snake Trap|--- defensive spells ---|Camouflage|Misdirection|Mend Pet|Hunter&amp;apos;s Mark|Assist Tank|--- offensive spells ---|Tranquilizing Shot|Masters Call|Raptor Strike|Rapid Fire|Readiness|Aimed Shot Proc|Kill Shot|Aspect of the Fox|Steady Shot|Serpent Sting|Aspect of the Hawk|Chimera Shot|USE: Gloves|USE: Trinket 1|USE: Trinket 2|Aimed Shot|Multi-Shot|Arcane Shot</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#ccbMZfRGoGoMuroc
+
+-- Hotkeys
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to use Scatter Shot on mouseover
+Hold down LEFT CONTROL to activate Trap Launcher
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Behaviour
+Rotation pause while trap launcher is active to allow use any trap
+Serpent sting is only casted on mobs with highter hp than player
+Hunter Mark cast out of combat if target hp is highter than player hp</RotationNotes></Rotation><Rotation><RotationName>MM_PVP</RotationName><RotationDefault>false</RotationDefault><RotationList>HuntersMark|Scatter Shot|Traplauncher|Traplauncher2|FreezingTrap|Snake Trap|Ice Trap|Explosive Trap|--- defensive spells ---|Camouflage|Mend Pet|--- offensive spells ---|USE: Trinket 1|Masters Call|Tranquilizing Shot w/o Magic|Kill Shot|Aimed Shot Proc|MS Effect|Raptor Strike|Concussive Shot|Aspect of the Fox|Steady Shot|Aspect of the Hawk|Serpent Sting PVP|Chimera Shot|Aimed Shot|Multi-Shot|Arcane Shot</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#ccbMZfRGoGoMuroc
+
+-- Hotkeys
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to use Scatter Shot on mouseover
+Hold down LEFT CONTROL to activate Trap Launcher
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Behaviour
+Rotation pause while trap launcher is active to allow use any trap
+Serpent sting is only casted on mobs with highter hp than player
+Hunter Mark cast out of combat if target hp is highter than player hp</RotationNotes></Rotation><Rotation><RotationName>SV</RotationName><RotationDefault>false</RotationDefault><RotationList>Misdirection|Scatter Shot|Traplauncher|Traplauncher2|FreezingTrap|Explosive Trap|Ice Trap|Snake Trap|--- defensive spells ---|Camouflage|Mend Pet|Hunter&amp;apos;s Mark|Assist Tank|--- offensive spells ---|Tranquilizing Shot|Masters Call|Raptor Strike|Rapid Fire|Kill Shot|Aspect of the Fox|Cobra Shot|Aspect of the Hawk|Explosive Shot|USE: Trinket 1|USE: Trinket 2|Black Arrow|SV: Serpent Sting|USE: Gloves|Multi-Shot|Arcane Shot</RotationList><RequireCombat>false</RequireCombat><RotationNotes>-- Tested with this build
+http://www.wowhead.com/talent#ccbMZfRGoGoMuroc
+
+-- Hotkeys
+Hold down LEFT ALT pause rotation
+Hold down LEFT SHIFT to use Scatter Shot on mouseover
+Hold down LEFT CONTROL to activate Trap Launcher
+Tap RIGHT CONTROL to switch single/aoe rotation
+
+-- Behaviour
+Rotation pause while trap launcher is active to allow use any trap
+Serpent sting is only casted on mobs with highter hp than player
+Hunter Mark cast out of combat if target hp is highter than player hp</RotationNotes></Rotation></HUNTER>

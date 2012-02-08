@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>-- OFENSIVE SPELLS --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Change to AOE and back
+if not leftkeydown then leftkeydown = 0 end
+
+if IsLeftShiftKeyDown() and GetTime() - leftkeydown &amp;gt; 0.3  then
+  leftkeydown = GetTime()
+  if setAoE  then 
+    setAoE  = false print(&amp;quot;Rotation mode: \124cFFDBFA2ASingle target&amp;quot;)
+  else 
+    setAoE  = true print(&amp;quot;Rotation mode: \124cFFFA652AArea of Effect&amp;quot;)
+  end
+end
+
+--Global Variables Offensive
+_,_,_,_,_,_,_,_,notI = UnitCastingInfo(&amp;quot;target&amp;quot;)
+Rage = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+--Function Special Targets
+function SpecialAggro(t)
+  local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, 
+                        &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot;, 
+                        &amp;quot;Icy Tomb&amp;quot;, &amp;quot;Risen Ghoul&amp;quot;, &amp;quot;Mana Void&amp;quot;, &amp;quot;Burning Tendons&amp;quot;, &amp;quot;Wing Tentacle&amp;quot;, &amp;quot;Arm Tentacle&amp;quot;, 
+                        &amp;quot;Twilight Assault Drake&amp;quot;, &amp;quot;Goriona&amp;quot;, &amp;quot;Ice Tomb&amp;quot;, &amp;quot;Murozond&amp;quot; }
+  for _,v in ipairs(mob) do if UnitName(t) == v then return true end end
+end
+
+--Function ImmuneTarget
+function ImmuneTarget(t) 
+  local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977, 102915, 100686, 105784, 74938 }
+  for _,v in ipairs(buff) do if UnitBuffID(t,v) then return true end end
+end
+
+--Stop IF:
+if UnitIsDead(&amp;quot;target&amp;quot;)
+or ImmuneTarget(&amp;quot;target&amp;quot;)
+or not UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+or ( not UnitAffectingCombat(&amp;quot;target&amp;quot;) and not SpecialAggro(&amp;quot;target&amp;quot;) and not UnitIsPlayer(&amp;quot;target&amp;quot;) )
+or IsSpellInRange(&amp;quot;Maul&amp;quot;, &amp;quot;target&amp;quot;) == 0
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>-- DEFENSIVE SPELLS --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Global Variables Defensive
+myHP = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+Stance = GetShapeshiftForm(&amp;quot;player&amp;quot;)
+MoW = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Mark of the Wild&amp;quot;)
+BoK = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Blessing of Kings&amp;quot;)
+
+-- Stop IF:
+if IsLeftAltKeyDown()
+or Stance == 5
+or SpellIsTargeting()
+or IsMounted()
+or UnitChannelInfo(&amp;quot;player&amp;quot;)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear Form</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if Stance ~= 1 then
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 0&amp;quot;)
+	CastShapeshiftForm(1)
+	RunMacroText(&amp;quot;/console Sound_EnableSFX 1&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Barskin</Name><Default>false</Default><SpellID>22812</SpellID><Actions></Actions><Lua>if myHP &amp;lt;= 90 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Survival Instincts</Name><Default>false</Default><SpellID>61336</SpellID><Actions></Actions><Lua>if myHP &amp;lt;= 50 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mark of the Wild</Name><Default>false</Default><SpellID>1126</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) then return false
+else
+if MoW == nil and BoK == nil then return true end
+end</Lua><RecastDelay>150</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Skull Bash</Name><Default>false</Default><SpellID>80964</SpellID><Actions></Actions><Lua>if notI ~= nil then return true end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bash</Name><Default>false</Default><SpellID>5211</SpellID><Actions></Actions><Lua>Local skull = GetSpellCooldown(80964)
+
+if notI ~= nil and skull ~= nil then return true end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Faerie Fire (Bear)</Name><Default>false</Default><SpellID>16857</SpellID><Actions>/startattack</Actions><Lua>return true</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Demoralizing Roar</Name><Default>false</Default><SpellID>99</SpellID><Actions></Actions><Lua>local vindication = UnitDebuffID(&amp;quot;target&amp;quot;, 26017)
+local demoshout = UnitDebuffID(&amp;quot;target&amp;quot;, 1160)
+local curseofweakness = UnitDebuffID(&amp;quot;target&amp;quot;, 702)
+local demoroar = UnitDebuffID(&amp;quot;target&amp;quot;, 99)
+
+if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) == nil then
+	return false
+end
+
+if vindication == nil and demoshout == nil and curseofweakness == nil and demoroar == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Feral Charge (Bear)</Name><Default>false</Default><SpellID>16979</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) == nil and UnitName(&amp;quot;target&amp;quot;) ~= nil then
+	return true
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33878</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Enrage</Name><Default>false</Default><SpellID>5229</SpellID><Actions></Actions><Lua>if Rage &amp;lt; 20 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lacerate</Name><Default>false</Default><SpellID>33745</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pulverize</Name><Default>false</Default><SpellID>80313</SpellID><Actions></Actions><Lua>local _, _, _, LacerateCount = UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Lacerate&amp;quot;)
+if LacerateCount ~= nil then
+    if LacerateCount == 3 then
+        return true
+    end
+else
+    return false;
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Thrash</Name><Default>false</Default><SpellID>77758</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Swipe</Name><Default>false</Default><SpellID>779</SpellID><Actions></Actions><Lua>if setAoE 
+then return true end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Maul</Name><Default>false</Default><SpellID>6807</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>50334</SpellID><Actions></Actions><Lua>local ber = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Pulverize&amp;quot;)
+local tHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if ber ~= nil and tHP &amp;gt;= 10 then return true end</Lua><RecastDelay>300</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></DRUID>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>--- initialize ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not xeroninit then
+
+  function SpecialAggro(t)
+    local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, 
+                          &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot;, 
+                          &amp;quot;Icy Tomb&amp;quot;, &amp;quot;Risen Ghoul&amp;quot;, &amp;quot;Mana Void&amp;quot;, &amp;quot;Burning Tendons&amp;quot;, &amp;quot;Wing Tentacle&amp;quot;, &amp;quot;Arm Tentacle&amp;quot;, 
+                          &amp;quot;Twilight Assault Drake&amp;quot;, &amp;quot;Goriona&amp;quot;, &amp;quot;Ice Tomb&amp;quot;, &amp;quot;Twilight Sapper&amp;quot;, &amp;quot;Dreadlord Debilitator&amp;quot; }
+    for _,v in ipairs(mob) do if UnitName(t) == v then return true end end
+  end
+
+  function ImmuneTarget(t) 
+    local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977, 102915, 100686, 105784, 74938 }
+    for _,v in ipairs(buff) do if UnitBuffID(t,v) then return true end end
+  end
+
+  function HoldCooldown(cd)
+    if GetMinimapZoneText() == &amp;quot;Deathwing&amp;quot; and UnitName(&amp;quot;target&amp;quot;) ~= &amp;quot;Burning Tendons&amp;quot; and cd &amp;gt;= 1
+    then return true end
+    if UnitName(&amp;quot;target&amp;quot;) == &amp;quot;Warlord Zon&amp;apos;ozz&amp;quot; and not UnitDebuffID(&amp;quot;target&amp;quot;,104031) and cd &amp;gt;= 3 
+    then return true end
+    if UnitName(&amp;quot;boss1&amp;quot;) == &amp;quot;Alysrazor&amp;quot; and not UnitDebuffID(&amp;quot;boss1&amp;quot;,99432) and cd &amp;gt;= 3 
+    then return true end
+  end
+
+  if UnitLevel(&amp;quot;player&amp;quot;) ~= 85 then
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFLevel 85 is required to use this profile properly&amp;quot;)
+  end
+
+  if GetLocale() ~= &amp;quot;enUS&amp;quot; then 
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFenUS language pack is required to use this profile properly&amp;quot;)
+  end 
+
+  print(&amp;quot;Sheuron initialized, ver: \124cFFFFE6402012.02.08&amp;quot;)
+  xeroninit = true
+
+end
+
+if IsLeftAltKeyDown() 
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;player&amp;quot;,87959)
+or UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- special events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
+local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
+if fadingtime and fadingtime - GetTime() &amp;lt; 1.3 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid Hour of Twilight on Ultraxion, Delete next 3 lines if you are working as tank
+local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+if channelSpell == GetSpellInfo(109417) and endTime/1000 - GetTime() &amp;lt; 1.3 
+then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid sudden death on Madness 
+local tentacledeath = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,109597))
+if tentacledeath and tentacledeath - GetTime() &amp;lt; 1 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end
+
+-- Try to aim on Darkmoon Faerie Cannon
+local canontime = select(7,UnitBuffID(&amp;quot;player&amp;quot;,102116))
+if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;quot;player&amp;quot;,&amp;quot;Magic Wings&amp;quot;) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Chakra</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not rightkeydown then rightkeydown = 0 end
+
+if IsRightControlKeyDown() and GetTime() - rightkeydown &amp;gt; 0.3  then
+  rightkeydown = GetTime()
+  if ChakraAOE then 
+    ChakraAOE = false print(&amp;quot;Chakra state: \124cFFFFE640Serenity Enabled&amp;quot;)
+  else 
+    ChakraAOE = true print(&amp;quot;Chakra state: \124cFF40C9FFSanctuary Enabled&amp;quot;)
+  end
+end
+
+if not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+and ( UnitAffectingCombat(PQR_CustomTarget) or IsLeftShiftKeyDown() ) 
+and GetSpellCooldown(14751) == 0 
+and ( ( not UnitBuffID(&amp;quot;player&amp;quot;, 81206) and ChakraAOE and select(2,GetSpellCooldown(33076)) ~= 10 ) 
+     or ( not UnitBuffID(&amp;quot;player&amp;quot;, 81208) and not ChakraAOE ) )
+then
+  CastSpellByID(14751)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- automatic target ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not healinit then
+
+  function CalculateHP(t)
+    local incomingheal = 0
+    if UnitGetIncomingHeals(t) then incomingheal = UnitGetIncomingHeals(t)  end
+    return 100 * ( UnitHealth(t) + incomingheal ) / UnitHealthMax(t)
+  end
+
+  function SafeTarget(t)
+    if IsSpellInRange(tostring(GetSpellInfo(2050)),t) == 1 
+    and UnitIsCharmed(t) == nil
+    and UnitIsDeadOrGhost(t) == nil 
+    and UnitCanCooperate(&amp;quot;player&amp;quot;,t) 
+    and PQR_IsOutOfSight(t) == false 
+    then return true end 
+  end
+
+  function DontDispel(t)
+    local buff  = { 96328, 96325, 96326, 86788, 30108 } 
+    for _,v in ipairs(buff) do if UnitDebuffID(t,v) then return true end end
+  end
+
+  function DangerousMagic(t)
+    local buff = { 5782, 118, 122, 339, 1499, 6358, 605, 20066, 8122, 853, 5484, 71757, 104601, 107629, 99567 }
+    for _,v in ipairs(buff) do if UnitDebuffID(t,v) then return true end end
+  end
+
+  healinit = true
+
+end
+
+lowhpmembers = 0
+missingfortitude = false
+missingshadow = false
+havemending = false
+priodispel = nil
+if SafeTarget(&amp;quot;target&amp;quot;) then 
+  PQR_CustomTarget = &amp;quot;target&amp;quot; 
+  PQR_CustomTargetHP = CalculateHP(&amp;quot;target&amp;quot;) 
+elseif SafeTarget(&amp;quot;mouseover&amp;quot;) and GetMouseFocus() ~= WorldFrame then 
+  PQR_CustomTarget = &amp;quot;mouseover&amp;quot;
+  PQR_CustomTargetHP = CalculateHP(&amp;quot;mouseover&amp;quot;) 
+else 
+  PQR_CustomTarget = &amp;quot;player&amp;quot;
+  PQR_CustomTargetHP = CalculateHP(&amp;quot;player&amp;quot;)
+  local group = &amp;quot;party&amp;quot;
+  local members = GetNumPartyMembers()
+  if GetNumRaidMembers() &amp;gt; 0 then group = &amp;quot;raid&amp;quot; members = GetNumRaidMembers() end
+
+  for i = 1, members, 1 do
+    local member = group..tostring(i)
+    local memberhp = CalculateHP(member)
+    if SafeTarget(member)  then
+      if UnitBuffID(member,41635) then havemending = true end
+      if not UnitBuffID(member,79107) then missingshadow = true end
+      if not UnitBuffID(member,79105) and not UnitBuffID(member,90364) and not UnitBuffID(member,469) 
+      and not UnitBuffID(member,6307) then missingfortitude = true end
+      if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; then memberhp = memberhp - 1 end
+      if UnitThreatSituation(member) == 3 then memberhp = memberhp - 3 end
+      if memberhp &amp;lt; 90 then lowhpmembers = lowhpmembers +1 end
+      if memberhp &amp;lt; PQR_CustomTargetHP then
+        PQR_CustomTarget = member
+        PQR_CustomTargetHP = memberhp
+      end
+      if DangerousMagic(member) and not DontDispel(member) then priodispel = member end 
+
+    end
+  end
+
+  if SafeTarget(&amp;quot;pet&amp;quot;) and DangerousMagic(&amp;quot;pet&amp;quot;) and not DontDispel(&amp;quot;pet&amp;quot;) then  priodispel = &amp;quot;pet&amp;quot; end
+  if priodispel then PQR_CustomTarget = priodispel end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Protection</Name><Default>false</Default><SpellID>27683</SpellID><Actions></Actions><Lua>if ( missingshadow or not UnitBuffID(&amp;quot;player&amp;quot;, 79107) )
+and UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Power Word: Fortitude</Name><Default>false</Default><SpellID>21562</SpellID><Actions></Actions><Lua>if ( missingfortitude or not UnitBuffID(&amp;quot;player&amp;quot;, 79105) )
+and UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Fire</Name><Default>false</Default><SpellID>588</SpellID><Actions></Actions><Lua>if not UnitBuffID(&amp;quot;player&amp;quot;, 588) 
+and not UnitBuffID(&amp;quot;player&amp;quot;, 73413) 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mass Dispel</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsRightAltKeyDown() 
+and not GetCurrentKeyBoardFocus() 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then
+  CastSpellByName(tostring(GetSpellInfo(32375)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Lightwell</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsRightShiftKeyDown() 
+and not GetCurrentKeyBoardFocus() 
+and select(2,GetSpellCooldown(724)) &amp;lt; 2 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then
+  CastSpellByName(tostring(GetSpellInfo(724)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fade</Name><Default>false</Default><SpellID>586</SpellID><Actions></Actions><Lua>if UnitThreatSituation(&amp;quot;player&amp;quot;) == 3 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Arcane Torrent</Name><Default>false</Default><SpellID>28730</SpellID><Actions></Actions><Lua>if IsSpellKnown(28730) 
+and 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;lt; 80
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- healing spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not UnitAffectingCombat(PQR_CustomTarget) 
+and not IsLeftShiftKeyDown() 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;lt; 70 
+and select(2,GetSpellCooldown(34433)) &amp;lt; 2
+and UnitIsEnemy(&amp;quot;player&amp;quot;,PQR_CustomTarget..&amp;quot;target&amp;quot;) 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then 
+  CastSpellByID(34433,PQR_CustomTarget..&amp;quot;target&amp;quot;) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Guardian Spirit</Name><Default>false</Default><SpellID>47788</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 10 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dispel Magic</Name><Default>false</Default><SpellID>527</SpellID><Actions></Actions><Lua>if not DontDispel(PQR_CustomTarget) then
+  local i = 1
+  local buff,_,_,count,bufftype,duration = UnitDebuff(PQR_CustomTarget, i)
+  while buff do
+    if bufftype == &amp;quot;Magic&amp;quot; 
+    and duration &amp;gt; 6 
+    and count ~= 1 
+    and UnitIsFriend(&amp;quot;player&amp;quot;,PQR_CustomTarget) 
+    then return true end
+    i = i + 1;
+    buff,_,_,count,bufftype,duration = UnitDebuff(PQR_CustomTarget, i)
+  end
+end</Lua><RecastDelay>500</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prayer of Mending</Name><Default>false</Default><SpellID>33076</SpellID><Actions></Actions><Lua>if ( ( lowhpmembers &amp;gt; 1 and not havemending )  or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and ChakraAOE ) ) 
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and ChakraAOE ) ) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Circle of Healing</Name><Default>false</Default><SpellID>34861</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 95
+and lowhpmembers &amp;gt; 3 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Prayer of Healing</Name><Default>false</Default><SpellID>596</SpellID><Actions></Actions><Lua>if ( lowhpmembers &amp;gt; 4 or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and ChakraAOE ) ) 
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and ChakraAOE ) ) 
+and select(4,UnitBuffID(&amp;quot;player&amp;quot;, 63735)) == 2
+and PQR_IsCastingSpell(596) == false
+and PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Renew</Name><Default>false</Default><SpellID>139</SpellID><Actions></Actions><Lua>if not UnitBuffID(PQR_CustomTarget, 139,&amp;quot;PLAYER&amp;quot;) 
+and ( PQR_CustomTargetHP &amp;lt; 50 or UnitThreatSituation(PQR_CustomTarget) == 3 ) 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Holy Word</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsUsableSpell(88685) 
+and select(2,GetSpellCooldown(88685)) &amp;lt; 2 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+and PQR_IsMoving(1) == false
+then
+  CastSpellByName(tostring(GetSpellInfo(88685)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end 
+  return true
+end
+
+if PQR_CustomTargetHP &amp;lt; 95 
+and IsUsableSpell(88684) 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+and select(2,GetSpellCooldown(88684)) &amp;lt; 2 then
+  CastSpellByName(GetSpellInfo(88684),PQR_CustomTarget)
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Greater Heal</Name><Default>false</Default><SpellID>2060</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 60 
+and 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;gt; 50  
+and ( select(4,UnitBuffID(&amp;quot;player&amp;quot;, 63735)) == 2 
+   or ( select(4,UnitBuffID(&amp;quot;player&amp;quot;, 63735)) == 1 and PQR_IsCastingSpell(2061) ) )
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and not ChakraAOE ) ) 
+and PQR_IsCastingSpell(2060) == false
+and PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Binding Heal</Name><Default>false</Default><SpellID>32546</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 60 
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and not ChakraAOE ) ) 
+and 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 90 
+and not UnitIsUnit(&amp;quot;player&amp;quot;, PQR_CustomTarget) 
+and PQR_IsCastingSpell(32546) == false
+and PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flash Heal</Name><Default>false</Default><SpellID>2061</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;,88688) 
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and not ChakraAOE ) ) 
+then return true end
+
+if PQR_CustomTargetHP &amp;lt; 60 
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and not ChakraAOE ) ) 
+and 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;gt; 50 
+and PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heal</Name><Default>false</Default><SpellID>2050</SpellID><Actions></Actions><Lua>if ( PQR_CustomTargetHP &amp;lt; 95 or ( PQR_CustomTargetHP &amp;lt; 100 and not UnitBuffID(PQR_CustomTarget, 139) ) )
+and ( not UnitBuffID(&amp;quot;player&amp;quot;, 14751) or ( UnitBuffID(&amp;quot;player&amp;quot;, 14751) and not ChakraAOE ) ) 
+and PQR_IsMoving(1) == false
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Power Word: Shield</Name><Default>false</Default><SpellID>17</SpellID><Actions></Actions><Lua>if PQR_CustomTargetHP &amp;lt; 40 
+and not UnitDebuffID(PQR_CustomTarget,6788) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Extra Follow</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not SLASH_EXTRAFOLLOW1 then
+  SLASH_EXTRAFOLLOW1 = &amp;quot;/extra&amp;quot;
+  SlashCmdList.EXTRAFOLLOW = function(msg)
+    if not extrafollowactive then extrafollowactive = true else extrafollowactive = false end
+    if extrafollowactive then print(&amp;quot;Auto follow TANK enabled&amp;quot;) else print(&amp;quot;Auto follow TANK disabled&amp;quot;) end
+  end
+end
+
+if not HaveTank then
+  function HaveTank()
+    local group = &amp;quot;party&amp;quot;
+    local members = GetNumPartyMembers()
+    if GetNumRaidMembers() &amp;gt; 0 then group = &amp;quot;raid&amp;quot; members = GetNumRaidMembers() end
+    for i = 1, members, 1 do
+      local member = group..tostring(i)
+      if UnitGroupRolesAssigned(member) == &amp;quot;TANK&amp;quot; 
+      and not UnitIsDeadOrGhost(member) 
+      then return member end
+    end
+  end
+end
+
+if HaveTank() and extrafollowactive then
+  px,py = GetPlayerMapPosition(&amp;quot;player&amp;quot;)
+  tx,ty = GetPlayerMapPosition(HaveTank())
+  angle = floor ( ( math.pi - math.atan2(px-tx,ty-py) - GetPlayerFacing() ) / (math.pi*2) * 32 + 0.5 ) % 32
+  if not IsMouselooking() and px ~= 0 and tx ~= 0 then
+    if angle &amp;gt; 0 and angle &amp;lt; 16 then TurnLeftStart() end
+    if angle &amp;gt; 15 and angle &amp;lt; 31 then TurnRightStart() end
+    if angle == 31 or angle == 0 then 
+      TurnRightStop() TurnLeftStop() 
+      if not CheckInteractDistance(HaveTank(), 4) and not UnitChannelInfo(&amp;quot;player&amp;quot;) and not UnitCastingInfo(&amp;quot;player&amp;quot;) 
+      then MoveForwardStart() else MoveForwardStop() end
+    end
+    manualcontrol = false
+  end
+end
+
+if not manualcontrol and IsMouselooking() then
+  manualcontrol = true MoveForwardStop() TurnRightStop() TurnLeftStop() 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PRIEST>

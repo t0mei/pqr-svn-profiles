@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Rotation><RotationName>SV PVP</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Cooldowns --|-- Single/AoE Switch --|-- Lightwell --|-- Pet Assist --|Scatter Trap|Concussive Shot test|Widow Venom|Tranquilizing Shot|Multi-Shot|Explosive Shot|Kill Shot|Hunter&amp;apos;s Mark|Serpent Sting|Black Arrow|Arcane Shot|Mend Pet|Raptor Strike|Wing Clip|Cobra Shot|Kill Command</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Survival Single Target.
+
+Ideal single target raid dps using all cooldowns.
+
+Left CTRL for Scatter Shot + Freezing Trap. (Mouseover)
+Left SHIFT will toggle between Single Target Rotation and AoE Rotation
+
+Right SHIFT for Rapid Fire+ trinkets+CotW</RotationNotes></Rotation><Rotation><RotationName>SV PVE</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Special Events --|-- Single/AoE Switch --|-- Cooldowns --|-- Lightwell --|-- Pet Assist --|Trap Launcher|Explosive Trap|Misdirection|Tranquilizing Shot|Multi-Shot|Explosive Shot|Kill Shot|Hunter&amp;apos;s Mark|Serpent Sting|Black Arrow|Arcane Shot|Mend Pet|Cobra Shot|Raptor Strike|Kill Command</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Survival Single Target.
+
+Ideal single target raid dps using all cooldowns.
+
+Left CTRL for explosive trap via trap launcher. (Mouseover)
+Left SHIFT will toggle between Single Target Rotation and AoE Rotation
+
+Right SHIFT for Rapid Fire+ trinkets+CotW</RotationNotes></Rotation></HUNTER>

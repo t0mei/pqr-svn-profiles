@@ -1,1 +1,85 @@
-<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>PvE - Raiding (Restrictive)</RotationName><RotationDefault>false</RotationDefault><RotationList>Shadowform|Vampiric Embrace|Inner Fire|Dispersion|Vampiric Touch|Vampiric Touch (Focus)|Devouring Plague|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadowfiend (Restrictive)|Archangel (Restrictive)|Shadow Word: Death|Shadow Word: Death (Focus)|Mind Blast (Orb)|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>PvE - Raiding</RotationName><RotationDefault>false</RotationDefault><RotationList>Shadowform|Vampiric Embrace|Inner Fire|Dispersion|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Shadowfiend|Archangel|Shadow Word: Death|Shadow Word: Death (Focus)|Mind Blast (Orb)|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Focus Damage</RotationName><RotationDefault>false</RotationDefault><RotationList>Mind Blast|Shadow Word: Death (DD)|Mind Spike</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Shadow CC/Slow</RotationName><RotationDefault>false</RotationDefault><RotationList>Shadow Word: Pain (Mouseover)|Mind Flay (Mouseover)</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation><Rotation><RotationName>Dungeons/Mmana Problems</RotationName><RotationDefault>false</RotationDefault><RotationList>Shadowform|Vampiric Embrace|Inner Fire|Dispersion|Vampiric Touch|Vampiric Touch (Focus)|Devouring Plague|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadowfiend|Archangel|Shadow Word: Death (Mana)|Shadow Word: Death|Shadow Word: Death (Focus)|Mind Blast (Orb)|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes></RotationNotes></Rotation></PRIEST>
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Rotation><RotationName>PvE Raiding (Regular)</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Mass Dispel|Heroic Will|Shadow Word: Death|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Shadowfiend|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Archangel|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>PvE Raiding (4pT13)</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Mass Dispel|Heroic Will|Cancel Mind Melt|Archangel|Shadowfiend|Shadow Word: Death|Mind Blast (Opener)|Mind Spike|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>PvE - Leveling</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Renew|Dispersion|Power Word: Shield|Shadowfiend|Shadow Word: Death|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Archangel|Mind Flay|Smite</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>PvE Raiding (Regular - Boss Only)</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Mass Dispel|Heroic Will|Shadow Word: Death|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Shadowfiend (Boss Only)|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Archangel (Boss Only)|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>PvE Raiding (4pT13 - Boss Only)</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Mass Dispel|Heroic Will|Cancel Mind Melt|Archangel (Boss Only)|Shadowfiend (Boss Only)|Shadow Word: Death|Mind Blast (Opener)|Mind Spike|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>PvE Raiding (Regular +Mana)</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Mass Dispel|Heroic Will|Shadow Word: Death (Mana)|Shadow Word: Pain|Shadow Word: Pain (Focus)|Shadow Word: Pain (Mouseover)|Shadowfiend|Vampiric Touch|Vampiric Touch (Focus)|Vampiric Touch (Mouseover)|Devouring Plague|Mind Blast|Archangel|Mind Flay</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation><Rotation><RotationName>AoE</RotationName><RotationDefault>false</RotationDefault><RotationList>------ Global Variables ------|---- Buff Handler ----|Dispersion|Heroic Will|Mass Dispel|Mind Sear</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Mentally Shadow Priest Profile v4.6
+------------------------------
+New in this rotation:
+   - Added support for MB/MS spam with 4PCT13
+   - Improved DoT tracking and refreshing timers
+   - Re-implemented leveling profile
+   - Fixed: Ultraxion - Hold Left Shift to not use Heroic Will
+   - Fixed: Mass Dispel - Hold Right Alt to cast
+   - Added more profile seperations.
+
+The rotation should execute as close to perfectly as possible under any circumstances.  I&amp;apos;ve now tried to adjust DoT re-cast timers dynamically and take weight for latency and other haste buffs, they should also refresh whenever you gain any powerful Intellect proc.
+
+Will cast Shadow Word: Pain and Vampiric Touch on Focus and Mouseover targets!</RotationNotes></Rotation></PRIEST>

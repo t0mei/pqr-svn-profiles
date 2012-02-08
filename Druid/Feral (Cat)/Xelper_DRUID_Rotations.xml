@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Rotation><RotationName>Kitty PVE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: General Functions|All: Event Functions|All: Event Loader|Boss: Heroic Will|All: Return to Form|All: Rebirth Mouseover|--- offensive spells ---|All: Start Attack|Cat: Feral Charge|Cat: Cancel Tiger&amp;apos;s Fury|Cat: Faerie Fire (Feral)|Cat: Ravage|Cat: Mangle (No Debuff)|Cat: Tiger&amp;apos;s Fury|Cat: Rip|Cat: Ferocious Bite Refresh|Cat: Rake|Cat: Savage Roar|Cat: Ferocious Bite Filler|Cat: Energy Pause|Cat: Shred|Cat: Mangle</RotationList><RequireCombat>false</RequireCombat><RotationNotes>This profile does NOT manage your berserk. You should use your Berserk when you want to use it!
+
+Hold SHIFT over a dead player&amp;apos;s unit frame to Battle Rez them then return to your previous form.
+Hold ALT to prevent yourself from clicking for Hour of Twilight.
+
+</RotationNotes></Rotation><Rotation><RotationName>Kitty PVE AOE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: General Functions|All: Event Functions|All: Event Loader|Boss: Heroic Will|All: Return to Form|All: Rebirth Mouseover|--- offensive spells ---|All: Start Attack|Cat: Feral Charge|Cat: Cancel Tiger&amp;apos;s Fury|Cat: Ravage|Cat: Tiger&amp;apos;s Fury|Cat: Swipe|Cat: Faerie Fire (Feral)</RotationList><RequireCombat>false</RequireCombat><RotationNotes>This profile does NOT manage your berserk. You should use your Berserk when you want to use it!
+
+Hold SHIFT over a dead player&amp;apos;s unit frame to Battle Rez them then return to your previous form.
+Hold ALT to prevent yourself from clicking for Hour of Twilight.
+
+</RotationNotes></Rotation><Rotation><RotationName>Bear PVE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: General Functions|All: Event Functions|All: Event Loader|Boss: Heroic Will|All: Return to Form|All: Rebirth Mouseover|--- offensive spells ---|All: Start Attack|Bear: Maul|Bear: Demoralizing Roar|Bear: Faerie Fire (Feral)|Bear: Mangle|Bear: Pulverize|Bear: Lacerate</RotationList><RequireCombat>false</RequireCombat><RotationNotes>This profile does NOT manage your berserk. You should use your Berserk when you want to use it!
+
+Hold SHIFT over a dead player&amp;apos;s unit frame to Battle Rez them then return to your previous form.
+Hold ALT to prevent yourself from clicking for Hour of Twilight.
+
+</RotationNotes></Rotation><Rotation><RotationName>Bear PVE AOE</RotationName><RotationDefault>false</RotationDefault><RotationList>All: General Functions|All: Event Functions|All: Event Loader|Boss: Heroic Will|All: Return to Form|All: Rebirth Mouseover|--- offensive spells ---|All: Start Attack|Bear: Maul|Bear: Swipe|Bear: Thrash|Bear: Demoralizing Roar|Bear: Faerie Fire (Feral)|Bear: Mangle</RotationList><RequireCombat>false</RequireCombat><RotationNotes>This profile does NOT manage your berserk. You should use your Berserk when you want to use it!
+
+Hold SHIFT over a dead player&amp;apos;s unit frame to Battle Rez them then return to your previous form.
+Hold ALT to prevent yourself from clicking for Hour of Twilight.
+
+</RotationNotes></Rotation></DRUID>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Rotation><RotationName>LFR_25</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Special Events by Sheuron --|-- Functions --|MotW|Set Focus|Lifebloom|Wild Growth|Self Reju|Swiftmend|Use: Gloves|Use: Trinket 1|Use: Trinket 2</RotationList><RequireCombat>false</RequireCombat><RotationNotes>This profile is only intended to LFR 25m.
+
+What it does:
+-Cast MotW on urself if your out of combat and dont have the buff.
+-Cast Lifebloom on your focus target, stack to 3 and keep it stacked on unless you keep pressed LEFT ALT to allow it to bloom and do a big heal. You have to manually select your focus. Preferly a TANK.
+-Cast Rejuvenation on yourself, so you can use Swiftmend.
+-Cast Wild Growth on every CoolDown.
+-Cast Swiftmend on every CoolDown.
+
+How to make the most healing out of it:
+-Always stay in a place were theres alot of ppl, so you can always make the best use of Wild Growth, and Swiftmend.
+
+Manualy use TRANQUILITY and TREE OF LIFE FORM to improve even more your healing. Use your brain when using this 2 abilitys. Better to use them when you know there will be alot of raid damage.</RotationNotes></Rotation></DRUID>

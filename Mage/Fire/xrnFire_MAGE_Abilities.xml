@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?><MAGE><Ability><Name>--- initialize ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not xeroninit then
+
+  function SpecialAggro(t)
+    local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, 
+                          &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot;, 
+                          &amp;quot;Icy Tomb&amp;quot;, &amp;quot;Risen Ghoul&amp;quot;, &amp;quot;Mana Void&amp;quot;, &amp;quot;Burning Tendons&amp;quot;, &amp;quot;Wing Tentacle&amp;quot;, &amp;quot;Arm Tentacle&amp;quot;, 
+                          &amp;quot;Twilight Assault Drake&amp;quot;, &amp;quot;Goriona&amp;quot;, &amp;quot;Ice Tomb&amp;quot;, &amp;quot;Twilight Sapper&amp;quot;, &amp;quot;Dreadlord Debilitator&amp;quot; }
+    for _,v in ipairs(mob) do if UnitName(t) == v then return true end end
+  end
+
+  function ImmuneTarget(t) 
+    local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977, 102915, 100686, 105784, 74938 }
+    for _,v in ipairs(buff) do if UnitBuffID(t,v) then return true end end
+  end
+
+  function HoldCooldown(cd)
+    if GetMinimapZoneText() == &amp;quot;Deathwing&amp;quot; and UnitName(&amp;quot;target&amp;quot;) ~= &amp;quot;Burning Tendons&amp;quot; and cd &amp;gt;= 1
+    then return true end
+    if UnitName(&amp;quot;target&amp;quot;) == &amp;quot;Warlord Zon&amp;apos;ozz&amp;quot; and not UnitDebuffID(&amp;quot;target&amp;quot;,104031) and cd &amp;gt;= 3 
+    then return true end
+    if UnitName(&amp;quot;boss1&amp;quot;) == &amp;quot;Alysrazor&amp;quot; and not UnitDebuffID(&amp;quot;boss1&amp;quot;,99432) and cd &amp;gt;= 3 
+    then return true end
+  end
+
+  if UnitLevel(&amp;quot;player&amp;quot;) ~= 85 then
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFLevel 85 is required to use this profile properly&amp;quot;)
+  end
+
+  if GetLocale() ~= &amp;quot;enUS&amp;quot; then 
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFenUS language pack is required to use this profile properly&amp;quot;)
+  end 
+
+  print(&amp;quot;Sheuron initialized, ver: \124cFFFFE6402012.02.08&amp;quot;)
+  xeroninit = true
+end
+
+if IsLeftAltKeyDown() 
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;player&amp;quot;,87959)
+or UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- special events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
+local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
+if fadingtime and fadingtime - GetTime() &amp;lt; 1.3 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid Hour of Twilight on Ultraxion, Delete next 3 lines if you are working as tank
+local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+if channelSpell == GetSpellInfo(109417) and endTime/1000 - GetTime() &amp;lt; 1.3 
+then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid sudden death on Madness 
+local tentacledeath = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,109597))
+if tentacledeath and tentacledeath - GetTime() &amp;lt; 1 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end
+
+-- Try to aim on Darkmoon Faerie Cannon
+local canontime = select(7,UnitBuffID(&amp;quot;player&amp;quot;,102116))
+if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;quot;player&amp;quot;,&amp;quot;Magic Wings&amp;quot;) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Ice Block</Name><Default>false</Default><SpellID>45438</SpellID><Actions></Actions><Lua>if 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 10 
+and UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Molten Armor</Name><Default>false</Default><SpellID>30482</SpellID><Actions></Actions><Lua>if not UnitBuffID(&amp;quot;player&amp;quot;, 30482) 
+and not UnitBuffID(&amp;quot;player&amp;quot;, 6117) 
+and not UnitBuffID(&amp;quot;player&amp;quot;, 7302) 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Arcane Brilliance</Name><Default>false</Default><SpellID>1459</SpellID><Actions></Actions><Lua>if not UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+
+local mytarget = nil
+local mytargetmana = 0
+local doneFM = false
+local allinrange = true
+local missint = false
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberpower = UnitPowerMax(member)
+  if UnitBuffID(member, 54646,&amp;quot;PLAYER&amp;quot;) then doneFM = true end 
+  if not UnitBuffID(member, 1459) and not UnitBuffID(member, 61316) then missint = true end
+  if not UnitInRange(member) or UnitIsDeadOrGhost(member) then allinrange = false end
+  if memberpower &amp;gt; mytargetmana 
+  and not UnitIsUnit(&amp;quot;player&amp;quot;,member) 
+  and not UnitIsDeadOrGhost(member) 
+  and not UnitBuffID(member, 54646)
+  then mytarget = member mytargetmana = memberpower end
+end
+
+if mytarget and not doneFM and allinrange and IsSpellKnown(54646) 
+then CastSpellByID(54646, mytarget) end
+
+if ( allinrange and missint )
+or ( not UnitBuffID(&amp;quot;player&amp;quot;, 1459) and not UnitBuffID(&amp;quot;player&amp;quot;, 61316) )
+then return true end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mana Gem</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if createdmanagem and GetTime() - createdmanagem &amp;gt; 4 then createdmanagem = nil end
+
+if GetItemCount(36799) == 0 
+and not createdmanagem 
+and not UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+and not UnitCastingInfo(&amp;quot;player&amp;quot;) 
+and PQR_IsMoving(1) == false
+then 
+  CastSpellByID(759) 
+  createdmanagem = GetTime()
+  return true 
+end
+
+if 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;lt; 90 
+and GetItemCount(36799) == 1 
+and GetItemCooldown(36799) == 0 
+and UnitAffectingCombat(&amp;quot;player&amp;quot;)  
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+and (UnitBuffID(&amp;quot;player&amp;quot;,12042) or IsSpellKnown(12042) == false)
+then 
+  local name = GetItemInfo(36799)
+  UseItemByName(name)
+  return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Evocation</Name><Default>false</Default><SpellID>12051</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+and 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) &amp;lt; 35 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Assist Tank</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if GetNumPartyMembers() &amp;gt; 0 and not UnitInRaid(&amp;quot;player&amp;quot;) then
+
+local heisthetank = nil
+
+for i = 1, GetNumPartyMembers(), 1 do
+  if UnitGroupRolesAssigned(&amp;quot;party&amp;quot;..tostring(i)) == &amp;quot;TANK&amp;quot; then heisthetank = &amp;quot;party&amp;quot;..tostring(i) end
+end
+
+if heisthetank 
+and not UnitExists(&amp;quot;target&amp;quot;) 
+and UnitAffectingCombat(heisthetank) 
+and UnitAffectingCombat(heisthetank..&amp;quot;target&amp;quot;) 
+and not UnitIsDead(heisthetank..&amp;quot;target&amp;quot;) 
+and UnitCanAttack(&amp;quot;player&amp;quot;,heisthetank..&amp;quot;target&amp;quot;)
+then TargetUnit(heisthetank..&amp;quot;target&amp;quot;) end
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- offensive spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitIsDead(&amp;quot;target&amp;quot;) 
+or ImmuneTarget(&amp;quot;target&amp;quot;) 
+or not UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+or ( not UnitAffectingCombat(&amp;quot;target&amp;quot;) and not SpecialAggro(&amp;quot;target&amp;quot;) and not UnitIsPlayer(&amp;quot;target&amp;quot;) )
+or IsSpellInRange(tostring(GetSpellInfo(133)),&amp;quot;target&amp;quot;) == 0 
+or UnitBuffID(&amp;quot;player&amp;quot;,32612)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Spellsteal</Name><Default>false</Default><SpellID>30449</SpellID><Actions></Actions><Lua>if not StealThisBuff then
+  function StealThisBuff(t)
+    local buff = { 43242, 92965, 93631, 76634, 88186, 76307, 31884, 2825, 32182, 80353, 1719, 17, 33763, 96802, 
+                         6940, 102599, 89542, 11426 }
+    for _,v in ipairs(buff) do if UnitBuffID(t,v) then return true end end
+  end
+end
+
+if StealThisBuff(&amp;quot;target&amp;quot;) then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Gloves</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,10)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(10) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(13) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(14) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mirror Image</Name><Default>false</Default><SpellID>55342</SpellID><Actions></Actions><Lua>if UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;)*10 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flame Orb</Name><Default>false</Default><SpellID>82731</SpellID><Actions></Actions><Lua>if PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Combustion</Name><Default>false</Default><SpellID>11129</SpellID><Actions></Actions><Lua>if UnitDebuffID(&amp;quot;target&amp;quot;, 44457,&amp;quot;PLAYER&amp;quot;) 
+and UnitDebuffID(&amp;quot;target&amp;quot;, 12654,&amp;quot;PLAYER&amp;quot;) 
+and UnitDebuffID(&amp;quot;target&amp;quot;, 92315,&amp;quot;PLAYER&amp;quot;) 
+and not HoldCooldown(1)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Living bomb</Name><Default>false</Default><SpellID>44457</SpellID><Actions></Actions><Lua>if not CheckLV then
+  function CheckLV(t)
+    if IsSpellInRange(tostring(GetSpellInfo(133)),t) == 1 
+    and not UnitDebuffID(t,44457,&amp;quot;PLAYER&amp;quot;) 
+    and UnitHealth(t) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;) 
+    and UnitCanAttack(&amp;quot;player&amp;quot;,t) 
+    and not UnitIsDeadOrGhost(t) 
+    and not PQR_IsOutOfSight(t) 
+    then return true end 
+  end
+end
+
+if CheckLV(&amp;quot;target&amp;quot;) then 
+  PQR_CustomTarget = &amp;quot;target&amp;quot;
+  return true
+elseif CheckLV(&amp;quot;focus&amp;quot;) then 
+  PQR_CustomTarget = &amp;quot;focus&amp;quot;
+  return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Pyroblast!</Name><Default>false</Default><SpellID>92315</SpellID><Actions></Actions><Lua>if not UnitChannelInfo(&amp;quot;player&amp;quot;) then
+  CastSpellByName(tostring(GetSpellInfo(92315)))
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fire Blast</Name><Default>false</Default><SpellID>2136</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and not GetCurrentKeyBoardFocus() 
+and UnitDebuffID(&amp;quot;target&amp;quot;,44457,&amp;quot;PLAYER&amp;quot;) 
+and UnitBuffID(&amp;quot;player&amp;quot;, 64343) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dragon&amp;apos;s Breath</Name><Default>false</Default><SpellID>31661</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and not GetCurrentKeyBoardFocus() 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;)  
+and CheckInteractDistance(&amp;quot;target&amp;quot;, 3) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Blast Wave</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and not GetCurrentKeyBoardFocus() 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+and select(2,GetSpellCooldown(11113)) ~= 15 
+then 
+  CastSpellByName(tostring(GetSpellInfo(11113)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end 
+  return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Flamestrike</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() and not GetCurrentKeyBoardFocus() 
+and not UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then 
+  CastSpellByName(tostring(GetSpellInfo(2120)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end 
+  return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Fireball</Name><Default>false</Default><SpellID>133</SpellID><Actions></Actions><Lua>if ( UnitDebuffID(&amp;quot;target&amp;quot;, 22959) or UnitDebuffID(&amp;quot;target&amp;quot;, 17800) or PQR_IsCastingSpell(2948) ) 
+and PQR_IsMoving(1) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Scorch</Name><Default>false</Default><SpellID>2948</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></MAGE>

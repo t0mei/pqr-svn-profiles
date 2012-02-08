@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Rotation><RotationName>Arms PvE</RotationName><RotationDefault>false</RotationDefault><RotationList>--- Function ---|--- Pause ---|Heroic Leap|++ Defensive Cooldowns ++|--- Special Events ---|--- Lightwell ---|--- Healthstone ---|! Autotarget|! Autoattack|Retaliation|Sunder|Executioner|Berserker Rage|Deadly Calm|! Blood Fury|! Trinket 1|! Trinket 2|--- Potion ---|--- AoE ---|Inner Rage|Rend|Overpower|--- Berserker Stance ---|Mortal Strike|Colossus Smash|Execute|--- Battle Stance ---|Slam|Heroic Strike|Battle Shout</RotationList><RequireCombat>true</RequireCombat><RotationNotes>- Left Alt will cast Defensive Cooldowns and will stay out on &amp;quot;Hour of Twilight.&amp;quot;
+- Left Control will Heroic Leap.
+- Left Shift will cast AoE.
+- Right Control will Pause rotation.
+
+1.  Go In Game and setup your &amp;quot;equipset&amp;quot; .
+ -Open up your &amp;quot;Character Info&amp;quot;
+-Go to &amp;quot;Equipment Manager&amp;quot; and hit &amp;quot;New Set&amp;quot;
+-You are going to create TWO  sets. One named &amp;quot;Shield&amp;quot; with upper case &amp;quot;S&amp;quot; and another 	named &amp;quot;2h&amp;quot;
+- For &amp;quot;Shield&amp;quot; you will [X] everything out other than your 1hand weapon and shield.
+-For &amp;quot;2h&amp;quot; you will [X] everything out other than your 2hand weapon.
+-Make sure to update with new gear!
+
+2.  Time to make some In Game Macros!
+- You will use these to toggle the abilities on/off.
+
+-Name First macro &amp;quot;SUNDER&amp;quot; all upper case.
+
+#showtooltip
+/run RegisterCVar(&amp;quot;SUNDER&amp;quot;,&amp;quot;no&amp;quot;)    
+/run if GetCVar(&amp;quot;SUNDER&amp;quot;)==&amp;quot;no&amp;quot; then SetCVar(&amp;quot;SUNDER&amp;quot;,&amp;quot;yes&amp;quot;) SetMacroSpell(&amp;quot;SUNDER&amp;quot;,&amp;quot;Sunder Armor&amp;quot;) return elseif GetCVar(&amp;quot;SUNDER&amp;quot;)==&amp;quot;yes&amp;quot; then SetCVar(&amp;quot;SUNDER&amp;quot;,&amp;quot;no&amp;quot;) SetMacroSpell(&amp;quot;SUNDER&amp;quot;,&amp;quot;Throw&amp;quot;) end
+
+-Name Second macro &amp;quot;TC&amp;quot; all upper case.
+
+#showtooltip
+/run RegisterCVar(&amp;quot;TC&amp;quot;,&amp;quot;no&amp;quot;)
+/run if GetCVar(&amp;quot;TC&amp;quot;)==&amp;quot;no&amp;quot; then SetCVar(&amp;quot;TC&amp;quot;,&amp;quot;yes&amp;quot;) SetMacroSpell(&amp;quot;TC&amp;quot;,&amp;quot;Thunder Clap&amp;quot;) return elseif GetCVar(&amp;quot;TC&amp;quot;)==&amp;quot;yes&amp;quot; then SetCVar(&amp;quot;TC&amp;quot;,&amp;quot;no&amp;quot;) SetMacroSpell(&amp;quot;TC&amp;quot;,&amp;quot;Throw&amp;quot;) end
+
+</RotationNotes></Rotation><Rotation><RotationName>test</RotationName><RotationDefault>false</RotationDefault><RotationList>Execute|Executioner</RotationList><RequireCombat>true</RequireCombat><RotationNotes></RotationNotes></Rotation></WARRIOR>

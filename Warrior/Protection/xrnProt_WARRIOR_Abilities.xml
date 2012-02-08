@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>--- initialize ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not xeroninit then
+
+  function SpecialAggro(t)
+    local mob = { &amp;quot;Training Dummy&amp;quot;, &amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;, &amp;quot;Twisted Spirit&amp;quot;, &amp;quot;Amani´shi Hatcher&amp;quot;, &amp;quot;Hakkar&amp;apos;s Chains&amp;quot;, 
+                          &amp;quot;Exposed Head of Magmaw&amp;quot;, &amp;quot;Battleground Demolisher&amp;quot;, &amp;quot;Ozumat&amp;quot;, &amp;quot;Right Foot&amp;quot;, &amp;quot;Left Foot&amp;quot;, 
+                          &amp;quot;Icy Tomb&amp;quot;, &amp;quot;Risen Ghoul&amp;quot;, &amp;quot;Mana Void&amp;quot;, &amp;quot;Burning Tendons&amp;quot;, &amp;quot;Wing Tentacle&amp;quot;, &amp;quot;Arm Tentacle&amp;quot;, 
+                          &amp;quot;Twilight Assault Drake&amp;quot;, &amp;quot;Goriona&amp;quot;, &amp;quot;Ice Tomb&amp;quot;, &amp;quot;Twilight Sapper&amp;quot;, &amp;quot;Dreadlord Debilitator&amp;quot; }
+    for _,v in ipairs(mob) do if UnitName(t) == v then return true end end
+  end
+
+  function ImmuneTarget(t) 
+    local buff = { 642, 45438, 31224, 23920, 33786, 19263, 97417, 97977, 102915, 100686, 105784, 74938 }
+    for _,v in ipairs(buff) do if UnitBuffID(t,v) then return true end end
+  end
+
+  function HoldCooldown(cd)
+    if GetMinimapZoneText() == &amp;quot;Deathwing&amp;quot; and UnitName(&amp;quot;target&amp;quot;) ~= &amp;quot;Burning Tendons&amp;quot; and cd &amp;gt;= 1
+    then return true end
+    if UnitName(&amp;quot;target&amp;quot;) == &amp;quot;Warlord Zon&amp;apos;ozz&amp;quot; and not UnitDebuffID(&amp;quot;target&amp;quot;,104031) and cd &amp;gt;= 3 
+    then return true end
+    if UnitName(&amp;quot;boss1&amp;quot;) == &amp;quot;Alysrazor&amp;quot; and not UnitDebuffID(&amp;quot;boss1&amp;quot;,99432) and cd &amp;gt;= 3 
+    then return true end
+  end
+
+  if UnitLevel(&amp;quot;player&amp;quot;) ~= 85 then
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFLevel 85 is required to use this profile properly&amp;quot;)
+  end
+
+  if GetLocale() ~= &amp;quot;enUS&amp;quot; then 
+    print(&amp;quot;\124cFFD12727WARNING: \124cFFFFFFFFenUS language pack is required to use this profile properly&amp;quot;)
+  end 
+
+  print(&amp;quot;Sheuron initialized, ver: \124cFFFFE6402012.02.08&amp;quot;)
+  xeroninit = true
+
+end
+
+if IsLeftAltKeyDown() 
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;player&amp;quot;,87959)
+or UnitChannelInfo(&amp;quot;player&amp;quot;) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- special events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
+local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
+if fadingtime and fadingtime - GetTime() &amp;lt; 1.3 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid Hour of Twilight on Ultraxion, Delete next 3 lines if you are working as tank
+-- local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+-- if channelSpell == GetSpellInfo(109417) and endTime/1000 - GetTime() &amp;lt; 1.3 
+-- then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
+
+-- Avoid sudden death on Madness 
+local tentacledeath = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,109597))
+if tentacledeath and tentacledeath - GetTime() &amp;lt; 1 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end
+
+-- Try to aim on Darkmoon Faerie Cannon
+local canontime = select(7,UnitBuffID(&amp;quot;player&amp;quot;,102116))
+if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;quot;player&amp;quot;,&amp;quot;Magic Wings&amp;quot;) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Command / Battle Shout</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not rightkeydown then rightkeydown = 0 end
+
+if IsRightControlKeyDown() and GetTime() - rightkeydown &amp;gt; 0.3  then
+  rightkeydown = GetTime()
+  if setAoE  then 
+    setAoE  = false print(&amp;quot;Rotation mode: \124cFFDBFA2ASingle target&amp;quot;)
+  else 
+    setAoE  = true print(&amp;quot;Rotation mode: \124cFFFA652AArea of Effect&amp;quot;)
+  end
+end
+
+if UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+and select(2,GetSpellCooldown(469)) &amp;lt; 2
+and UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 60 
+then
+  if UnitBuffID(&amp;quot;player&amp;quot;, 79105) == nil 
+  and UnitBuffID(&amp;quot;player&amp;quot;, 90364) == nil 
+  and UnitBuffID(&amp;quot;player&amp;quot;, 6307) == nil  
+  and (UnitBuffID(&amp;quot;player&amp;quot;,469) == nil or select(8,UnitBuffID(&amp;quot;player&amp;quot;,469)) == &amp;quot;player&amp;quot;)
+  then 
+    CastSpellByID(469) 
+    return true
+  else 
+    CastSpellByID(6673) 
+    return true 
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vigilance</Name><Default>false</Default><SpellID>50720</SpellID><Actions></Actions><Lua>if not UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+
+local mytarget = nil
+local mytargethp = 0
+local doneVG = nil
+local allinrange = true
+local group = &amp;quot;party&amp;quot;
+local members = GetNumPartyMembers()
+
+if GetNumRaidMembers() &amp;gt; 0 then
+  group = &amp;quot;raid&amp;quot;
+  members = GetNumRaidMembers()
+end
+
+for i = 1, members, 1 do
+  local member = group..tostring(i)
+  local memberhp = UnitHealthMax(member)
+  if UnitBuffID(member,50720,&amp;quot;PLAYER&amp;quot;) then doneVG = 1 end
+  if not UnitInRange(member) then allinrange = false end
+  if memberhp &amp;gt; mytargethp 
+  and UnitInRange(member) 
+  and not UnitIsUnit(&amp;quot;player&amp;quot;,member) 
+  and not UnitBuffID(member,50720)
+  and UnitGroupRolesAssigned(&amp;quot;target&amp;quot;) ~= &amp;quot;HEALER&amp;quot; then
+    mytarget = member
+    mytargethp = memberhp
+  end
+end
+
+if mytarget and not doneVG and allinrange and not UnitIsDead(mytarget) 
+then PQR_CustomTarget = mytarget return true end
+
+end</Lua><RecastDelay>500</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shield Block</Name><Default>false</Default><SpellID>2565</SpellID><Actions></Actions><Lua>if 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 90 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Enraged Regeneration</Name><Default>false</Default><SpellID>55694</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 12976) 
+and 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 90 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- offensive spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitIsDead(&amp;quot;target&amp;quot;) 
+or ImmuneTarget(&amp;quot;target&amp;quot;) 
+or not UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+or tonumber(UnitGUID(&amp;quot;target&amp;quot;):sub(5,5),16) == 4
+or ( not UnitAffectingCombat(&amp;quot;target&amp;quot;) and not SpecialAggro(&amp;quot;target&amp;quot;) and not UnitIsPlayer(&amp;quot;target&amp;quot;) )
+or ( UnitGroupRolesAssigned(&amp;quot;targettarget&amp;quot;) == &amp;quot;TANK&amp;quot; and UnitIsUnit(&amp;quot;player&amp;quot;,&amp;quot;targettarget&amp;quot;) == nil and not setAoE ) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Gloves</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,10)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(10) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(13) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>USE: Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,cd,havecd = GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14)
+
+if cd == 0 and havecd == 1  
+and UnitChannelInfo(&amp;quot;player&amp;quot;) == nil 
+then 
+  UseInventoryItem(14) 
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Throw</Name><Default>false</Default><SpellID>57755</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) == nil 
+and CheckInteractDistance(&amp;quot;target&amp;quot;, 1) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Concussion Blow</Name><Default>false</Default><SpellID>12809</SpellID><Actions></Actions><Lua>if GetSpellCooldown(6552) ~= 0 
+and select(9,UnitCastingInfo(&amp;quot;target&amp;quot;)) == false 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Victory Rush</Name><Default>false</Default><SpellID>34428</SpellID><Actions></Actions><Lua>if 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) &amp;lt; 80 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Rage</Name><Default>false</Default><SpellID>1134</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;gt;= 90 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike / Cleave</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitPower(&amp;quot;player&amp;quot;) &amp;gt;= 65 
+and GetSpellCooldown(78) == 0 
+then
+  if setAoE then 
+    CastSpellByID(845) 
+    return true
+  else 
+    CastSpellByID(78) 
+    return true 
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shockwave</Name><Default>false</Default><SpellID>46968</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) 
+and setAoE 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Thunder Clap</Name><Default>false</Default><SpellID>6343</SpellID><Actions></Actions><Lua>if CheckInteractDistance(&amp;quot;target&amp;quot;, 3) 
+and ( UnitDebuffID(&amp;quot;target&amp;quot;, 6343) == nil or setAoE ) 
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shield Slam</Name><Default>false</Default><SpellID>23922</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Revenge</Name><Default>false</Default><SpellID>6572</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rend</Name><Default>false</Default><SpellID>772</SpellID><Actions></Actions><Lua>if not UnitDebuffID(&amp;quot;target&amp;quot;, 94009,&amp;quot;PLAYER&amp;quot;) 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Demoralizing Shout</Name><Default>false</Default><SpellID>1160</SpellID><Actions></Actions><Lua>if not UnitDebuffID(&amp;quot;target&amp;quot;, 1160) 
+then return true end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Devastate</Name><Default>false</Default><SpellID>20243</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Taunt</Name><Default>false</Default><SpellID>355</SpellID><Actions></Actions><Lua>if not ShouldTaunt then
+  function ShouldTaunt()
+    if UnitInRange(&amp;quot;targettarget&amp;quot;) 
+    and not UnitIsUnit(&amp;quot;player&amp;quot;,&amp;quot;targettarget&amp;quot;) 
+    and UnitThreatSituation(&amp;quot;player&amp;quot;,&amp;quot;targettarget&amp;quot;) ~= 3 then 
+
+      local debuff = { 103687, 104849, 108043, 101239 }
+      for _,v in ipairs(debuff) do 
+        local debuffstacks = select(4,UnitDebuffID(&amp;quot;targettarget&amp;quot;,v))
+        if debuffstacks and debuffstacks &amp;gt; 2 and not UnitDebuffID(&amp;quot;player&amp;quot;,v) then return true end     
+      end
+
+      local debuff = { 110078, 104936, 101007, 95172, 99476 }
+      for _,v in ipairs(debuff) do 
+        if UnitDebuffID(&amp;quot;targettarget&amp;quot;,v) and not UnitDebuffID(&amp;quot;player&amp;quot;,v) then return true end 
+      end
+
+      if UnitChannelInfo(&amp;quot;target&amp;quot;) == GetSpellInfo(109631) then return true end 
+
+    end
+  end
+end
+
+if ShouldTaunt() then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></WARRIOR>

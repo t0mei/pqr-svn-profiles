@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Rotation><RotationName>moonkin</RotationName><RotationDefault>false</RotationDefault><RotationList>Insect swarm|Moonfire|Sunfire|Innervate|Force of Nature|Starsurge|Starfire (solar)|Starfire (none)|Wrath (lunar)|Wild Mushrooms|Starfall|Detonate</RotationList><RequireCombat>true</RequireCombat><RotationNotes>AoE:
+- Hold Left Shift To Use Mushrooms on MouseOver Location
+- Starfall will cast when 3 Mushrooms are up
+
+-It will still Single Target More than AoE. If needed, Can make a Whole New Rotation For Just AoE.</RotationNotes></Rotation></DRUID>

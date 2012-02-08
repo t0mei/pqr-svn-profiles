@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>Heroic Leap</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,HLeap = GetSpellCooldown(&amp;quot;Heroic Leap&amp;quot;)
+
+if HLeap == 0 and IsLeftControlKeyDown() and GetCurrentKeyBoardFocus()==nil then
+CastSpellByName(&amp;quot;Heroic Leap&amp;quot;)
+if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>---- AoE ----</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not leftkeydown then leftkeydown = 0 end
+
+if IsLeftShiftKeyDown() and GetTime() - leftkeydown &amp;gt; 0.3  then
+  leftkeydown = GetTime()
+  if AoEMode  then 
+    AoEMode  = false print(&amp;quot;Rotation mode: \124c98FB982ASingle Target&amp;quot;)
+  else 
+    AoEMode  = true print(&amp;quot;Rotation mode: \124cFFF0002AArea of Effect&amp;quot;)
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>AoErot</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>cast=CastSpellByName
+function check(sp,unit)
+   unit = unit or &amp;quot;target&amp;quot;;
+   spell = string.format(&amp;quot;%s&amp;quot;,sp)
+   if GetSpellCooldown(spell)==0 and IsUsableSpell(spell) then 
+      if SpellHasRange(spell)==1 then
+         if IsSpellInRange(spell,unit)~=1 then
+            return false
+         end
+      end
+   else 
+      return false
+   end
+   return true
+end
+
+if AoEMode then
+   if check(&amp;quot;Whirlwind&amp;quot;) then cast(&amp;quot;Whirlwind&amp;quot;) return end
+   if check(&amp;quot;Inner Rage&amp;quot;) then cast(&amp;quot;Inner Rage&amp;quot;) return end
+   if check(&amp;quot;Cleave&amp;quot;) then cast(&amp;quot;Cleave&amp;quot;) return end 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+local cs, csx = GetSpellCooldown(86346)
+local cscd = (cs + csx - GetTime())
+
+if (cscd &amp;gt; 5 or csx == 0) and (rage &amp;gt;= 85 or (IR ~= nil and rage &amp;gt;= 75)) and unithealth &amp;gt;= 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute One</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local ExecuteTime, _, _, _, _, _, ExecuteExpireTime = UnitBuffID(&amp;quot;player&amp;quot;, 90806)
+
+if ExecuteTime ~= nil then
+ExecuteTime = ExecuteExpireTime - GetTime()
+if ExecuteTime &amp;lt;= 2 then
+	return true
+end
+else 
+return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute Two</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local _, _, _, count = UnitBuffID(&amp;quot;player&amp;quot;, 90806)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+		
+if unithealth &amp;lt; 20 then
+if count ~= 5 and rage &amp;gt;= 30 then
+return true
+end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bloodthirst</Name><Default>false</Default><SpellID>23881</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if unithealth &amp;gt; 20 then
+return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Colossus Smash One</Name><Default>false</Default><SpellID>86346</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if csDebuff == nil and csDebuffR == nil and btcd &amp;gt;= 1 and unithealth &amp;gt; 22 then
+ return true
+ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Rage</Name><Default>false</Default><SpellID>1134</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+
+if ((rage &amp;gt;= 75 and unithealth &amp;gt;= 20) or ((incite ~= nil or (csDebuff ~= nil or csDebuffR ~= nil)) and ((rage &amp;gt;= 40 and unithealth &amp;gt;= 20) or (rage &amp;gt;= 65 and unithealth &amp;lt;20)))) then
+
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Slam</Name><Default>false</Default><SpellID>1464</SpellID><Actions></Actions><Lua>local BS = UnitBuffID(&amp;quot;player&amp;quot;, 46915)
+local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local DW = UnitBuffID(&amp;quot;player&amp;quot;, 12292)
+local EN = UnitBuffID(&amp;quot;player&amp;quot;, 13046)
+local UF = UnitBuffID(&amp;quot;player&amp;quot;, 49016)
+local BR = UnitBuffID(&amp;quot;player&amp;quot;, 18499)
+local rb, rbx = GetSpellCooldown(85288)
+local rbcd = (rb + rbx - GetTime())
+
+if BS ~= nil and btcd &amp;gt;= 1 and unithealth &amp;gt; 20 and ((DW == nil and EN == nil and UF == nil or BR == nil) or rbcd &amp;gt;=1)  then 
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute Three</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+		
+if unithealth &amp;lt; 20 and rage &amp;gt;= 50 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Two</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+local BT = UnitBuffID(&amp;quot;player&amp;quot;, 85742)
+
+if BT ~= nil and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Three</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local incite = UnitBuffID(&amp;quot;player&amp;quot;, 50687)
+local cs, csx = GetSpellCooldown(86346)
+local cscd = (cs + csx - GetTime())
+
+if (cscd &amp;gt; 5 or csx == 0) and unithealth &amp;gt; 20 and (incite ~= nil or (csDebuff ~= nil or csDebuffR ~= nil)) and (((rage &amp;gt;= 50 or (rage &amp;gt;= 40 and IR ~= nil)) and unithealth &amp;gt;= 20) or ((rage &amp;gt;= 75 or (rage &amp;gt;= 65 and IR ~= nil)) and unithealth &amp;lt;20)) then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raging Blow</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if btcd &amp;gt;= 1 and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike Four</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local BT = UnitBuffID(&amp;quot;player&amp;quot;, 85742)
+
+if rage &amp;gt;= 85 and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Raging Blow Two</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>local IR = UnitBuffID(&amp;quot;player&amp;quot;, 1134)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local ir, irx = GetSpellCooldown(1134)
+local ircd = (ir + irx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if rage &amp;gt; 90 and IR ~= nil and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Battle Shout two</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 70 and btcd &amp;gt;= 1 and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Battle Shout</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>local BS = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;6673&amp;quot;)
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if BS == nil and unithealth &amp;gt; 20 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Berserker Rage</Name><Default>false</Default><SpellID>18499</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+local retal, retalX = GetSpellCooldown(20230)
+local DW = UnitBuffID(&amp;quot;player&amp;quot;, 12292)
+local EN = UnitBuffID(&amp;quot;player&amp;quot;, 13046)
+local UF = UnitBuffID(&amp;quot;player&amp;quot;, 49016)
+local BR = UnitBuffID(&amp;quot;player&amp;quot;, 18499)
+local rb, rbx = GetSpellCooldown(85288)
+local rbcd = (rb + rbx - GetTime())
+
+if (DW == nil and EN == nil and UF == nil) and rage &amp;gt; 15 and rbcd &amp;lt; 1 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- cooldowns ---</Name><Default>false</Default><SpellID>0</SpellID><Actions>/cast Recklessness|/cast Death Wish</Actions><Lua>if IsRightAltKeyDown() then
+return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+
+if GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14) == 0 and (csDebuff ~= nil or csDebuffR ~= nil) then UseInventoryItem(14) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Adv Exec ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local cs, csx = GetSpellCooldown(86346)
+local cscd = (cs + csx - GetTime())
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local slam = UnitBuffID(&amp;quot;player&amp;quot;, 46916)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local applejack = _G[&amp;quot;applejack&amp;quot;];
+local cs, csx = GetSpellCooldown(86346)
+local cscd = (cs + csx - GetTime())
+local BT = UnitBuffID(&amp;quot;player&amp;quot;, 85742)
+local exec = UnitBuffID(&amp;quot;player&amp;quot;, 90806)
+local csDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 86346, &amp;quot;PLAYER&amp;quot;)
+local csDebuffR = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local CSTime, _, _, _, _, _, CSExpireTime = UnitDebuffID(&amp;quot;target&amp;quot;, 108126, &amp;quot;PLAYER&amp;quot;)
+local DW = UnitBuffID(&amp;quot;player&amp;quot;, 12292)
+local EN = UnitBuffID(&amp;quot;player&amp;quot;, 13046)
+local UF = UnitBuffID(&amp;quot;player&amp;quot;, 49016)
+local BR = UnitBuffID(&amp;quot;player&amp;quot;, 18499)
+local enrage = 0
+local global_cats2 = _G[&amp;quot;cats2&amp;quot;]; 
+local var = _G[&amp;quot;cats2&amp;quot;];
+local rainbowcheck = _G[&amp;quot;rainbowdash&amp;quot;];
+
+-- cs debuff duration
+if csDebuffR ~= nil then
+csdur = CSExpireTime - GetTime()
+end
+
+-- no idea
+if applejack == 535 then
+if cscd &amp;lt;= 8 or cscd == 0 then
+csready = 1
+end
+end
+
+
+-- heroic strike
+if rage &amp;gt;= 85 or BT ~= nil and (cscd &amp;gt;= 3 or csx == 0)  then
+CastSpellByName(&amp;quot;Heroic Strike&amp;quot;)
+CastSpellByName(&amp;quot;Inner Rage&amp;quot;)
+end
+
+-- Switch to CS execute phase if it&amp;apos;s up early 
+if exec ~= nil and rage &amp;gt;= 55 and csx == 0 then
+var = 4
+end
+
+--Switch to execute spam if CS 4pc is up
+if csDebuffR  ~= nil and rage &amp;gt; 40 and unithealth &amp;lt; 20 and csdur &amp;gt;= 5.6 then
+_G[&amp;quot;cats2&amp;quot;] = 5;
+
+
+elseif csDebuffR  ~= nil and rage &amp;gt; 30 and unithealth &amp;lt; 20 and csdur &amp;lt;= 5.2 and csdur &amp;gt;= 4.8 then
+_G[&amp;quot;cats2&amp;quot;] = 6;
+
+
+elseif csDebuffR  ~= nil and rage &amp;gt; 20 and unithealth &amp;lt; 20 and csdur &amp;lt;= 4.5 and csdur &amp;gt;= 3 then
+_G[&amp;quot;cats2&amp;quot;] = 6;
+
+elseif csDebuffR  ~= nil and rage &amp;gt; 20 and unithealth &amp;lt; 20 and csdur &amp;lt;= 3 and csdur &amp;gt;= 2.5 then
+_G[&amp;quot;cats2&amp;quot;] = 7;
+end
+
+-- Fading Light
+local FL = {105925, 109075, 110068, 110069, 110070, 110078, 110079, 110080}
+
+for i,v in ipairs(FL) do
+   local _,_,_,_,_,_,flight = UnitDebuffID(&amp;quot;player&amp;quot;, v)
+   if flight 
+      and flight - GetTime() &amp;lt; 2
+      then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) 
+   end 
+end
+
+-- Hour of Twilight
+local HoTcast,_,_,_,_,endtime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+local HoT = {109415, 106371, 109416, 109415, 109417}
+    
+for i,v in ipairs(HoT) do
+   if HoTcast == GetSpellInfo(v) 
+      and endtime/1000 - GetTime() &amp;lt; .5
+      then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;)
+   end
+end
+
+-- Madness 
+local _,_,_,_,_,_,shrapnel = UnitDebuff(&amp;quot;player&amp;quot;,&amp;quot;Shrapnel&amp;quot;)
+
+if shrapnel 
+   and shrapnel - GetTime() &amp;lt; .75 
+   then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) 
+end
+
+
+if 535 == global_cats2 or global_cats2 &amp;lt; 15 then
+	-- do nothing
+	else
+		_G[&amp;quot;cats2&amp;quot;] = 535;
+		_G[&amp;quot;rainbowdash&amp;quot;] = 535;	
+	end
+
+if unithealth &amp;lt;= 20 then
+	
+	if var == 535 and GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Bloodthirst&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 1;	
+	end
+	
+	if var == 1 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 2;
+	end
+	
+	if var == 2 and GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Bloodthirst&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 3;
+		_G[&amp;quot;rainbowdash&amp;quot;] = 466; -- 466 means rd is ready to cast
+	end
+
+	-- if _G[&amp;quot;rainbowdash&amp;quot;] == 466 then -- 466 is up, we need to filler now.
+	if rainbowcheck == 466 then -- 466 is up, we need to filler now.
+		if DW ~= nil or EN ~= nil or UF ~= nil or BR ~= nil then
+			enraged = 1
+		else
+			enraged = 0
+		end
+	
+		-- if rage &amp;lt;=50 and _G[&amp;quot;rainbowdash&amp;quot;] == 466 and GetSpellCooldown(&amp;quot;Battle Shout&amp;quot;) then 
+		if rage &amp;lt;=50 and rainbowcheck == 466 and GetSpellCooldown(&amp;quot;Battle Shout&amp;quot;) == 0 then 
+			CastSpellByName(&amp;quot;Battle Shout&amp;quot;)
+			_G[&amp;quot;rainbowdash&amp;quot;] = 1;
+		end
+
+		-- if slam ~= nil and _G[&amp;quot;rainbowdash&amp;quot;] == 466 and GetSpellCooldown(&amp;quot;Slam&amp;quot;) then
+		if slam ~= nil and rainbowcheck == 466 and GetSpellCooldown(&amp;quot;Slam&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Slam&amp;quot;) == 1  then
+			CastSpellByName(&amp;quot;Slam&amp;quot;) 
+			_G[&amp;quot;rainbowdash&amp;quot;] = 1;
+		end
+
+		-- if rage &amp;gt;50 and _G[&amp;quot;rainbowdash&amp;quot;] == 466 and enraged == 1 and GetSpellCooldown(&amp;quot;Raging Blow&amp;quot;)then
+		if rage &amp;gt;50 and rainbowcheck == 466 and enraged == 1 and GetSpellCooldown(&amp;quot;Raging Blow&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Raging Blow&amp;quot;) == 1  then
+			CastSpellByName(&amp;quot;Raging Blow&amp;quot;)
+			_G[&amp;quot;rainbowdash&amp;quot;] = 1;
+		end
+
+	end
+
+	-- if _G[&amp;quot;rainbowdash&amp;quot;] == 466 then
+	if rainbowcheck == 466 then
+		print(&amp;quot;something went wrong or we are waiting to cast a filler&amp;quot;)
+		if GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Bloodthirst&amp;quot;) == 1 then
+			CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+			_G[&amp;quot;cats2&amp;quot;] = 4;
+			_G[&amp;quot;rainbowdash&amp;quot;] = 1;
+		end
+	end
+
+	if var == 3 and GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Bloodthirst&amp;quot;) == 1 and _G[&amp;quot;rainbowdash&amp;quot;] == 1 then -- rd becomes 1 after we&amp;apos;ve done a filler.
+		CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 4;
+		
+	end
+
+	if var == 4 and GetSpellCooldown(&amp;quot;Colossus Smash&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Colossus Smash&amp;quot;) == 1  then
+		CastSpellByName(&amp;quot;Colossus Smash&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 5;
+elseif cscd &amp;gt;= 2 and var == 4 then
+_G[&amp;quot;cats2&amp;quot;] = 11;
+	end
+
+	if var == 5 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1  then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 6;
+	end
+
+	if var == 6 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 7;
+	end
+
+	if var == 7 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 8;
+	end
+	if var == 8 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 9;
+	end
+
+	if var == 9 and GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 10;
+		_G[&amp;quot;rainbowdash&amp;quot;] = 466;
+	end
+
+if var == 10 and GetSpellCooldown(&amp;quot;Bloodthirst&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Bloodthirst&amp;quot;) == 1 and _G[&amp;quot;rainbowdash&amp;quot;] == 1 then -- rd becomes 1 after we&amp;apos;ve done a filler.
+CastSpellByName(&amp;quot;Bloodthirst&amp;quot;)
+_G[&amp;quot;cats2&amp;quot;] = 11;
+end
+
+	if var == 11 and GetSpellCooldown(&amp;quot;Execute&amp;quot;) == 0 and IsUsableSpell(&amp;quot;Execute&amp;quot;) == 1 then
+		CastSpellByName(&amp;quot;Execute&amp;quot;)
+		_G[&amp;quot;cats2&amp;quot;] = 12;
+	end
+	
+	if var == 12 then
+		_G[&amp;quot;cats2&amp;quot;] = 535;
+		_G[&amp;quot;rainbowdash&amp;quot;] = 535;
+	end
+	
+end
+
+if unithealth &amp;gt; 20 then
+_G[&amp;quot;cats2&amp;quot;] = 535;
+_G[&amp;quot;rainbowdash&amp;quot;] = 535;
+end
+
+if unithealth == 0 then
+_G[&amp;quot;cats2&amp;quot;] = 535;
+_G[&amp;quot;rainbowdash&amp;quot;] = 535;
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--Raging Blow</Name><Default>false</Default><SpellID>85288</SpellID><Actions></Actions><Lua>local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local var = _G[&amp;quot;cats2&amp;quot;]; 
+
+if var == 3 and btcd &amp;gt;= 1 then
+_G[&amp;quot;cats2&amp;quot;] = 4;
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--Slam</Name><Default>false</Default><SpellID>1464</SpellID><Actions></Actions><Lua>local BS = UnitBuffID(&amp;quot;player&amp;quot;, 46915)
+local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local var = _G[&amp;quot;cats2&amp;quot;];
+
+if var == 3 and BS ~= nil and btcd &amp;gt;= 1 then 
+_G[&amp;quot;cats2&amp;quot;] = 4;
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--Battle Shout two</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>local bt, btx = GetSpellCooldown(23881)
+local btcd = (bt + btx - GetTime())
+local var = _G[&amp;quot;cats2&amp;quot;]; 
+
+if var == 3 and GetSpellCooldown(&amp;quot;Battle Shout&amp;quot;) == 0 and UnitPower(&amp;quot;player&amp;quot;) &amp;lt; 70 and btcd &amp;gt;= 1 then
+return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter>_G[&amp;quot;cats2&amp;quot;] = 4
+print(&amp;quot;cats&amp;quot;)</LuaAfter></Ability><Ability><Name>--- reset ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>_G[&amp;quot;cats2&amp;quot;] = 535;
+_G[&amp;quot;rainbowdash&amp;quot;] = 535;
+_G[&amp;quot;applejack&amp;quot;] = 535;</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter>_G[&amp;quot;cats2&amp;quot;] = 4
+print(&amp;quot;cats&amp;quot;)</LuaAfter></Ability></WARRIOR>

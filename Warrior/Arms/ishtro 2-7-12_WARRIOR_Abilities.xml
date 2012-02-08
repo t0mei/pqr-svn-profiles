@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8" ?><WARRIOR><Ability><Name>! Trinket 2</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;)
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+   and GetInventoryItemCooldown(&amp;quot;player&amp;quot;,14) == 0
+   then UseInventoryItem(14) 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>! Trinket 1</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;)
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;)
+   and GetInventoryItemCooldown(&amp;quot;player&amp;quot;,13) == 0
+   then UseInventoryItem(13) 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Leap</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--- Cannot remember who came up with  this, but thanks!
+local _,hlcd,_ =  GetSpellCooldown(6544)
+
+if hlcd == 0 and IsLeftControlKeyDown()  and GetCurrentKeyBoardFocus() == nil then
+  CastSpellByName(&amp;quot;Heroic Leap&amp;quot;)
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+  return true
+end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- AoE ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,bscd,_ = GetSpellCooldown(&amp;quot;Bladestorm&amp;quot;)
+local _,dccd,_ = GetSpellCooldown(&amp;quot;Deadly Calm&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+
+if AoEMode and GetCVar(&amp;quot;TC&amp;quot;)==&amp;quot;yes&amp;quot; then
+   if rend&amp;lt;1.5 then RunMacroText(&amp;quot;/cast [stance:1] Rend; Battle Stance&amp;quot;)return true end 
+   if rend&amp;lt;3 or tc&amp;lt;3 then RunMacroText(&amp;quot;/cast [stance:1] Thunder Clap; Battle Stance&amp;quot;) return true end
+end
+if AoEMode and (rend&amp;gt;3 or tc&amp;gt;3) then
+   if check(&amp;quot;Sweeping Strikes&amp;quot;) and rage&amp;gt;25 then cast(&amp;quot;Sweeping Strikes&amp;quot;) return true end
+   if check(&amp;quot;Bladestorm&amp;quot;) and CheckInteractDistance(&amp;quot;target&amp;quot;, 3) then cast(&amp;quot;Bladestorm&amp;quot;) return true end
+   if check(&amp;quot;Whirlwind&amp;quot;) then cast(&amp;quot;Whirlwind&amp;quot;) return true end
+   if check(&amp;quot;Inner Rage&amp;quot;) and dccd&amp;gt;15 and UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Deadly Calm&amp;quot;)==nil then cast(&amp;quot;Inner Rage&amp;quot;) return true end
+   if check(&amp;quot;Cleave&amp;quot;) and bscd&amp;gt;=1.5 then cast(&amp;quot;Cleave&amp;quot;) return true end
+   if check(&amp;quot;Mortal Strike&amp;quot;) and rage&amp;gt;60 then cast(&amp;quot;Mortal Strike&amp;quot;) return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Function ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>cast = CastSpellByName
+function check(sp,unit)
+   unit = unit or &amp;quot;target&amp;quot;;
+   spell = string.format(&amp;quot;%s&amp;quot;,sp)
+   if GetSpellCooldown(spell)==0 and IsUsableSpell(spell) then 
+      if SpellHasRange(spell)==1 then
+         if IsSpellInRange(spell,unit)~=1 then
+            return false
+         end
+      end
+   else 
+      return false
+   end
+   return true
+end
+
+-------- Colossus Smash Timer --------
+if not UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Colossus Smash&amp;quot;, &amp;quot;PLAYER&amp;quot;) then 
+   cs=0 
+elseif UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Colossus Smash&amp;quot;, &amp;quot;PLAYER&amp;quot;) then  
+   cs=select(7,UnitDebuff(&amp;quot;target&amp;quot;, &amp;quot;Colossus Smash&amp;quot;, &amp;quot;PLAYER&amp;quot;))-GetTime() 
+end
+
+-------- Rend Timer --------
+if not UnitDebuffID(&amp;quot;target&amp;quot;, 772, &amp;quot;PLAYER&amp;quot;) then 
+   rend=0 
+elseif UnitDebuffID(&amp;quot;target&amp;quot;, 772, &amp;quot;PLAYER&amp;quot;) then  
+   rend=select(7,UnitDebuffID(&amp;quot;target&amp;quot;, 772, &amp;quot;PLAYER&amp;quot;))-GetTime() 
+end
+
+-------- Deadly Calm Timer --------
+if not UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Deadly Calm&amp;quot;) then 
+   dc=0 
+elseif UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Deadly Calm&amp;quot;) then  
+   dc=select(7,UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Deadly Calm&amp;quot;))-GetTime() 
+end
+
+-------- Taste for Blood Timer --------
+if not UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Taste for Blood&amp;quot;) then 
+   tfb=0 
+elseif UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Taste for Blood&amp;quot;) then  
+   tfb=select(7,UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Taste for Blood&amp;quot;))-GetTime() 
+end
+
+-------- Thunder Clap Timer --------
+if not UnitDebuffID(&amp;quot;target&amp;quot;, 6343, &amp;quot;PLAYER&amp;quot;) then 
+   tc=0 
+elseif UnitDebuffID(&amp;quot;target&amp;quot;, 6343, &amp;quot;PLAYER&amp;quot;) then  
+   tc=select(7,UnitDebuffID(&amp;quot;target&amp;quot;, 6343, &amp;quot;PLAYER&amp;quot;))-GetTime() 
+end
+
+-------- AoE --------
+if not leftshift then leftshift = 0 end
+
+if IsLeftShiftKeyDown() and GetTime() - leftshift &amp;gt; 0.3  then
+  leftshift = GetTime()
+  if AoEMode  then 
+    AoEMode  = false print(&amp;quot;Rotation mode: \124c98FB982ASingle Target&amp;quot;)
+  else 
+    AoEMode  = true print(&amp;quot;Rotation mode: \124cFFF0002AArea of Effect&amp;quot;)
+  end
+end
+
+-------- Defensive Cooldowns --------
+if not leftalt then leftalt = 0 end
+
+if IsLeftAltKeyDown() and GetTime() - leftalt &amp;gt; 0.3  then
+  leftalt = GetTime()
+  if DefMode  then 
+    DefMode  = false print(&amp;quot;Rotation mode: \124c98FB982AArms DPS&amp;quot;)
+  else 
+    DefMode  = true print(&amp;quot;Rotation mode: \124cFFF0002ADefensive Cooldowns!&amp;quot;)
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Battle Stance ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+local mss, msx = GetSpellCooldown(&amp;quot;Mortal Strike&amp;quot;)
+local mscd = mss + msx - GetTime()
+local ops, opx = GetSpellCooldown(&amp;quot;Overpower&amp;quot;)
+local opcd = ops + opx - GetTime()
+
+
+if not DefMode
+   and GetShapeshiftForm()~=1
+   and rage&amp;lt;=75
+   and (tfb~=0 or opcd==0)
+   and mscd&amp;gt;1.5 
+   then cast(&amp;quot;Battle Stance&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Berserker Stance ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not DefMode then
+   if GetShapeshiftForm()~=3 
+      and rend&amp;gt;1.5
+      or (AoEMode and tc&amp;gt;1.5 and rend&amp;gt;1.5)  
+      then RunMacroText(&amp;quot;/equipset 2h&amp;quot;) 
+      cast(&amp;quot;Berserker Stance&amp;quot;)
+      return true
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Healthstone ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if unithealth&amp;lt;=20 
+   then RunMacroText(&amp;quot;/use healthstone&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Lightwell ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--- Thanks Xelper for all your hard work!!
+
+local LightwellName = &amp;quot;Lightwell&amp;quot;
+local hp = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+local sLightwell = UnitBuffID(&amp;quot;player&amp;quot;, 7001)
+local sDeepCorruption = UnitDebuffID(&amp;quot;player&amp;quot;, 108220)
+if PQR_LightwellTimeout == nil then
+    PQR_LightwellTimeout = 0
+end
+
+
+
+
+if hp &amp;lt; 70 and sLightwell == nil then
+    if PQR_LightwellTimeout &amp;lt; GetTime() then
+        if sDeepCorruption == nil then
+            PQR_LightwellTimeout = GetTime() + 1
+            InteractUnit(LightwellName)
+        end
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Pause ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsRightControlKeyDown() 
+   and GetCurrentKeyBoardFocus() == nil 
+   then return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Special Events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Fading Light
+local FL = {105925, 109075, 110068, 110069, 110070, 110078, 110079, 110080}
+
+for i,v in ipairs(FL) do
+   local _,_,_,_,_,_,flight = UnitDebuffID(&amp;quot;player&amp;quot;, v)
+   if flight 
+      and flight - GetTime() &amp;lt; .6 
+      then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) 
+   end 
+end
+
+-- Hour of Twilight
+local HoTcast,_,_,_,_,endtime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+local HoT = {109415, 106371, 109416, 109415, 109417}
+    
+for i,v in ipairs(HoT) do
+   if not DefMode
+      and HoTcast == GetSpellInfo(v) 
+      and endtime/1000 - GetTime() &amp;lt; .4 
+      then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;)
+   end
+end
+
+-- Madness 
+local _,_,_,_,_,_,shrapnel = UnitDebuff(&amp;quot;player&amp;quot;,&amp;quot;Shrapnel&amp;quot;)
+
+if shrapnel 
+   and shrapnel - GetTime() &amp;lt; 2 
+   then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>! Autotarget</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+   and not UnitExists(&amp;quot;target&amp;quot;) 
+   then TargetNearestEnemy() 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>! Autoattack</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local targetName = UnitName(&amp;quot;target&amp;quot;)
+
+if targetName ~= nil then
+    RunMacroText(&amp;quot;/startattack&amp;quot;)
+end
+return false</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>! Blood Fury</Name><Default>false</Default><SpellID>20572</SpellID><Actions></Actions><Lua>if UnitRace(&amp;quot;player&amp;quot;)==&amp;quot;Orc&amp;quot;
+   and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+   and GetShapeshiftForm()==3
+   then return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Battle Shout</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if check(&amp;quot;Battle Shout&amp;quot;)
+   and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+   and GetShapeshiftForm()==3
+   and UnitPower(&amp;quot;player&amp;quot;)&amp;lt;60 
+   then cast(&amp;quot;Battle Shout&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Berserker Rage</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local dcs, dcx = GetSpellCooldown(&amp;quot;Deadly Calm&amp;quot;)
+local dccd = dcs + dcx - GetTime()
+
+if check(&amp;quot;Berserker Rage&amp;quot;)
+   and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+   and GetShapeshiftForm()==3
+   and UnitPower(&amp;quot;player&amp;quot;)&amp;lt;=95
+   and dc==0
+   and dccd&amp;gt;1.5
+   then cast(&amp;quot;Berserker Rage&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Colossus Smash</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local ms, msx = GetSpellCooldown(&amp;quot;Mortal Strike&amp;quot;)
+local mscd = ms + msx - GetTime()
+
+if check(&amp;quot;Colossus Smash&amp;quot;)
+   and cs&amp;lt;=1.5 
+   and mscd&amp;gt;1.5
+   then cast(&amp;quot;Colossus Smash&amp;quot;)
+   return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Deadly Calm</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if check(&amp;quot;Deadly Calm&amp;quot;)
+  and UnitAffectingCombat(&amp;quot;player&amp;quot;)
+  and GetShapeshiftForm()==3
+  and UnitExists(&amp;quot;target&amp;quot;) 
+  and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+  and rend &amp;gt; 2
+  and UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;)*20
+  then cast(&amp;quot;Deadly Calm&amp;quot;)
+  return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Execute</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ms, msx = GetSpellCooldown(12294)  -- Mortal Strike
+local mscd = (ms + msx - GetTime())
+local dc = UnitBuffID(&amp;quot;player&amp;quot;, 85730)  -- Deadly Calm
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+
+if unithealth &amp;lt; 20 
+   and (mscd &amp;gt; 1.5 or dc or rage&amp;gt;=40)
+   then return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Strike</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local rage = UnitPower(&amp;quot;player&amp;quot;)
+local ir = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Inner Rage&amp;quot;)
+local inc = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Incite&amp;quot;)
+local bt = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Battle Trance&amp;quot;) 
+
+if not AoEMode then
+   if check(&amp;quot;Heroic Strike&amp;quot;)
+      and dc&amp;gt;0
+      or (rage&amp;gt;85 
+      or inc 
+      or (ir and unithealth&amp;gt;20 and rage&amp;gt;50)
+      or (ir and unithealth&amp;lt;=20 and (rage&amp;gt;50 or bt)))
+      then cast(&amp;quot;Heroic Strike&amp;quot;) 
+      return true 
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Rage</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local dca, dcx = GetSpellCooldown(85730) -- Deadly Calm
+local dccd = (dca + dcx - GetTime())
+
+if check(&amp;quot;Inner Rage&amp;quot;)
+   and UnitAffectingCombat(&amp;quot;player&amp;quot;) 
+   and UnitExists(&amp;quot;target&amp;quot;) 
+   and UnitCanAttack(&amp;quot;player&amp;quot;,&amp;quot;target&amp;quot;) 
+   and dc==0 
+   and dccd&amp;gt;15 
+   then cast(&amp;quot;Inner Rage&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mortal Strike</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local enrage = UnitBuffID(&amp;quot;player&amp;quot;, 57519)
+local unithealth = 100 * UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;)
+
+if check(&amp;quot;Mortal Strike&amp;quot;)
+   and not AoEMode
+   and unithealth&amp;gt;20
+   or (unithealth&amp;lt;=20 and (rend&amp;lt;3 or enrage==nil or rage&amp;lt;=25 or rage&amp;gt;=35))
+   then cast(&amp;quot;Mortal Strike&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Rend</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if rend&amp;lt;1.5
+   then RunMacroText(&amp;quot;/cast [stance:1] Rend; Battle Stance&amp;quot;)
+   return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Slam</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local rage = UnitPower(&amp;quot;player&amp;quot;)
+local ms, msx = GetSpellCooldown(&amp;quot;Mortal Strike&amp;quot;)
+local mscd = ms + msx - GetTime()
+local css, csx = GetSpellCooldown(&amp;quot;Colossus Smash&amp;quot;)
+local cscd = css + csx - GetTime()
+local ops, opx = GetSpellCooldown(&amp;quot;Overpower&amp;quot;)
+local opcd = ops + opx - GetTime()
+local bt = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Battle Trance&amp;quot;)   
+
+if check(&amp;quot;Slam&amp;quot;)
+   and (bt or dc&amp;gt;0)
+   or (rage&amp;gt;=35 and (cs&amp;gt;1.5 or cscd&amp;gt;1.5) and mscd&amp;gt;1.5 and (tfb==0 or opcd&amp;gt;0))
+   then cast(&amp;quot;Slam&amp;quot;)
+   return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Overpower</Name><Default>false</Default><SpellID>7384</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Sunder</Name><Default>false</Default><SpellID>7386</SpellID><Actions></Actions><Lua>---- Thanks Sheuron you are an awesome coder!
+if GetCVar(&amp;quot;SUNDER&amp;quot;)==&amp;quot;yes&amp;quot; and UnitHealthMax(&amp;quot;target&amp;quot;) &amp;gt; UnitHealthMax(&amp;quot;player&amp;quot;)*20 and UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+
+  buff = { 58567, 91565, 8647, 95467, 95466 }
+  local _,_,_,count,_,_,timer,caster = UnitDebuffID(&amp;quot;target&amp;quot;,58567)
+  local armordebuff = nil
+
+  for i,v in ipairs(buff) do
+   if UnitDebuffID(&amp;quot;target&amp;quot;,v) then armordebuff = 1 end
+  end
+
+  if armordebuff == nil and lastarmorcheck == nil then lastarmorcheck = GetTime() end
+  if lastarmorcheck and GetTime()-lastarmorcheck &amp;gt; 3 and IsUsableSpell(7386) then
+    lastarmorcheck = nil
+    return true
+  end
+
+  if armordebuff and caster == &amp;quot;player&amp;quot; then
+    if count &amp;lt; 3 or timer-GetTime() &amp;lt; 3 then
+      return true
+    end
+  end
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>++ Defensive Cooldowns ++</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if DefMode then RunMacroText(&amp;quot;/equipset Shield&amp;quot;)
+   if GetShapeshiftForm()~=2 then cast(&amp;quot;Defensive Stance&amp;quot;) return end
+   if check(&amp;quot;Shield Wall&amp;quot;) then cast(&amp;quot;Shield Wall&amp;quot;) return end
+   if check(&amp;quot;Shield Block&amp;quot;) then cast(&amp;quot;Shield Block&amp;quot;) return end
+   if check(&amp;quot;Shield Slam&amp;quot;) and UnitPower(&amp;quot;player&amp;quot;)&amp;gt;40 then cast(&amp;quot;Shield Slam&amp;quot;) return end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- Potion ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local lust = { 2825, 32182, 80353, 90355 }
+local boss = false
+for _,v in ipairs(lust) do
+  if UnitBuffID(&amp;quot;player&amp;quot;, v)~=nil 
+    then RunMacroText(&amp;quot;/use Potion of the Tol&amp;apos;Vir&amp;quot;)
+  end
+end
+for i=1,4 do
+  if UnitExists(&amp;quot;boss&amp;quot;..i) 
+    then boss = true
+    break
+  end
+end
+
+local pot = GetItemCount(58145)
+if boss==false 
+  and pot==false 
+  then return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Executioner</Name><Default>false</Default><SpellID>5308</SpellID><Actions></Actions><Lua>local _, _, _, count, _, _, executioner = UnitBuffID(&amp;quot;player&amp;quot;, 90806) -- Executioner
+local bt = UnitBuffID(&amp;quot;player&amp;quot;, 12964) -- Battle Trance
+local unithealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+
+if unithealth &amp;lt; 20 then
+   if count ~= 5 or bt then
+      return true
+   else
+      if executioner - GetTime() &amp;lt; 2.5 then
+         return true
+      end
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></WARRIOR>

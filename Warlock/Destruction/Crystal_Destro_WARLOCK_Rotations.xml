@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?><WARLOCK><Rotation><RotationName>PVE: Destro</RotationName><RotationDefault>false</RotationDefault><RotationList>Pause|Extras|Buffs|Life Tap|Fel Flame|Focus|Rain of Fire|Bane of Havok|Infernal|Soulburn|Soul Fire|Curse of Elements|Demon Soul|Doom Guard|Immolate|Conflagrate|Bane of Doom|Bane of Agony|Corruption|Shadowburn|Shadowflame|Chaos Bolt|Incerate</RotationList><RequireCombat>true</RequireCombat><RotationNotes>Spec: http://wowtal.com/#k=eAxYbgT9.aei.warlock.
+Glyphs: Immolate, Conflagrate, Imp
+Pet: Imp
+
+Notes:
+L Shift - Soulburn
+L Control - Doomguard
+L Alt - Pause
+R Shift - Set Focus on mouseover
+R Control - Infernal
+R Alt - Rain of Fire -not working yet</RotationNotes></Rotation></WARLOCK>

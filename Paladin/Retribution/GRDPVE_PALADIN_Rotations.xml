@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?><PALADIN><Rotation><RotationName>ReT</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Special Events By Sheuron --|Auras|-- RET: DS --|BoM / Kings|RET: Seals|RET: Divine Prot|Divine Shield|Divine Plea|RET: HoJ|RET: HoF|-- RET: OS --|RET: GoAK|RET: AW|RET: Zea|RET: Inquisition|RET: DS|RET: CS|RET: TV|RET: Exo|RET: HoW|RET: J|RET: HW|RET: Cons|Use: Gloves|Use: Trinket 1|Use: Trinket 2</RotationList><RequireCombat>false</RequireCombat><RotationNotes>LEFT ALT = Pause Rotation
+LEFT CONTROL = AoE On/Off
+LEFT SHIFT = Hammer of Justice
+RIGHT CONTROL = Hand of Freedom
+</RotationNotes></Rotation></PALADIN>

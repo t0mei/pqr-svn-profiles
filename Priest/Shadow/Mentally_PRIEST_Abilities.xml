@@ -1,89 +1,214 @@
-<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>Shadowform</Name><Default>false</Default><SpellID>15473</SpellID><Actions></Actions><Lua>if IsSpellKnown(15473) and UnitBuffID(&amp;quot;player&amp;quot;, 15473) == nil 
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Inner Fire</Name><Default>false</Default><SpellID>588</SpellID><Actions></Actions><Lua>if IsSpellKnown(588) and UnitBuffID(&amp;quot;player&amp;quot;, 588) == nil 
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Embrace</Name><Default>false</Default><SpellID>15286</SpellID><Actions></Actions><Lua>if IsSpellKnown(15286) and UnitBuffID(&amp;quot;player&amp;quot;, 15286) == nil 
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Devouring Plague</Name><Default>false</Default><SpellID>2944</SpellID><Actions></Actions><Lua>local DP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 2944, &amp;quot;player&amp;quot;)
+<?xml version="1.0" encoding="utf-8" ?><PRIEST><Ability><Name>Vampiric Touch</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+PQ_Lightweave		= 75170
+PQ_PowerTorrent		= 74241
+PQ_VolcanicPotion	= 79476
+PQ_SynapseSprings	= 96230
+
+PQ_Buffs = { 
+	[PQ_Lightweave] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_PowerTorrent] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_VolcanicPotion] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_SynapseSprings] = {check = true, hasBuff = false, endTime = nil},
+}
+
+function PQ_CheckForBuffs()
+	for k,v in pairs(PQ_Buffs) do
+		if PQ_Buffs[k].check == true and UnitBuffID(&amp;quot;player&amp;quot;,k) then
+			PQ_Buffs[k].hasBuff = true
+			PQ_Buffs[k].endTime = (select(7, UnitBuffID(&amp;quot;player&amp;quot;,k)))
+		end
+	end
+end
+
+function PQ_GetTimeLeft(buff)
+	return PQ_Buffs[buff].endTime - GetTime()
+end
+
+-- Initialize
+PQ_CheckForBuffs()
+
+-- Check if we actually know the spell!
+if IsSpellKnown(34914)
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(34914)),&amp;quot;target&amp;quot;)
+then
+	if VT then
+		-- Volcanic Potion
+		if PQ_Buffs[PQ_VolcanicPotion].hasBuff then
+			if PQ_GetTimeLeft(PQ_VolcanicPotion) &amp;lt; 5 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Lightweave II
+		if PQ_Buffs[PQ_Lightweave].hasBuff then
+			if PQ_GetTimeLeft(PQ_Lightweave) &amp;lt; 5 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Power Torrent
+		if PQ_Buffs[PQ_PowerTorrent].hasBuff then
+			if PQ_GetTimeLeft(PQ_PowerTorrent) &amp;lt; 5 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Synapse Springs
+		if PQ_Buffs[PQ_SynapseSprings].hasBuff then
+			if PQ_GetTimeLeft(PQ_SynapseSprings) &amp;lt; 5 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		
+		-- Check for Heroism effects
+		if UnitBuffID(&amp;quot;player&amp;quot;, 90355) or UnitBuffID(&amp;quot;player&amp;quot;, 80353) or UnitBuffID(&amp;quot;player&amp;quot;, 32182) or UnitBuffID(&amp;quot;player&amp;quot;, 2825) then
+			if timer - GetTime() &amp;lt;= 3/((1.7/((1+(haste/12805))*1.05*1.03*1.30))+(latency/1000)) then return true end
+		else
+			if timer - GetTime() &amp;lt;= 3/((1.7/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+		end
+	else return true end
+end</Lua><RecastDelay>300</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>------ Global Variables ------</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if not PriestGlobals then
+	local PQR_ResetMovementTime = 0.3
+
+	-- We only want to load once
+	PriestGlobals = true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Devouring Plague</Name><Default>false</Default><SpellID>2944</SpellID><Actions></Actions><Lua>local DP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 2944, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+PQ_Lightweave		= 75170
+PQ_PowerTorrent		= 74241
+PQ_VolcanicPotion	= 79476
+PQ_SynapseSprings	= 96230
+
+PQ_Buffs = { 
+	[PQ_Lightweave] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_PowerTorrent] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_VolcanicPotion] = {check = true, hasBuff = false, endTime = nil},
+	[PQ_SynapseSprings] = {check = true, hasBuff = false, endTime = nil},
+}
+
+function PQ_CheckForBuffs()
+	for k,v in pairs(PQ_Buffs) do
+		if PQ_Buffs[k].check == true and UnitBuffID(&amp;quot;player&amp;quot;,k) then
+			PQ_Buffs[k].hasBuff = true
+			PQ_Buffs[k].endTime = (select(7, UnitBuffID(&amp;quot;player&amp;quot;,k)))
+		end
+	end
+end
+
+function PQ_GetTimeLeft(buff)
+	return PQ_Buffs[buff].endTime - GetTime()
+end
+
+-- Initialize
+PQ_CheckForBuffs()
+
+-- Check if we actually know the spell!
 if IsSpellKnown(2944)
 	and UnitExists(&amp;quot;target&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(2944)), &amp;quot;target&amp;quot;)
+	and IsSpellInRange(tostring(GetSpellInfo(2944)),&amp;quot;target&amp;quot;)
 then
-	if PQR_IsMoving(1) then return true end
-
 	if DP then
-		if timer - GetTime() &amp;lt;= 3 then return true end
+		-- Volcanic Potion
+		if PQ_Buffs[PQ_VolcanicPotion].hasBuff then
+			if PQ_GetTimeLeft(PQ_VolcanicPotion) &amp;lt; 4 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Lightweave II
+		if PQ_Buffs[PQ_Lightweave].hasBuff then
+			if PQ_GetTimeLeft(PQ_Lightweave) &amp;lt; 4 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Power Torrent
+		if PQ_Buffs[PQ_PowerTorrent].hasBuff then
+			if PQ_GetTimeLeft(PQ_PowerTorrent) &amp;lt; 4 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		-- Synapse Springs
+		if PQ_Buffs[PQ_SynapseSprings].hasBuff then
+			if PQ_GetTimeLeft(PQ_SynapseSprings) &amp;lt; 4 and timer - GetTime() &amp;lt; 10 then return true end
+		end
+		
+		-- Check for Heroism effects
+		if UnitBuffID(&amp;quot;player&amp;quot;, 90355) or UnitBuffID(&amp;quot;player&amp;quot;, 80353) or UnitBuffID(&amp;quot;player&amp;quot;, 32182) or UnitBuffID(&amp;quot;player&amp;quot;, 2825) then
+			if timer - GetTime() &amp;lt;= 3/((1.7/((1+(haste/12805))*1.05*1.03*1.30))+(latency/1000)) then return true end
+		else
+			if timer - GetTime() &amp;lt;= 3/((1.7/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+		end
+		
+		-- Spam if we&amp;apos;re on the move
+		if PQR_IsMoving(1) then return true end
 	else return true end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 34914, &amp;quot;player&amp;quot;)
-if IsSpellKnown(34914)
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and PQR_IsMoving(1) == false
-	and IsSpellInRange(tostring(GetSpellInfo(34914)), &amp;quot;target&amp;quot;)
-then
-	if VT then
-		if timer - GetTime() &amp;lt;= 4 then return true end
-	else return true end
-end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Focus)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 34914, &amp;quot;player&amp;quot;)
-if IsSpellKnown(34914)
-	and UnitExists(&amp;quot;focus&amp;quot;)
-	and PQR_IsMoving(1) == false
-	and IsSpellInRange(tostring(GetSpellInfo(34914)), &amp;quot;focus&amp;quot;)
-then
-	if VT then
-		if timer - GetTime() &amp;lt;= 4 then return true end
-	else return true end
-end</Lua><RecastDelay>500</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Mouseover)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 34914, &amp;quot;player&amp;quot;)
-if IsSpellKnown(34914)
-	and UnitExists(&amp;quot;mouseover&amp;quot;)
-	and PQR_IsMoving(1) == false
-	and IsSpellInRange(tostring(GetSpellInfo(34914)), &amp;quot;mouseover&amp;quot;)
-then
-	if VT then
-		if timer - GetTime() &amp;lt;= 4 then return true end
-	else return true end
-end</Lua><RecastDelay>500</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;player&amp;quot;)
+end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;target&amp;quot;, 589, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
 if IsSpellKnown(589)
 	and UnitExists(&amp;quot;target&amp;quot;)
 	and IsSpellInRange(tostring(GetSpellInfo(589)), &amp;quot;target&amp;quot;)
 then
 	if SWP then
-		if timer - GetTime() &amp;lt;= 4 then return true end
+		if timer - GetTime() &amp;lt;= 3/((1.5/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
 	else return true end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Focus)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 589, &amp;quot;player&amp;quot;)
-if IsSpellKnown(589)
-	and UnitExists(&amp;quot;focus&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(589)), &amp;quot;focus&amp;quot;)
-then
-	if SWP then
-		if timer - GetTime() &amp;lt;= 4 then return true end
-	else return true end
-end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Mouseover)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 589, &amp;quot;player&amp;quot;)
-if IsSpellKnown(589)
-	and UnitExists(&amp;quot;mouseover&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(589)), &amp;quot;mouseover&amp;quot;)
-then
-	if SWP then
-		if timer - GetTime() &amp;lt;= 4 then return true end
-	else return true end
-end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>if IsSpellKnown(8092)
-	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(8092)), &amp;quot;target&amp;quot;)
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast (Orb)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>if IsSpellKnown(8092)
-	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and UnitBuffID(&amp;quot;player&amp;quot;, 77487)
-	and IsSpellInRange(tostring(GetSpellInfo(8092)), &amp;quot;target&amp;quot;)
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast (Orb - Mouseover)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>if IsSpellKnown(8092)
-	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;mouseover&amp;quot;)
-	and UnitBuffID(&amp;quot;player&amp;quot;, 77487)
-	and IsSpellInRange(tostring(GetSpellInfo(8092)), &amp;quot;mouseover&amp;quot;)
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Spike</Name><Default>false</Default><SpellID>73510</SpellID><Actions></Actions><Lua>if IsSpellKnown(73510)
-	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(73510)), &amp;quot;target&amp;quot;)
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local hp = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
-local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>---- Buff Handler ----</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;)
+	or IsMounted()
+	then return false
+else
+	-- Inner Fire
+	if not UnitBuffID(&amp;quot;player&amp;quot;,588) then
+		CastSpellByID(588, &amp;quot;player&amp;quot;)
 
-tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+	-- Power Word: Fortitude
+	elseif not UnitBuffID(&amp;quot;player&amp;quot;,21562) then
+		CastSpellByID(21562, &amp;quot;player&amp;quot;)
+		
+	-- Shadow Protection
+	elseif not UnitBuffID(&amp;quot;player&amp;quot;,27683) then
+		CastSpellByID(27683, &amp;quot;player&amp;quot;)
+		
+	-- Vampiric Embrace
+	elseif not UnitBuffID(&amp;quot;player&amp;quot;,15286) then
+		CastSpellByID(15286, &amp;quot;player&amp;quot;)
+		
+	-- Shadowform
+	elseif not UnitBuffID(&amp;quot;player&amp;quot;,15473) then
+		CastSpellByID(15473, &amp;quot;player&amp;quot;)
+
+	-- Cancel Mind Melt
+	elseif UnitBuffID(&amp;quot;player&amp;quot;, 87160) then
+		CancelUnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Mind Melt&amp;quot;)
+		
+	-- We&amp;apos;re buffed, do nada.
+	else end
+end</Lua><RecastDelay>400</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local DA = UnitBuffID(&amp;quot;player&amp;quot;,87153)
+local _,DAduration,_ = GetSpellCooldown(34433)
+
+if UnitExists(&amp;quot;target&amp;quot;)
+	and IsSpellKnown(34433)
+then
+	-- Check for Archangel
+	if DA then return true
+	elseif DAduration &amp;gt;= 40 then return true
+	elseif DAduration &amp;lt;= 35 then return false end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Archangel</Name><Default>false</Default><SpellID>87151</SpellID><Actions></Actions><Lua>local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;,87117)
+local _,SFduration,_ = GetSpellCooldown(34433)
+
+if IsSpellKnown(87151)
+	and DA
+	and DA &amp;gt; 4
+then
+	-- Check for Shadowfiend
+	if GetSpellCooldown(34433) == 0 then return true
+	elseif SFduration &amp;gt;= 40 then return true
+	elseif SFduration &amp;lt;= 35 then return false end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Flay</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>if IsSpellKnown(15407)
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and GetSpellCooldown(15407) == 0
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(15407)), &amp;quot;target&amp;quot;)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local DA = UnitBuffID(&amp;quot;player&amp;quot;,87153)
+
+if IsSpellKnown(8092)
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(8092)), &amp;quot;target&amp;quot;)
+	and not DA
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+local tarHP = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
+local tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
+
 for i,v in ipairs(tormented_debuffs) do
 	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
 end
@@ -92,92 +217,174 @@ if IsSpellKnown(32379)
 	and UnitExists(&amp;quot;target&amp;quot;)
 	and GetSpellCooldown(32379) == 0
 	and IsSpellInRange(tostring(GetSpellInfo(32379)), &amp;quot;target&amp;quot;)
-	and tormented ~= 1
-	and hp &amp;lt;= 25
-	and myHP &amp;gt;= 20
+	and not tormented
+	and myHP &amp;gt; 20
+	and tarHP &amp;lt;= 25
+then return true end
+if IsSpellKnown(32379) and PQR_IsMoving(1) then return true end</Lua><RecastDelay>100</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Archangel (Boss Only)</Name><Default>false</Default><SpellID>87151</SpellID><Actions></Actions><Lua>local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;,87117)
+local _,SFduration,_ = GetSpellCooldown(34433)
+local lvl = UnitLevel(&amp;quot;target&amp;quot;)
+
+if IsSpellKnown(87151)
+	and DA
+	and DA &amp;gt; 4
+	and lvl == -1
 then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (DD)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>if IsSpellKnown(32379)
+	-- Check for Shadowfiend
+	if GetSpellCooldown(34433) == 0 then return true
+	elseif SFduration &amp;gt;= 40 then return true
+	elseif SFduration &amp;lt;= 35 then return false end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend (Boss Only)</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local DA = UnitBuffID(&amp;quot;player&amp;quot;,87153)
+local _,DAduration,_ = GetSpellCooldown(34433)
+local lvl = UnitLevel(&amp;quot;target&amp;quot;)
+
+if UnitExists(&amp;quot;target&amp;quot;)
+	and IsSpellKnown(34433)
+	and lvl == -1
+then
+	-- Check for Archangel
+	if DA then return true
+	elseif DAduration &amp;gt;= 40 then return true
+	elseif DAduration &amp;lt;= 35 then return false end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Focus)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 589, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+if IsSpellKnown(589)
+	and UnitExists(&amp;quot;focus&amp;quot;)
+	and IsSpellInRange(tostring(GetSpellInfo(589)), &amp;quot;focus&amp;quot;)
+then
+	if SWP then
+		if timer - GetTime() &amp;lt;= 3/((1.5/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+	else return true end
+end</Lua><RecastDelay>100</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Pain (Mouseover)</Name><Default>false</Default><SpellID>589</SpellID><Actions></Actions><Lua>local SWP, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 589, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+if IsSpellKnown(589)
+	and UnitExists(&amp;quot;mouseover&amp;quot;)
+	and IsSpellInRange(tostring(GetSpellInfo(589)), &amp;quot;mouseover&amp;quot;)
+then
+	if SWP then
+		if timer - GetTime() &amp;lt;= 3/((1.5/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+	else return true end
+end</Lua><RecastDelay>100</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Focus)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;focus&amp;quot;, 34914, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+if IsSpellKnown(34914)
+	and UnitExists(&amp;quot;focus&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(34914)), &amp;quot;focus&amp;quot;)
+then
+	if VT then
+		if timer - GetTime() &amp;lt;= 3/((1.5/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+	else return true end
+end</Lua><RecastDelay>300</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Vampiric Touch (Mouseover)</Name><Default>false</Default><SpellID>34914</SpellID><Actions></Actions><Lua>local VT, _, _, _, _, _, timer = UnitDebuffID(&amp;quot;mouseover&amp;quot;, 34914, &amp;quot;player&amp;quot;)
+local haste = GetCombatRating(19)
+local latency = select(4,GetNetStats())
+
+if IsSpellKnown(34914)
+	and UnitExists(&amp;quot;mouseover&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(34914)), &amp;quot;mouseover&amp;quot;)
+then
+	if VT then
+		if timer - GetTime() &amp;lt;= 3/((1.5/((1+(haste/12805))*1.05*1.03))+(latency/1000)) then return true end
+	else return true end
+end</Lua><RecastDelay>300</RecastDelay><Target>Mouseover</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Spike</Name><Default>false</Default><SpellID>73510</SpellID><Actions></Actions><Lua>local DA = UnitBuffID(&amp;quot;player&amp;quot;,87153)
+
+if IsSpellKnown(73510)
+	and DA
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(73510)), &amp;quot;target&amp;quot;)
+then if GetSpellCooldown(8092) ~= 0 then return true else return false end end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dispersion</Name><Default>false</Default><SpellID>47585</SpellID><Actions></Actions><Lua>local mana = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+local health = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+local level = UnitLevel(&amp;quot;player&amp;quot;)
+
+if IsSpellKnown(47585)
+	and GetSpellCooldown(47585) == 0
+then
+	if level &amp;lt; 85 then if mana &amp;lt; 15 or health &amp;lt; 15 then return true end end
+	if mana &amp;lt;= 5 or health &amp;lt;= 7 then return true end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (DD)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if IsSpellKnown(32379)
 	and UnitExists(&amp;quot;target&amp;quot;)
 	and GetSpellCooldown(32379) == 0
-	and IsSpellInRange(tostring(GetSpellInfo(32379)),&amp;quot;target&amp;quot;)
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (Focus)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local hp = UnitHealth(&amp;quot;focus&amp;quot;) / UnitHealthMax(&amp;quot;focus&amp;quot;) * 100
-local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+	and IsSpellInRange(tostring(GetSpellInfo(32379)), &amp;quot;target&amp;quot;)
+	and myHP &amp;gt; 20
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (Mana)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+local myMP = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+local tarHP = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
+local tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
 
-tormented_debuffs = { 99489, 99404, 99403, 99257, 99402 }
 for i,v in ipairs(tormented_debuffs) do
 	if UnitDebuffID(&amp;quot;player&amp;quot;,v) then tormented = 1 end
 end
 
 if IsSpellKnown(32379)
-	and UnitExists(&amp;quot;focus&amp;quot;)
-	and GetSpellCooldown(32379) == 0
-	and IsSpellInRange(tostring(GetSpellInfo(32379)), &amp;quot;focus&amp;quot;)
-	and tormented ~= 1
-	and hp &amp;lt;= 25
-	and myHP &amp;gt;= 20
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Focus</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadow Word: Death (Mana)</Name><Default>false</Default><SpellID>32379</SpellID><Actions></Actions><Lua>local mana = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
-if IsSpellKnown(32379)
 	and UnitExists(&amp;quot;target&amp;quot;)
 	and GetSpellCooldown(32379) == 0
-	and IsSpellInRange(tostring(GetSpellInfo(32379)),&amp;quot;target&amp;quot;)
-	and mana &amp;lt;= 55
-then
+	and IsSpellInRange(tostring(GetSpellInfo(32379)), &amp;quot;target&amp;quot;)
+	and not tormented
+	and myHP &amp;gt; 20
+	and myMP &amp;lt; 55
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mass Dispel</Name><Default>false</Default><SpellID>32375</SpellID><Actions></Actions><Lua>if IsAltKeyDown() then
 	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Dispersion</Name><Default>false</Default><SpellID>47585</SpellID><Actions></Actions><Lua>local mana = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
-local health = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
-local level = UnitLevel(&amp;quot;player&amp;quot;)
-if IsSpellKnown(47585)
-	and GetSpellCooldown(47585) == 0
-then
-	if level &amp;lt; 85 then if mana &amp;lt; 15 or health &amp;lt; 15 then return true end end
-	if mana &amp;lt;= 5 or health &amp;lt;= 5 then
-		return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Click</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cancel Mind Melt</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitBuffID(&amp;quot;player&amp;quot;, 87160) then CancelUnitBuff(&amp;quot;player&amp;quot;, GetSpellInfo(87160)) end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Blast (Opener)</Name><Default>false</Default><SpellID>8092</SpellID><Actions></Actions><Lua>local DA = UnitBuffID(&amp;quot;player&amp;quot;,87153)
+
+if IsSpellKnown(8092)
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(8092)), &amp;quot;target&amp;quot;)
+	and DA
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Smite</Name><Default>false</Default><SpellID>585</SpellID><Actions></Actions><Lua>local lvl = UnitLevel(&amp;quot;player&amp;quot;)
+
+if IsSpellKnown(585)
+	and UnitExists(&amp;quot;target&amp;quot;)
+	and PQR_IsMoving(1) == false
+	and IsSpellInRange(tostring(GetSpellInfo(585)), &amp;quot;target&amp;quot;)
+	and lvl &amp;lt;= 10
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Power Word: Shield</Name><Default>false</Default><SpellID>17</SpellID><Actions></Actions><Lua>local lvl = UnitLevel(&amp;quot;player&amp;quot;)
+local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if IsSpellKnown(17)
+	and lvl &amp;lt;= 85
+	and myHP &amp;lt;= 65
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Renew</Name><Default>false</Default><SpellID>139</SpellID><Actions></Actions><Lua>local renew = UnitBuffID(&amp;quot;player&amp;quot;,139)
+local lvl = UnitLevel(&amp;quot;player&amp;quot;)
+local myHP = UnitHealth(&amp;quot;player&amp;quot;) / UnitHealthMax(&amp;quot;player&amp;quot;) * 100
+
+if IsSpellKnown(139)
+	and lvl &amp;lt;= 29
+	and myHP &amp;lt;= 65
+	and not renew
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Heroic Will</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Fading Light
+local FadingLight = {110070, 105925, 109075, 110079, 110069, 110070, 110080, 110068, 110078}
+for i,v in ipairs(FadingLight) do
+	if select(7,UnitDebuffID(&amp;quot;player&amp;quot;, v))
+		and select(7,UnitDebuffID(&amp;quot;player&amp;quot;, v)) - GetTime() &amp;lt; 0.6 then
+			RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;)
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Archangel</Name><Default>false</Default><SpellID>87151</SpellID><Actions>/use 13|/use 14</Actions><Lua>local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;, 87117)
-if IsSpellKnown(87151)
-	and GetSpellCooldown(87151) == 0
-	and DA
-	and DA &amp;gt; 4
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Flay</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>if IsSpellKnown(15407)
+end
+
+-- Hour of Twilight
+if not IsLeftShiftKeyDown() then
+	local HoT,_,_,_,_,timer = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+	local HourOfTwilight = {109415, 106371, 109416, 109415, 109417}
+	
+	for i,v in ipairs(HourOfTwilight) do
+		if HoT == GetSpellInfo(v) and timer/1000 - GetTime() &amp;lt; 0.6 then
+			RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;)
+		end
+	end
+end
+
+-- Sharpnel
+local sharpnel = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,109597))
+if sharpnel and sharpnel - GetTime() &amp;lt; 1.5 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Sear</Name><Default>false</Default><SpellID>48045</SpellID><Actions></Actions><Lua>if IsSpellKnown(48045)
 	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(15407)),&amp;quot;target&amp;quot;)
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Mind Flay (Mouseover)</Name><Default>false</Default><SpellID>15407</SpellID><Actions></Actions><Lua>if IsSpellKnown(15407)
-	and PQR_IsMoving(1) == false
-	and UnitExists(&amp;quot;mouseover&amp;quot;)
-	and IsSpellInRange(tostring(GetSpellInfo(15407)),&amp;quot;mouseover&amp;quot;)
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local level = UnitLevel(&amp;quot;target&amp;quot;)
-if IsSpellKnown(34433)
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and GetSpellCooldown(34433) == 0
-	and IsSpellInRange(tostring(GetSpellInfo(34433)),&amp;quot;target&amp;quot;)
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Archangel (Restrictive)</Name><Default>false</Default><SpellID>87151</SpellID><Actions>/use 13|/use 14</Actions><Lua>local _,_,_, DA = UnitBuffID(&amp;quot;player&amp;quot;, 87117)
-if IsSpellKnown(87151)
-	and GetSpellCooldown(87151) == 0
-	and DA
-	and DA &amp;gt; 4
-	and UnitLevel(&amp;quot;target&amp;quot;) == -1
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Shadowfiend (Restrictive)</Name><Default>false</Default><SpellID>34433</SpellID><Actions></Actions><Lua>local level = UnitLevel(&amp;quot;target&amp;quot;)
-if IsSpellKnown(34433)
-	and UnitExists(&amp;quot;target&amp;quot;)
-	and GetSpellCooldown(34433) == 0
-	and IsSpellInRange(tostring(GetSpellInfo(34433)),&amp;quot;target&amp;quot;)
-	and UnitLevel(&amp;quot;target&amp;quot;) == -1
-then
-	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>True</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PRIEST>
+	and IsSpellInRange(tostring(GetSpellInfo(48045)), &amp;quot;target&amp;quot;)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></PRIEST>

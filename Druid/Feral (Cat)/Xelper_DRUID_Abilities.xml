@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>Cat: Shred</Name><Default>false</Default><SpellID>5221</SpellID><Actions></Actions><Lua>if PQR_NotBehindTarget() == false then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>if PQR_NotBehindTarget() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Ferocious Bite</Name><Default>false</Default><SpellID>22568</SpellID><Actions></Actions><Lua>local sRip, _, _, _, _, _, ripEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ripHealth = 25
+
+if sRip then
+	ripFinishTime = ripEndTime - GetTime()
+	if PlayerT13() &amp;gt;= 2 then
+		ripHealth = 60
+	end
+	if targetHP &amp;lt; ripHealth then
+		if ripFinishTime &amp;lt; 2 and playerCP &amp;gt;= 1 then
+			return true
+		end
+		if ripFinishTime &amp;lt; 8 and playerCP == 5 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Rip</Name><Default>false</Default><SpellID>1079</SpellID><Actions></Actions><Lua>local sRip, _, _, _, _, _, ripEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ripHealth = 25
+
+if sRip then
+	local ripFinishTime = ripEndTime - GetTime()
+	if PlayerT13() &amp;gt;= 2 then
+		ripHealth = 60
+	end
+	if targetHP &amp;gt; ripHealth then
+		if ripFinishTime &amp;lt; 2 and playerCP == 5 then
+			return true
+		end
+	end
+else
+	if playerCP == 5 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Rake</Name><Default>false</Default><SpellID>1822</SpellID><Actions></Actions><Lua>local sRake, _, _, _, _, _, rakeEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
+
+if sRake then
+	local finishTime = rakeEndTime - GetTime()
+	if finishTime &amp;lt; 2.5 then
+		return true
+	end
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Tiger&amp;apos;s Fury</Name><Default>false</Default><SpellID>5217</SpellID><Actions></Actions><Lua>local sStampede = UnitBuffID(&amp;quot;player&amp;quot;, 78893)
+local mangleValid = IsSpellInRange(GetSpellInfo(33876), &amp;quot;target&amp;quot;)
+local sBerserk = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
+
+if sBerserk then
+	return false
+end
+
+if sStampede == nil and mangleValid then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Berserk</Name><Default>false</Default><SpellID>50334</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Savage Roar</Name><Default>false</Default><SpellID>52610</SpellID><Actions></Actions><Lua>local sSavageRoar = UnitBuffID(&amp;quot;player&amp;quot;, 62071)
+local sRip, _, _, _, _, _, ripEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+
+if sSavageRoar then
+	return false
+else
+	if sRip then
+		local ripFinishTime = ripEndTime - GetTime()
+		if playerCP == 5 then
+			if ripFinishTime &amp;gt; 8 then
+				return true
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Ravage</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local sStampede, _, _, _, _, _, stampedeEndTime = UnitBuffID(&amp;quot;player&amp;quot;, 78893)
+sunders = {770, 7386} -- Order: Faerie Fire, Sunder Armor.
+local ravageCastable = false
+local targetSundered = false
+local castRavage = false
+local finishTime = 100 --arbitrary value.
+
+if sStampede then
+	ravageCastable = true
+	finishTime = stampedeEndTime - GetTime()
+end
+
+if sStampede then
+	--check if a sunder is on the target.
+	for i, spellID in ipairs(sunders) do
+		local _, _, _, sunderCount = UnitDebuffID(&amp;quot;target&amp;quot;, spellID)
+		if sunderCount == 3 then
+			targetSundered = true
+		end
+	end
+	if targetSundered == true then
+		castRavage = true
+	end
+	if finishTime &amp;lt; 2.0 then
+		castRavage = true
+	end
+end
+
+if castRavage then
+	local spellRavage = GetSpellInfo(6785)
+	CastSpellByName(spellRavage)
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Swipe</Name><Default>false</Default><SpellID>62078</SpellID><Actions></Actions><Lua>local playerEnergy = UnitPower(&amp;quot;player&amp;quot;)
+local sPrimalMadness = UnitBuffID(&amp;quot;player&amp;quot;, 80317)
+local sClearcasting = UnitBuff(&amp;quot;player&amp;quot;, 16870)
+
+if sPrimalMadness or sClearcasting then
+	return true
+end
+
+if playerEnergy &amp;lt; 45 then
+	return false
+else
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Rebirth Mouseover</Name><Default>false</Default><SpellID>20484</SpellID><Actions></Actions><Lua>local _, rebirthCD = GetSpellCooldown(20484)
+shiftDown = IsLeftShiftKeyDown();
+
+if PQR_IsCastingSpell(20484) then
+	return false
+end
+
+if rebirthTimeout ~= nil then
+	if rebirthTimeout &amp;lt; GetTime() then
+		PQR_CurrentForm = nil
+		PQR_Rebirth = nil
+		rebirthTimeout = nil
+	end
+end
+
+if (UnitIsDeadOrGhost(&amp;quot;mouseover&amp;quot;)) and shiftDown then
+	if rebirthCD &amp;lt; 20 then
+		rebirthTimeout = GetTime() + 5
+		if PQR_CurrentForm == nil then
+			PQR_CurrentForm = GetShapeshiftForm()
+		end
+		PQR_Rebirth = true
+		return true
+	else
+		PQR_Rebirth = nil
+	end
+end</Lua><RecastDelay>300</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>sunders = {770, 7386} -- Order: Faerie Fire, Sunder Armor.
+local targetSundered = false
+
+--check if a sunder is on the target.
+for i, spellID in ipairs(sunders) do
+	local _, _, _, sunderCount = UnitDebuffID(&amp;quot;target&amp;quot;, spellID)
+	if sunderCount == 3 then
+		targetSundered = true
+	end
+end
+
+if targetSundered == false then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Return to Form</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local myForm = GetShapeshiftForm()
+
+if PQR_ReturnToForm ~= nil then
+	if myForm == PQR_CurrentForm or PQR_CurrentForm == 0 then
+		PQR_ReturnToForm = nil
+		PQR_CurrentForm = nil
+		return false
+	else
+		CastShapeshiftForm(PQR_CurrentForm)
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Event Loader</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--event loader, use this to create a frame and register events for this rotation.
+
+if XelperDruidEvents == nil then
+	XelperDruidEvents = true
+	print(&amp;quot;Xelper Druid Events Loaded.&amp;quot;)
+
+	local xelperFrame = CreateFrame(&amp;quot;Frame&amp;quot;)
+	xelperFrame:RegisterEvent(&amp;quot;COMBAT_LOG_EVENT_UNFILTERED&amp;quot;)
+	xelperFrame:SetScript(&amp;quot;OnEvent&amp;quot;, xelperFrame_OnEvent)
+	xelperFrame:Show()
+
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Event Functions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if XelperDruidFunctions == nil then
+	XelperDruidFunctions = true
+	print(&amp;quot;Xelper Druid Functions Loaded.&amp;quot;)
+
+	function xelperFrame_OnEvent(self,event,...)
+		if event == &amp;quot;COMBAT_LOG_EVENT_UNFILTERED&amp;quot; then
+			local subEvent = select(2, ...)
+			local sourceName = select(5, ...)
+			local spellName = select(13, ...)
+			if subEvent == &amp;quot;SPELL_RESURRECT&amp;quot; then
+				if UnitName(&amp;quot;player&amp;quot;) == sourceName then
+					if spellName == GetSpellInfo(20484) then
+						--REBIRTH
+						if PQR_Rebirth then
+							PQR_Rebirth = nil
+							PQR_ReturnToForm = true
+						end
+					end
+				end
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>--- offensive spells ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;player&amp;quot;) then
+	return false
+end
+
+if UnitExists(&amp;quot;boss1&amp;quot;) then
+	return false
+end
+
+return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Mangle (No Debuff)</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>local mangles = {33876, 46857, 35290, 57386, 50271, 16511} -- Mangle, Trauma, Gore, Stampede, Tendon Rip, Hemo
+
+--check if a sunder is on the target.
+for i, spellID in ipairs(mangles) do
+	local targetMangled = UnitDebuffID(&amp;quot;target&amp;quot;, spellID)
+	if targetMangled ~= nil then
+		return false
+	end
+end
+
+return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: General Functions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if XelperDruidGeneral == nil then
+	XelperDruidGeneral = true
+	function PlayerT13()
+		local T13Count = 0
+		local TierItems = { 78789, 77017, 78760, 77014, 77016 } --helm, shoulders, chest, gloves, legs.
+		for i, itemID in ipairs(TierItems) do
+			local itemName = GetItemInfo(itemID)
+			if IsEquippedItem(itemName) then
+				T13Count = T13Count + 1
+			end
+		end
+		return T13Count
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Energy Pause</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--this will keep us from performing our filler abilities when &amp;lt; 40 energy when mangling, &amp;lt; 45 when shredding.
+--should keep the rotation a little bit more fluid and avoid debuffs dropping for too long.
+--unless &amp;quot;Clearcasting&amp;quot; buff.
+
+local sClearcasting = UnitBuff(&amp;quot;player&amp;quot;, 16870)
+local playerEnergy = UnitPower(&amp;quot;player&amp;quot;)
+local sPrimalMadness = UnitBuffID(&amp;quot;player&amp;quot;, 80317)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local sBerserk = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
+
+if sClearcasting then
+	return false
+end
+
+if sPrimalMadness then
+	return false
+end
+
+if sBerserk then
+	return false
+end
+
+if playerEnergy &amp;lt; 60 and playerCP == 5 then
+	return true
+end
+
+if PQR_NotBehindTarget() then
+	--mangling
+	if playerEnergy &amp;lt; 40 then
+		return true
+	end
+else
+	--shredding
+	if playerEnergy &amp;lt; 45 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Cancel Tiger&amp;apos;s Fury</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local playerEnergy = UnitPower(&amp;quot;player&amp;quot;)
+local sPrimalMadness = UnitBuffID(&amp;quot;player&amp;quot;, 80317)
+
+if sPrimalMadness then
+	if playerEnergy &amp;lt; 15 then
+		RunMacroText(&amp;quot;/cancelaura &amp;quot;..sPrimalMadness)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Boss: Heroic Will</Name><Default>false</Default><SpellID>0</SpellID><Actions>/click ExtraActionButton1</Actions><Lua>local altDown = IsAltKeyDown()
+local sDivineShield = UnitBuffID(&amp;quot;player&amp;quot;, 642)
+
+if altDown == nil then
+    local spellHourOfTwilight = GetSpellInfo(109417)
+    local channelSpell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;boss1&amp;quot;)
+    if channelSpell ~= nil and channelSpell == spellHourOfTwilight then
+        local finishTime = endTime/1000 - GetTime()
+        if finishTime &amp;lt; 1 and sDivineShield == nil then
+            return true
+        end
+    end
+end
+
+
+local sFadingLight, _, _, _, _, _, fadingEndTime = UnitDebuffID(&amp;quot;player&amp;quot;, 110068)
+if sFadingLight then
+    local finishTime = fadingEndTime - GetTime()
+    if finishTime &amp;lt; 1 then
+        return true
+    end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Feral Charge</Name><Default>false</Default><SpellID>49376</SpellID><Actions></Actions><Lua>local chargeValid = IsSpellInRange(GetSpellInfo(49376), &amp;quot;target&amp;quot;)
+local mangleValid = IsSpellInRange(GetSpellInfo(33876), &amp;quot;target&amp;quot;)
+
+if chargeValid and mangleValid == 0 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Ferocious Bite Filler</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local sRip, _, _, _, _, _, ripEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local sSavageRoar, _, _, _, _, _, roarEndTime = UnitBuffID(&amp;quot;player&amp;quot;, 62071)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local playerEnergy = UnitPower(&amp;quot;player&amp;quot;)
+local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ripHealth = 25
+local sBerserk = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
+local FBEnergy = 60
+if sBerserk then
+	FBEnergy = 47
+end
+if sRip and sSavageRoar then
+	ripFinishTime = ripEndTime - GetTime()
+	roarFinishTime = roarEndTime - GetTime()
+	if PlayerT13() &amp;gt;= 2 then
+		ripHealth = 60
+	end
+
+	if targetHP &amp;lt; ripHealth then
+		return false --we are handling FB in another ability under 25/60% 
+	end
+
+	if ripFinishTime &amp;gt; 8 and roarFinishTime &amp;gt; 8 and playerCP == 5 then
+
+		if playerEnergy &amp;lt; FBEnergy then
+			return true --prevent casting spells and wait for energy.
+		else
+			CastSpellByID(22568, &amp;quot;target&amp;quot;)
+			return true
+		end
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Cat: Ferocious Bite Refresh</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local sRip, _, _, _, _, _, ripEndTime = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local playerCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local targetHP = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+local ripHealth = 25
+local castFB = false
+local sBerserk = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
+local FBEnergy = 60
+if sBerserk then
+	FBEnergy = 47
+end
+
+if sRip then
+	ripFinishTime = ripEndTime - GetTime()
+	if PlayerT13() &amp;gt;= 2 then
+		ripHealth = 60
+	end
+	if targetHP &amp;lt; ripHealth then
+		if ripFinishTime &amp;lt; 2 and playerCP &amp;gt;= 1 then
+			castFB = true
+		end
+		if ripFinishTime &amp;lt; 8 and playerCP == 5 then
+			if playerEnergy &amp;lt; FBEnergy then
+				return true
+			else
+				castFB = true
+			end
+		end
+	end
+end
+
+if castFB then
+	CastSpellByID(22568, &amp;quot;target&amp;quot;)
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Start Attack</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>RunMacroText(&amp;quot;/startattack&amp;quot;)</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Mangle</Name><Default>false</Default><SpellID>33878</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Lacerate</Name><Default>false</Default><SpellID>33745</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Pulverize</Name><Default>false</Default><SpellID>80313</SpellID><Actions></Actions><Lua>local sLacerate, _, _, lacerateCount = UnitDebuffID(&amp;quot;target&amp;quot;, 33745, &amp;quot;PLAYER&amp;quot;)
+
+if IsSpellKnown(80313) == false then
+	return false
+end
+
+if sLacerate then
+	if lacerateCount == 3 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Maul</Name><Default>false</Default><SpellID>6807</SpellID><Actions></Actions><Lua>local playerRage = UnitPower(&amp;quot;player&amp;quot;)
+
+if playerRage &amp;gt;= 70 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>sunders = {770, 7386} -- Order: Faerie Fire, Sunder Armor.
+local targetSundered = false
+
+--check if a sunder is on the target.
+for i, spellID in ipairs(sunders) do
+	local _, _, _, sunderCount = UnitDebuffID(&amp;quot;target&amp;quot;, spellID)
+	if sunderCount == 3 then
+		targetSundered = true
+	end
+end
+
+if targetSundered == false then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Demoralizing Roar</Name><Default>false</Default><SpellID>99</SpellID><Actions></Actions><Lua>local roar = {702, 99, 24423, 1160, 81130, 26017}
+--Curse of Weakness = 702
+--Demoralizing Roar = 99
+--Demoralizing Screech = 24423
+--Demoralizing Shout = 1160	
+--Scarlet Fever = 81130
+--Vindication = 26017
+local targetRoared = false
+local mangleValid = IsSpellInRange(GetSpellInfo(33876), &amp;quot;target&amp;quot;)
+
+--check if a sunder is on the target.
+for i, spellID in ipairs(roar) do
+	local roarDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, spellID)
+	if roarDebuff then
+		targetRoared = true
+	end
+end
+
+if targetRoared == false and mangleValid then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Swipe</Name><Default>false</Default><SpellID>779</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>Bear: Thrash</Name><Default>false</Default><SpellID>77758</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore></LuaBefore><LuaAfter></LuaAfter></Ability></DRUID>

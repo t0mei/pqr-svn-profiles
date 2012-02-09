@@ -26,7 +26,7 @@ end</LuaBefore><LuaAfter></LuaAfter></Ability><Ability><Name>All: Serpent Sting<
 	return false
 end
 
-if UnitDebuffID(&amp;quot;target&amp;quot;, 1978) == nil and UnitHealth(&amp;quot;target&amp;quot;) &amp;gt; 100000 then
+if UnitDebuffID(&amp;quot;target&amp;quot;, 1978, &amp;quot;PLAYER&amp;quot;) == nil and UnitHealth(&amp;quot;target&amp;quot;) &amp;gt; 100000 then
 	return true
 end</Lua><RecastDelay>15000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><LuaBefore>if UnitBuffID(&amp;quot;player&amp;quot;, 13165) == nil 
 then  CastSpellByID(13165, &amp;quot;player&amp;quot;)
